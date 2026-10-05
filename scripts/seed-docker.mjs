@@ -12,7 +12,7 @@
 import { readFile } from "node:fs/promises";
 import { Kysely } from "kysely";
 import { createDialect } from "emdash/db/postgres";
-import { createStorage } from "emdash/storage/local";
+import { createStorage as createLocalStorage } from "emdash/storage/local";
 import { applySeed, validateSeed } from "emdash/seed";
 
 const connectionString = process.env.DATABASE_URL;
@@ -34,10 +34,12 @@ const db = new Kysely({
 	dialect: createDialect({ connectionString, pool: { min: 0, max: 2 } }),
 });
 
-const storage = createStorage({
-	directory: "/app/uploads",
-	baseUrl: "/_emdash/api/media/file",
-});
+const storage = process.env.S3_ENDPOINT
+	? (await import("emdash/storage/s3")).createStorage({})
+	: createLocalStorage({
+			directory: "/app/uploads",
+			baseUrl: "/_emdash/api/media/file",
+		});
 
 const result = await applySeed(db, seed, {
 	includeContent: true,
