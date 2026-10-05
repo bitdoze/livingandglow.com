@@ -160,12 +160,6 @@
 					"componentId": "core:categories",
 					"title": "Categories"
 				},
-				{
-					"type": "component",
-					"componentId": "core:recent-posts",
-					"title": "Recent guides",
-					"settings": { "count": 5, "showDate": true }
-				},
 				{ "type": "component", "componentId": "core:tags", "title": "Tags" }
 			]
 		},
