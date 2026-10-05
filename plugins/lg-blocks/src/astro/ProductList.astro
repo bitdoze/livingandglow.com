@@ -84,7 +84,7 @@ const list = Array.isArray(items) ? items.filter((i: any) => i?.name) : [];
 		color: var(--color-muted);
 	}
 
-	.lg-shoplist-link {
+	.lg-shoplist .lg-shoplist-link {
 		flex-shrink: 0;
 		font-size: 0.85em;
 		font-weight: 600;
@@ -93,7 +93,7 @@ const list = Array.isArray(items) ? items.filter((i: any) => i?.name) : [];
 		white-space: nowrap;
 	}
 
-	.lg-shoplist-link:hover {
+	.lg-shoplist .lg-shoplist-link:hover {
 		color: var(--color-brand-hover);
 		text-decoration: underline;
 		text-underline-offset: 3px;

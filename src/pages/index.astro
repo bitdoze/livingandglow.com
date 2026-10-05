@@ -100,7 +100,7 @@ const recentPosts = posts
 						<div class="category-head">
 							<h2 class="category-name">{section.label}</h2>
 							<p class="category-blurb">{section.blurb}</p>
-							<a href={`/category/${section.slug}`} class="category-link">
+							<a href={`/category/${section.slug}/`} class="category-link">
 								Browse {section.label.toLowerCase()}
 								<svg
 									width="13"
@@ -119,7 +119,7 @@ const recentPosts = posts
 							</a>
 						</div>
 						{section.post && (
-							<a href={`/posts/${section.post.id}`} class="category-guide">
+							<a href={`/posts/${section.post.id}/`} class="category-guide">
 								{section.post.data.featured_image && (
 									<span class="category-guide-thumb">
 										<Image image={section.post.data.featured_image} />
@@ -144,7 +144,7 @@ const recentPosts = posts
 				<section class="posts-section">
 					<header class="section-header">
 						<h2 class="section-title">Recent guides</h2>
-						<a href="/posts" class="section-link">
+						<a href="/posts/" class="section-link">
 							View all
 						</a>
 					</header>
@@ -154,7 +154,7 @@ const recentPosts = posts
 								title={post.data.title ?? "Untitled"}
 								excerpt={post.data.excerpt}
 								featuredImage={post.data.featured_image}
-								href={`/posts/${post.id}`}
+								href={`/posts/${post.id}/`}
 								date={post.data.publishedAt ?? undefined}
 								readingTime={getReadingTime(post.data.content)}
 								tags={tags}
@@ -186,7 +186,7 @@ const recentPosts = posts
 				and every guide says what that reason is, including who should skip
 				it.
 			</p>
-			<a href="/pages/about" class="about-band-link">
+			<a href="/pages/about/" class="about-band-link">
 				How we choose products
 				<svg
 					width="13"

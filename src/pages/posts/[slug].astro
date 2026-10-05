@@ -13,6 +13,11 @@ import PostCard from "../../components/PostCard.astro";
 import { getReadingTime } from "../../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 
+// Canonical URLs carry a trailing slash (guides are shared on Pinterest).
+if (!Astro.url.pathname.endsWith("/")) {
+	return Astro.redirect(`${Astro.url.pathname}/${Astro.url.search}`, 301);
+}
+
 const slug = decodeSlug(Astro.params.slug);
 
 if (!slug) {
@@ -55,7 +60,7 @@ const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
 const seo = getSeoMeta(post, {
 	siteTitle,
 	siteUrl: Astro.url.origin,
-	path: Astro.url.pathname.replace(/\/$/, ""),
+	path: Astro.url.pathname,
 	defaultOgImage: featuredImageUrl,
 });
 
@@ -196,7 +201,7 @@ const publishDate =
 									<span class="detail-label">Tags</span>
 									<div class="detail-tags">
 										{tags.map((t) => (
-											<a href={`/tag/${t.slug}`} class="detail-tag">
+											<a href={`/tag/${t.slug}/`} class="detail-tag">
 												{t.label}
 											</a>
 										))}
@@ -233,7 +238,7 @@ const publishDate =
 										<li>
 											<a
 												class="recent-item"
-												href={`/posts/${p.id}`}
+												href={`/posts/${p.id}/`}
 											>
 												{p.data.featured_image && (
 													<span class="recent-thumb">
@@ -284,7 +289,7 @@ const publishDate =
 									title={p.data.title}
 									excerpt={p.data.excerpt}
 									featuredImage={p.data.featured_image}
-									href={`/posts/${p.id}`}
+									href={`/posts/${p.id}/`}
 									date={p.data.publishedAt ?? undefined}
 									readingTime={getReadingTime(p.data.content)}
 									tags={postTags.map((t) => ({ slug: t.slug, label: t.label }))}

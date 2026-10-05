@@ -41,6 +41,7 @@ This template ships with `.mcp.json`, `.cursor/mcp.json`, and `.vscode/mcp.json`
 - `entry.id` is the slug (for URLs). `entry.data.id` is the database ULID (for API calls like `getEntryTerms`).
 - When Astro's cache is enabled, pass content-query hints to `Astro.cache.set(cacheHint)`. Use the `WithCacheHint` variants for site settings, menus, taxonomies, and widget areas rendered by cached routes.
 - Taxonomy names in queries must match the seed's `"name"` field exactly (e.g., `"category"` not `"categories"`).
+- Public content URLs are canonical with a trailing slash (`/posts/<slug>/`, `/pages/<slug>/`, `/category/<slug>/`, `/tag/<slug>/`, `/posts/`). Each content page 301-redirects the non-slash variant at the top of its frontmatter, and all internal links must emit the slash form. Do NOT use Astro's global `trailingSlash` option or a blanket redirect — `/_emdash/*` (admin, API, media) must never be touched by slash handling.
 
 ## This Site
 

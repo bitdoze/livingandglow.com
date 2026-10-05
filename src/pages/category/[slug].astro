@@ -9,6 +9,11 @@ import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import { getReadingTime } from "../../utils/reading-time";
 
+// Canonical URLs carry a trailing slash.
+if (!Astro.url.pathname.endsWith("/")) {
+	return Astro.redirect(`${Astro.url.pathname}/${Astro.url.search}`, 301);
+}
+
 const slug = decodeSlug(Astro.params.slug);
 const termsResult = await getTaxonomyTermsWithCacheHint("category", {
 	includeCounts: false,
@@ -67,7 +72,7 @@ const filteredPosts = posts.map((post) => ({
 							title={post.data.title}
 							excerpt={post.data.excerpt}
 							featuredImage={post.data.featured_image}
-							href={`/posts/${post.id}`}
+							href={`/posts/${post.id}/`}
 							date={post.data.publishedAt ?? undefined}
 							readingTime={getReadingTime(post.data.content)}
 							tags={tags.map((t) => ({ slug: t.slug, label: t.label }))}
@@ -78,11 +83,11 @@ const filteredPosts = posts.map((post) => ({
 			)
 		}
 		<nav class="pagination" aria-label="Pagination">
-			{cursor && <a href={`/category/${term.slug}`}>First page</a>}
+			{cursor && <a href={`/category/${term.slug}/`}>First page</a>}
 			{
 				nextCursor && (
 					<a
-						href={`/category/${term.slug}?cursor=${encodeURIComponent(nextCursor)}`}
+						href={`/category/${term.slug}/?cursor=${encodeURIComponent(nextCursor)}`}
 					>
 						Next page
 					</a>

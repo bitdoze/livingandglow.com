@@ -3,6 +3,11 @@ import { getEmDashCollection, getTermsForEntries } from "emdash";
 import Base from "../../layouts/Base.astro";
 import { getReadingTime } from "../../utils/reading-time";
 
+// Canonical URLs carry a trailing slash.
+if (!Astro.url.pathname.endsWith("/")) {
+	return Astro.redirect(`${Astro.url.pathname}/${Astro.url.search}`, 301);
+}
+
 // Sort in the database rather than in JS — lets the DB use its index on
 // published_at and avoids a full-table scan on the client.
 const cursor = Astro.url.searchParams.get("cursor") || undefined;
@@ -58,7 +63,7 @@ const formatDate = (date: Date) =>
 				<div class="posts-list">
 					{postsWithTags.map(({ post, tags, bylines }) => (
 						<article class="post-item">
-							<a href={`/posts/${post.id}`} class="post-link">
+							<a href={`/posts/${post.id}/`} class="post-link">
 								<div class="post-meta">
 									{bylines.length > 0 && (
 										<>
@@ -101,7 +106,7 @@ const formatDate = (date: Date) =>
 							{tags.length > 0 && (
 								<div class="post-tags">
 									{tags.slice(0, 3).map((t) => (
-										<a href={`/tag/${t.slug}`} class="post-tag">
+										<a href={`/tag/${t.slug}/`} class="post-tag">
 											{t.label}
 										</a>
 									))}
@@ -113,10 +118,10 @@ const formatDate = (date: Date) =>
 			)
 		}
 		<nav class="pagination" aria-label="Pagination">
-			{cursor && <a href="/posts">First page</a>}
+			{cursor && <a href="/posts/">First page</a>}
 			{
 				nextCursor && (
-					<a href={`/posts?cursor=${encodeURIComponent(nextCursor)}`}>
+					<a href={`/posts/?cursor=${encodeURIComponent(nextCursor)}`}>
 						Next page
 					</a>
 				)

@@ -9,6 +9,11 @@ import { PortableText } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 
+// Canonical URLs carry a trailing slash.
+if (!Astro.url.pathname.endsWith("/")) {
+	return Astro.redirect(`${Astro.url.pathname}/${Astro.url.search}`, 301);
+}
+
 const slug = decodeSlug(Astro.params.slug);
 
 if (!slug) {
@@ -26,7 +31,7 @@ const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
 const seo = getSeoMeta(page, {
 	siteTitle,
 	siteUrl: Astro.url.origin,
-	path: Astro.url.pathname.replace(/\/$/, ""),
+	path: Astro.url.pathname,
 });
 ---
 

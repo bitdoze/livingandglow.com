@@ -13,7 +13,7 @@ const hasImage =
 				{typeof image === "string" ? (
 					<img src={image} alt={title || ""} loading="lazy" />
 				) : (
-					<Image image={image} widths={[240, 480]} sizes="132px" />
+					<Image image={image} widths={[184, 368]} sizes="184px" />
 				)}
 			</span>
 		)
@@ -76,7 +76,7 @@ const hasImage =
 	}
 
 	.lg-product--media {
-		grid-template-columns: 132px minmax(0, 1fr);
+		grid-template-columns: 184px minmax(0, 1fr);
 	}
 
 	.lg-product-image {
@@ -147,7 +147,10 @@ const hasImage =
 		margin-top: 0.5em;
 	}
 
-	.lg-product-button {
+	/* Nested under .lg-product to beat .article-content a (prose links carry
+	   the page's scope id: 0-2-1) — without it the cream text turns terracotta
+	   on the terracotta button. */
+	.lg-product .lg-product-button {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.4em;
@@ -163,7 +166,7 @@ const hasImage =
 		transition: background var(--transition-fast);
 	}
 
-	.lg-product-button:hover {
+	.lg-product .lg-product-button:hover {
 		background: var(--color-brand-hover);
 		color: var(--color-on-brand);
 		text-decoration: none;
@@ -179,7 +182,7 @@ const hasImage =
 
 	@media (max-width: 560px) {
 		.lg-product--media {
-			grid-template-columns: 84px minmax(0, 1fr);
+			grid-template-columns: 112px minmax(0, 1fr);
 			gap: var(--spacing-4);
 			padding: var(--spacing-4);
 		}

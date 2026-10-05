@@ -115,35 +115,35 @@
 				{
 					"type": "custom",
 					"label": "Fashion & Style",
-					"url": "/category/fashion-style"
+					"url": "/category/fashion-style/"
 				},
 				{
 					"type": "custom",
 					"label": "Beauty & Getting Ready",
-					"url": "/category/beauty-getting-ready"
+					"url": "/category/beauty-getting-ready/"
 				},
 				{
 					"type": "custom",
 					"label": "Home & Living",
-					"url": "/category/home-living"
+					"url": "/category/home-living/"
 				},
-				{ "type": "custom", "label": "About", "url": "/pages/about" }
+				{ "type": "custom", "label": "About", "url": "/pages/about/" }
 			]
 		},
 		{
 			"name": "footer",
 			"label": "Footer Navigation",
 			"items": [
-				{ "type": "custom", "label": "Contact", "url": "/pages/contact" },
+				{ "type": "custom", "label": "Contact", "url": "/pages/contact/" },
 				{
 					"type": "custom",
 					"label": "Affiliate Disclosure",
-					"url": "/pages/affiliate-disclosure"
+					"url": "/pages/affiliate-disclosure/"
 				},
 				{
 					"type": "custom",
 					"label": "Privacy Policy",
-					"url": "/pages/privacy-policy"
+					"url": "/pages/privacy-policy/"
 				}
 			]
 		}
