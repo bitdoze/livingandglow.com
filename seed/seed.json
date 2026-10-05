@@ -3,7 +3,7 @@
 	"version": "1",
 	"meta": {
 		"name": "Living & Glow",
-		"description": "Everyday style, beautiful spaces and thoughtful finds — fashion, beauty and home guides with honest product picks.",
+		"description": "Everyday style, beautiful spaces and thoughtful finds. Fashion, beauty and home guides with honest product picks.",
 		"author": "Living & Glow"
 	},
 	"settings": {
@@ -178,7 +178,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "Practical guides to everyday style, getting ready, and comfortable rooms. Some links earn us a commission — every pick still has to earn its place.",
+									"text": "Practical guides to everyday style, getting ready, and comfortable rooms. Some links earn us a commission; every pick still has to earn its place.",
 									"_key": "k1"
 								}
 							],
@@ -319,7 +319,7 @@
 								{
 									"_key": "a1",
 									"_type": "link",
-									"href": "/pages/affiliate-disclosure"
+									"href": "/pages/affiliate-disclosure/"
 								}
 							],
 							"_key": "k10"
@@ -345,7 +345,7 @@
 								{
 									"_key": "a2",
 									"_type": "link",
-									"href": "/pages/contact"
+									"href": "/pages/contact/"
 								}
 							],
 							"_key": "k14"
@@ -528,7 +528,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "Living & Glow keeps things simple: this site is for reading, not for tracking you around the internet. This page describes what data is collected, why, and what you can do about it. Update this policy if you add analytics, email signup, or other tools.",
+									"text": "Living & Glow keeps things simple: this site is for reading, not for tracking you around the internet. This page describes what data is collected, why, and what you can do about it.",
 									"_key": "k1"
 								}
 							],
@@ -582,7 +582,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "Analytics (if enabled). Any analytics or measurement tools in use will be listed here, along with the consent choices that apply to them.",
+									"text": "Analytics. The site does not run third-party analytics or advertising trackers. If that changes, this section will say what is used and what choices you have.",
 									"_key": "k9"
 								}
 							],
@@ -762,7 +762,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "A light layer over a simple base. An unbuttoned flannel, utility or linen overshirt over a ribbed tank turns two plain pieces into an outfit with depth. Roll the sleeves once and leave the collar relaxed — this formula fails when it looks fussed over.",
+									"text": "A light layer over a simple base. An unbuttoned flannel, utility or linen overshirt over a ribbed tank turns two plain pieces into an outfit with depth. Roll the sleeves once and leave the collar relaxed. This formula fails when it looks fussed over.",
 									"_key": "b17"
 								}
 							],
@@ -786,7 +786,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "Soft on structured. A chunky or mid-weight knit half-tucked into a satin slip skirt — the contrast between textures is the whole point. Ankle boots in fall, flat sandals when it's warm.",
+									"text": "Soft on structured. A chunky or mid-weight knit half-tucked into a satin slip skirt. The contrast between textures is the whole point. Ankle boots in fall, flat sandals when it's warm.",
 									"_key": "b21"
 								}
 							],
@@ -827,7 +827,7 @@
 									"filename": "crossbody-bag.jpg"
 								}
 							},
-							"note": "A structured shape sharpens soft, casual outfits — look for an adjustable strap and a zip closure so it works across seasons.",
+							"note": "A structured shape sharpens soft, casual outfits. Look for an adjustable strap and a zip closure so it works across seasons.",
 							"caveat": "Check the listed dimensions against what you carry daily; a compact crossbody won't fit a tablet.",
 							"url": "https://www.amazon.com/s?k=structured+crossbody+bag+women",
 							"buttonLabel": "View on Amazon"
@@ -844,7 +844,7 @@
 								}
 							},
 							"note": "The tucked-knit and wide-leg formulas read unfinished without one. A slim belt in a neutral leather covers nearly every outfit here.",
-							"caveat": "Sizing runs differently between brands — measure a belt you own and compare the size chart.",
+							"caveat": "Sizing runs differently between brands. Measure a belt you own and compare the size chart.",
 							"url": "https://www.amazon.com/s?k=women+slim+leather+belt",
 							"buttonLabel": "View on Amazon"
 						},
@@ -874,7 +874,7 @@
 							"_type": "callout",
 							"_key": "c1",
 							"variant": "tip",
-							"text": "Keep the five formulas on a note in your phone with the pieces you own next to each one. Shopping gets easier too — you only buy what fills a real gap in a formula, not a hypothetical outfit."
+							"text": "Keep the five formulas on a note in your phone with the pieces you own next to each one. Shopping gets easier too: you only buy what fills a real gap in a formula, not a hypothetical outfit."
 						}
 					]
 				},
@@ -909,7 +909,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "Cozy is mostly lighting and texture, not furniture. If you only change one thing, swap a cold overhead bulb for a warm lamp at sitting height — the room changes instantly. Everything below builds on that, and most of it is free.",
+									"text": "Cozy is mostly lighting and texture, not furniture. If you only change one thing, swap a cold overhead bulb for a warm lamp at sitting height. The room changes instantly. Everything below builds on that, and most of it is free.",
 									"_key": "b1"
 								}
 							],
@@ -957,7 +957,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "A throw within arm's reach of the sofa, cushion covers in a mix of textures (one smooth, one nubby, one woven), and a rug that's big enough for the front legs of the seating to sit on. A rug that's too small makes the whole room feel temporary — it's the most common mistake.",
+									"text": "A throw within arm's reach of the sofa, cushion covers in a mix of textures (one smooth, one nubby, one woven), and a rug that's big enough for the front legs of the seating to sit on. A rug that's too small makes the whole room feel temporary. It's the most common mistake.",
 									"_key": "b9"
 								}
 							],
@@ -981,7 +981,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "Rooms pushed against the walls feel like waiting rooms. Bring seating inward so people can talk without raising their voices — even ten centimeters off the wall changes the feel. If the room is small, a loveseat angled toward a chair reads cozier than a sofa floating alone.",
+									"text": "Rooms pushed against the walls feel like waiting rooms. Bring seating inward so people can talk without raising their voices. Even a few inches off the wall changes the feel. If the room is small, a loveseat angled toward a chair reads cozier than a sofa floating alone.",
 									"_key": "b13"
 								}
 							],
@@ -1005,7 +1005,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "Cozy is not clutter. Pick one surface — usually the coffee table — and keep it nearly empty: a tray, a candle, maybe a small stack of books. Everything else gets a home in a basket or behind a cabinet door. The calm surface is what makes the layers feel intentional.",
+									"text": "Cozy is not clutter. Pick one surface, usually the coffee table, and keep it nearly empty: a tray, a candle, maybe a small stack of books. Everything else gets a home in a basket or behind a cabinet door. The calm surface is what makes the layers feel intentional.",
 									"_key": "b17"
 								}
 							],
@@ -1019,13 +1019,13 @@
 								{
 									"item": "Warm floor lamp (2700K)",
 									"bestFor": "The single biggest change; corners and reading spots",
-									"keepInMind": "Check height — the shade should sit near seated eye level",
+									"keepInMind": "Check the height. The shade should sit near seated eye level",
 									"url": "https://www.amazon.com/s?k=warm+floor+lamp+2700k"
 								},
 								{
 									"item": "Textured throw blanket",
 									"bestFor": "Instant softness on the sofa; picks up accent colors",
-									"keepInMind": "Check dimensions — under 50x60 inches reads small",
+									"keepInMind": "Check the dimensions. Under 50x60 inches reads small",
 									"url": "https://www.amazon.com/s?k=textured+throw+blanket"
 								},
 								{
@@ -1040,7 +1040,7 @@
 							"_type": "callout",
 							"_key": "c1",
 							"variant": "note",
-							"text": "Renting? Everything here works without touching a wall. Lamps, textiles and baskets are all reversible — and they move with you."
+							"text": "Renting? Everything here works without touching a wall. Lamps, textiles and baskets are all reversible, and they move with you."
 						}
 					]
 				},
@@ -1075,7 +1075,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "The right makeup bag is smaller than you think. If you separate what you use every day from the occasional extras, a single medium bag with two or three compartments covers most routines — here's how to get there.",
+									"text": "The right makeup bag is smaller than you think. If you separate what you use every day from the occasional extras, a single medium bag with two or three compartments covers most routines. Here's how to get there.",
 									"_key": "b1"
 								}
 							],
@@ -1099,7 +1099,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "Empty the bag. Put back only what you used in the last two weeks — that's the daily set. Everything else goes to a drawer organizer or a \"occasion\" pouch at home. Most bags are chaotic because they're carrying three routines at once.",
+									"text": "Empty the bag. Put back only what you used in the last two weeks — that's the daily set. Everything else goes to a drawer organizer or an \"occasion\" pouch at home. Most bags are chaotic because they're carrying three routines at once.",
 									"_key": "b5"
 								}
 							],
@@ -1123,7 +1123,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "One big pouch becomes a rummage box. Look for a main compartment, a flat pocket for palettes, and a brush section or elastic loops. A bag that opens flat or stands upright beats a deep one — you can see everything without tipping it out.",
+									"text": "One big pouch becomes a rummage box. Look for a main compartment, a flat pocket for palettes, and a brush section or elastic loops. A bag that opens flat or stands upright beats a deep one. You can see everything without tipping it out.",
 									"_key": "b9"
 								}
 							],
@@ -1147,7 +1147,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "Loose brushes shed product onto everything else and lose their shape. A slim brush roll or a section with elastic loops keeps bristles protected. Let brushes dry fully before they go back in a closed bag — trapped moisture is how mildew starts.",
+									"text": "Loose brushes shed product onto everything else and lose their shape. A slim brush roll or a section with elastic loops keeps bristles protected. Let brushes dry fully before they go back in a closed bag. Trapped moisture is how mildew starts.",
 									"_key": "b13"
 								}
 							],
@@ -1165,7 +1165,7 @@
 								}
 							},
 							"note": "Opens fully so nothing hides at the bottom; a separate brush flap keeps powder off everything else.",
-							"caveat": "Check the closed dimensions — some open flat but pack bulky in a tote.",
+							"caveat": "Check the closed dimensions. Some open flat but pack bulky in a tote.",
 							"url": "https://www.amazon.com/s?k=lay+flat+makeup+bag+compartments",
 							"buttonLabel": "View on Amazon"
 						},
@@ -1180,7 +1180,7 @@
 									"filename": "brush-roll.jpg"
 								}
 							},
-							"note": "Protects bristles in transit and doubles as a stand on a counter. Look for washable lining — it will get dirty.",
+							"note": "Protects bristles in transit and doubles as a stand on a counter. Look for washable lining. It will get dirty.",
 							"caveat": "Elastic loops sized for slim brushes may not fit chunky kabuki handles.",
 							"url": "https://www.amazon.com/s?k=makeup+brush+roll+case",
 							"buttonLabel": "View on Amazon"
@@ -1189,7 +1189,7 @@
 							"_type": "callout",
 							"_key": "c1",
 							"variant": "remember",
-							"text": "Liquids for carry-on flights need to fit the usual 3.4 oz / 100 ml rule in a clear quart bag — keep a travel pouch pre-packed so you're not decanting at midnight before a trip."
+							"text": "Liquids for carry-on flights need to fit the usual 3.4 oz / 100 ml rule in a clear quart bag. Keep a travel pouch pre-packed so you're not decanting at midnight before a trip."
 						}
 					]
 				},
