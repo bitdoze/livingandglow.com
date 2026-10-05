@@ -39,6 +39,15 @@ export default defineConfig({
 	image: {
 		layout: "constrained",
 		responsiveStyles: true,
+		// Authorize media hosts so <Image> goes through the sharp transform
+		// endpoint (webp/avif + srcset) instead of passing the raw file through.
+		remotePatterns: [
+			{ protocol: "https", hostname: "livingandglow.com" },
+			{ protocol: "https", hostname: "www.livingandglow.com" },
+			{ protocol: "https", hostname: "**.b-cdn.net" },
+			{ protocol: "http", hostname: "localhost" },
+			{ protocol: "http", hostname: "127.0.0.1" },
+		],
 	},
 	integrations: [
 		react(),

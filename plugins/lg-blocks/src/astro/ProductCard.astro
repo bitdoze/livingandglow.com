@@ -13,11 +13,7 @@ const hasImage =
 				{typeof image === "string" ? (
 					<img src={image} alt={title || ""} loading="lazy" />
 				) : (
-					<Image
-						image={image}
-						widths={[640, 960, 1280]}
-						sizes="(max-width: 720px) 100vw, 640px"
-					/>
+					<Image image={image} />
 				)}
 			</span>
 		)
