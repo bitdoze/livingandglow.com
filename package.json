@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "emdash": {
-    "label": "Blog",
+    "label": "Living & Glow",
     "seed": "seed/seed.json"
   },
   "scripts": {
@@ -17,8 +17,12 @@
   "dependencies": {
     "@astrojs/node": "^11.1.5",
     "@astrojs/react": "^6.0.5",
+    "@aws-sdk/client-s3": "^3.1146.0",
+    "@aws-sdk/s3-request-presigner": "^3.1146.0",
     "astro": "^7.3.2",
     "emdash": "^1.0.1",
+    "lg-blocks": "file:plugins/lg-blocks",
+    "pg": "^8.23.1",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },

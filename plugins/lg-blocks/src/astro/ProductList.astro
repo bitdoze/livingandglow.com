@@ -1,0 +1,101 @@
+---
+const { heading, items } = Astro.props.node;
+const list = Array.isArray(items) ? items.filter((i: any) => i?.name) : [];
+---
+
+<div class="lg-shoplist">
+	<span class="lg-shoplist-heading">{heading || "Shop this guide"}</span>
+	<ul class="lg-shoplist-items">
+		{
+			list.map((item: any) => (
+				<li class="lg-shoplist-item">
+					<div class="lg-shoplist-text">
+						<span class="lg-shoplist-name">{item.name}</span>
+						{item.detail && (
+							<span class="lg-shoplist-detail">{item.detail}</span>
+						)}
+					</div>
+					{item.url && (
+						<a
+							class="lg-shoplist-link"
+							href={item.url}
+							target="_blank"
+							rel="sponsored nofollow noopener"
+						>
+							View on Amazon
+						</a>
+					)}
+				</li>
+			))
+		}
+	</ul>
+</div>
+
+<style>
+	.lg-shoplist {
+		margin: 2em 0;
+		padding: var(--spacing-5) var(--spacing-5) var(--spacing-3);
+		background: var(--color-bg-subtle);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: var(--radius-lg);
+	}
+
+	.lg-shoplist-heading {
+		display: block;
+		margin-bottom: var(--spacing-3);
+		font-family: var(--font-heading);
+		font-size: 0.95em;
+		font-weight: var(--font-weight-heading);
+		letter-spacing: var(--tracking-snug);
+		color: var(--color-text);
+	}
+
+	.lg-shoplist-items {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.lg-shoplist-item {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--spacing-4);
+		padding: var(--spacing-2) 0;
+		border-top: 1px solid var(--color-border-subtle);
+		font-size: 0.88em;
+	}
+
+	.lg-shoplist-text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15em;
+		min-width: 0;
+	}
+
+	.lg-shoplist-name {
+		font-weight: 500;
+		color: var(--color-text);
+	}
+
+	.lg-shoplist-detail {
+		font-size: 0.9em;
+		line-height: 1.5;
+		color: var(--color-muted);
+	}
+
+	.lg-shoplist-link {
+		flex-shrink: 0;
+		font-size: 0.85em;
+		font-weight: 600;
+		color: var(--color-brand);
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.lg-shoplist-link:hover {
+		color: var(--color-brand-hover);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+</style>

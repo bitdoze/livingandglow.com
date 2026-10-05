@@ -10,14 +10,31 @@ import PostCard from "../components/PostCard.astro";
 import { getReadingTime } from "../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 
-// Limit to what we render (1 featured + 6 grid). The DB does the slicing
-// instead of fetching every post and discarding the tail in JS.
-const POSTS_PER_PAGE = 7;
+const CATEGORY_SECTIONS = [
+	{
+		slug: "fashion-style",
+		label: "Fashion & Style",
+		blurb:
+			"Wearable outfit formulas, wardrobe basics that pull their weight, and the accessories that finish a look.",
+	},
+	{
+		slug: "beauty-getting-ready",
+		label: "Beauty & Getting Ready",
+		blurb:
+			"Makeup, hair accessories and getting-ready setups that keep mornings simple and organized.",
+	},
+	{
+		slug: "home-living",
+		label: "Home & Living",
+		blurb:
+			"Cozy rooms and practical organization — lighting, textiles and storage that earn their place.",
+	},
+];
 
 const [{ entries: posts, cacheHint }, settings] = await Promise.all([
 	getEmDashCollection("posts", {
 		orderBy: { published_at: "desc" },
-		limit: POSTS_PER_PAGE + 1, // +1 to detect "view all" need
+		limit: 12,
 	}),
 	getSiteSettings(),
 ]);
@@ -25,326 +42,313 @@ const { siteTitle, siteTagline } = resolveBlogSiteIdentity(settings);
 
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 
-// Trim the lookahead post used to detect overflow
-const visiblePosts = posts.slice(0, POSTS_PER_PAGE);
-const hasMorePosts = posts.length > POSTS_PER_PAGE;
+const tagsByEntry = await getTermsForEntries(
+	"posts",
+	posts.map((p) => p.data.id),
+	"tag",
+);
+const categoriesByEntry = await getTermsForEntries(
+	"posts",
+	posts.map((p) => p.data.id),
+	"category",
+);
 
-// Find the first post with a featured image for the hero
-const featuredPost = visiblePosts.find((p) => p.data.featured_image);
-const featuredIndex = featuredPost ? visiblePosts.indexOf(featuredPost) : -1;
-
-// Get remaining posts (exclude featured if found, limit to 6 for grid)
-const gridPosts = visiblePosts
-	.filter((_, i) => i !== featuredIndex)
-	.slice(0, 6);
-
-// Single batched query for tags across the featured post + grid posts.
-// Avoids the N+1 pattern of calling getEntryTerms() per entry.
-// Bylines are already hydrated on entry.data.bylines by getEmDashCollection.
-const tagEntryIds = [
-	...(featuredPost ? [featuredPost.data.id] : []),
-	...gridPosts.map((p) => p.data.id),
-];
-const tagsByEntry = await getTermsForEntries("posts", tagEntryIds, "tag");
-
-const featuredTags = featuredPost
-	? (tagsByEntry.get(featuredPost.data.id) ?? []).map((t) => ({
-			slug: t.slug,
-			label: t.label,
-		}))
-	: [];
-const featuredBylines = featuredPost?.data.bylines ?? [];
-
-const gridPostsWithTags = gridPosts.map((post) => ({
-	post,
-	tags: (tagsByEntry.get(post.data.id) ?? []).map((t) => ({
-		slug: t.slug,
-		label: t.label,
-	})),
-	bylines: post.data.bylines ?? [],
+// Start-here: the newest guide in each launch category.
+const startHere = CATEGORY_SECTIONS.map((section) => ({
+	...section,
+	post:
+		posts.find((p) =>
+			(categoriesByEntry.get(p.data.id) ?? []).some(
+				(t) => t.slug === section.slug,
+			),
+		) ?? null,
 }));
 
-// Format date helper
-function formatDate(date: Date | null | undefined) {
-	if (!date) return null;
-	return date.toLocaleDateString("en-US", {
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-	});
-}
+const startHereIds = new Set(
+	startHere.map((s) => s.post?.data.id).filter(Boolean),
+);
+const recentPosts = posts
+	.filter((p) => !startHereIds.has(p.data.id))
+	.slice(0, 6)
+	.map((post) => ({
+		post,
+		tags: (tagsByEntry.get(post.data.id) ?? []).map((t) => ({
+			slug: t.slug,
+			label: t.label,
+		})),
+		bylines: post.data.bylines ?? [],
+	}));
 ---
 
 <Base title={siteTitle} description={siteTagline}>
-	{
-		posts.length === 0 ? (
+	<div class="home">
+		{/* 1. The promise */}
+		<section class="hero">
+			<p class="hero-eyebrow">{siteTitle}</p>
+			<h1 class="hero-title">{siteTagline}</h1>
+			<p class="hero-sub">
+				Wearable outfit ideas, getting-ready essentials and practical home
+				inspiration — researched guides with honest picks.
+			</p>
+		</section>
+
+		{/* 2 + 3. Category cards with a start-here guide in each */}
+		<section class="categories">
+			{
+				startHere.map((section) => (
+					<div class="category-card">
+						<div class="category-head">
+							<h2 class="category-name">{section.label}</h2>
+							<p class="category-blurb">{section.blurb}</p>
+							<a href={`/category/${section.slug}`} class="category-link">
+								Browse {section.label.toLowerCase()}
+								<svg
+									width="13"
+									height="13"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									aria-hidden="true"
+								>
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg>
+							</a>
+						</div>
+						{section.post && (
+							<a href={`/posts/${section.post.id}`} class="category-guide">
+								{section.post.data.featured_image && (
+									<span class="category-guide-thumb">
+										<Image image={section.post.data.featured_image} />
+									</span>
+								)}
+								<span class="category-guide-body">
+									<span class="category-guide-kicker">Start here</span>
+									<span class="category-guide-title">
+										{section.post.data.title}
+									</span>
+								</span>
+							</a>
+						)}
+					</div>
+				))
+			}
+		</section>
+
+		{/* 4. Recent guides */}
+		{
+			recentPosts.length > 0 && (
+				<section class="posts-section">
+					<header class="section-header">
+						<h2 class="section-title">Recent guides</h2>
+						<a href="/posts" class="section-link">
+							View all
+						</a>
+					</header>
+					<div class="posts-grid">
+						{recentPosts.map(({ post, tags, bylines }) => (
+							<PostCard
+								title={post.data.title ?? "Untitled"}
+								excerpt={post.data.excerpt}
+								featuredImage={post.data.featured_image}
+								href={`/posts/${post.id}`}
+								date={post.data.publishedAt ?? undefined}
+								readingTime={getReadingTime(post.data.content)}
+								tags={tags}
+								bylines={bylines}
+								edit={post.edit}
+							/>
+						))}
+					</div>
+				</section>
+			)
+		}
+
+		{posts.length === 0 && (
 			<section class="empty-state">
-				<h1>No posts yet</h1>
-				<p>Create your first post in the admin panel.</p>
+				<h2>No guides yet</h2>
+				<p>Publish your first guide in the admin panel.</p>
 				<a href="/_emdash/admin/content/posts/new" class="btn">
-					Create a post
+					Create a guide
 				</a>
 			</section>
-		) : (
-			<div class="home-content">
-				{/* Featured Post - Side by side */}
-				{featuredPost && (
-					<section class="featured-section">
-						<div class="featured-grid">
-							<a href={`/posts/${featuredPost.id}`} class="featured-image-link">
-								<div class="featured-image" {...featuredPost.edit.featured_image}>
-									<Image image={featuredPost.data.featured_image} />
-								</div>
-							</a>
-							<div class="featured-content">
-								<div class="featured-meta">
-									{featuredBylines.length > 0 && (
-										<>
-											<div class="featured-bylines">
-												{featuredBylines.slice(0, 2).map((credit, index) => (
-													<>
-														{index > 0 && <span class="byline-sep">,</span>}
-														<span class="featured-byline">
-															{credit.byline.avatarMediaId && (
-																<img
-																	src={`/_emdash/api/media/file/${credit.byline.avatarMediaId}`}
-																	alt={credit.byline.displayName}
-																	class="featured-byline-avatar"
-																/>
-															)}
-															<span class="featured-byline-name">
-																{credit.byline.displayName}
-															</span>
-														</span>
-													</>
-												))}
-												{featuredBylines.length > 2 && (
-													<span class="byline-more">
-														+{featuredBylines.length - 2}
-													</span>
-												)}
-											</div>
-											<span class="meta-dot" />
-										</>
-									)}
-									{formatDate(featuredPost.data.publishedAt) && (
-										<time>{formatDate(featuredPost.data.publishedAt)}</time>
-									)}
-									<span class="meta-dot" />
-									<span>
-										{getReadingTime(featuredPost.data.content)} min read
-									</span>
-								</div>
-								<a
-									href={`/posts/${featuredPost.id}`}
-									class="featured-title-link"
-								>
-									<h1 class="featured-title" {...featuredPost.edit.title}>{featuredPost.data.title}</h1>
-								</a>
-								{featuredPost.data.excerpt && (
-									<p class="featured-excerpt" {...featuredPost.edit.excerpt}>{featuredPost.data.excerpt}</p>
-								)}
-								{featuredTags.length > 0 && (
-									<div class="featured-tags">
-										{featuredTags.map((tag) => (
-											<a href={`/tag/${tag.slug}`} class="featured-tag">
-												{tag.label}
-											</a>
-										))}
-									</div>
-								)}
-							</div>
-						</div>
-					</section>
-				)}
+		)}
 
-				{/* Latest Posts */}
-				{gridPostsWithTags.length > 0 && (
-					<section class="posts-section">
-						<header class="section-header">
-							<h2 class="section-title">Latest</h2>
-							{hasMorePosts && (
-								<a href="/posts" class="section-link">
-									View all
-								</a>
-							)}
-						</header>
-						<div class="posts-grid">
-							{gridPostsWithTags.map(({ post, tags, bylines }) => (
-								<PostCard
-									title={post.data.title ?? "Untitled"}
-									excerpt={post.data.excerpt}
-									featuredImage={post.data.featured_image}
-									href={`/posts/${post.id}`}
-									date={post.data.publishedAt ?? undefined}
-									readingTime={getReadingTime(post.data.content)}
-									tags={tags}
-									bylines={bylines}
-									edit={post.edit}
-								/>
-							))}
-						</div>
-					</section>
-				)}
-			</div>
-		)
-	}
+		{/* 5. Who you are */}
+		<section class="about-band">
+			<h2 class="about-band-title">Who's behind Living & Glow</h2>
+			<p class="about-band-text">
+				Living & Glow publishes practical guides to everyday style, getting
+				ready, and comfortable rooms. Every pick is chosen for a reason —
+				and every guide says what that reason is, including who should skip
+				it.
+			</p>
+			<a href="/pages/about" class="about-band-link">
+				How we choose products
+				<svg
+					width="13"
+					height="13"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+				>
+					<path d="M5 12h14" />
+					<path d="m12 5 7 7-7 7" />
+				</svg>
+			</a>
+		</section>
+	</div>
 </Base>
 
 <style>
-	.home-content {
+	.home {
 		max-width: var(--wide-width);
 		margin: 0 auto;
-		padding: var(--spacing-16) var(--spacing-6);
+		padding: var(--spacing-16) var(--spacing-6) var(--spacing-20);
 	}
 
-	/* Featured Section - Side by side */
-	.featured-section {
-		margin-bottom: var(--spacing-16);
+	/* Hero */
+	.hero {
+		max-width: 640px;
+		margin: 0 auto var(--spacing-16);
+		text-align: center;
 	}
 
-	.featured-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--spacing-8);
-		align-items: center;
-	}
-
-	.featured-image-link {
-		grid-column: 1 / 3;
-		display: block;
-		/* Extend to viewport edge, but cap at -6rem minimum extension */
-		margin-left: min(
-			-6rem,
-			calc(-1 * (var(--spacing-6) + (100vw - var(--wide-width)) / 2))
-		);
-	}
-
-	.featured-image {
-		overflow: hidden;
-		border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-		background: var(--color-surface);
-	}
-
-	.featured-image img {
-		width: 100%;
-		height: auto;
-		aspect-ratio: 4 / 3;
-		object-fit: cover;
-		transition: transform 0.4s ease;
-	}
-
-	.featured-image-link:hover .featured-image img,
-	.featured-grid:has(.featured-title-link:hover) .featured-image img {
-		transform: scale(1.02);
-	}
-
-	.featured-content {
-		display: flex;
-		flex-direction: column;
-		gap: var(--spacing-4);
-	}
-
-	.featured-meta {
-		display: flex;
-		align-items: center;
-		flex-wrap: wrap;
-		column-gap: var(--spacing-3);
-		row-gap: var(--spacing-1);
-		font-size: var(--font-size-sm);
-		color: var(--color-muted);
-	}
-
-	.meta-dot {
-		width: 3px;
-		height: 3px;
-		border-radius: 50%;
-		background: var(--color-muted);
-	}
-
-	/* Featured bylines */
-	.featured-bylines {
-		display: flex;
-		align-items: center;
-		gap: 2px;
-	}
-
-	.featured-byline {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--spacing-2);
-	}
-
-	.featured-byline-avatar {
-		width: var(--avatar-size-md);
-		height: var(--avatar-size-md);
-		border-radius: 50%;
-		object-fit: cover;
-	}
-
-	.featured-byline-name {
-		font-weight: 500;
-		color: var(--color-text-secondary);
-	}
-
-	.byline-sep {
-		color: var(--color-muted);
-		margin-right: 2px;
-	}
-
-	.byline-more {
+	.hero-eyebrow {
 		font-size: var(--font-size-xs);
-		color: var(--color-muted);
-		margin-left: 2px;
-	}
-
-	.featured-title-link {
-		text-decoration: none;
-		color: inherit;
-	}
-
-	.featured-title {
-		font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-4xl));
-		font-weight: var(--font-weight-display);
-		line-height: var(--leading-tight);
-		letter-spacing: var(--tracking-tight);
-		transition: color var(--transition-fast);
-	}
-
-	.featured-title-link:hover .featured-title,
-	.featured-grid:has(.featured-image-link:hover) .featured-title {
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wider);
 		color: var(--color-brand);
+		margin-bottom: var(--spacing-4);
 	}
 
-	.featured-excerpt {
+	.hero-title {
+		font-size: clamp(2.4rem, 5.4vw, 3.8rem);
+		font-weight: var(--font-weight-display);
+		line-height: 1.08;
+		letter-spacing: var(--tracking-tight);
+		margin-bottom: var(--spacing-5);
+	}
+
+	.hero-sub {
 		font-size: var(--font-size-lg);
 		line-height: var(--leading-relaxed);
 		color: var(--color-text-secondary);
 	}
 
-	.featured-tags {
+	/* Category cards */
+	.categories {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--spacing-6);
+		margin-bottom: var(--spacing-20);
+	}
+
+	.category-card {
 		display: flex;
-		flex-wrap: wrap;
-		gap: var(--spacing-2);
-		margin-top: var(--spacing-2);
+		flex-direction: column;
+		background: var(--color-bg-subtle);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: var(--radius-lg);
+		overflow: hidden;
 	}
 
-	.featured-tag {
-		display: inline-block;
-		padding: var(--tag-padding-y) var(--spacing-2);
-		font-size: var(--font-size-xs);
+	.category-head {
+		padding: var(--spacing-6) var(--spacing-6) var(--spacing-5);
+	}
+
+	.category-name {
+		font-size: var(--font-size-2xl);
+		font-weight: var(--font-weight-heading);
+		letter-spacing: var(--tracking-snug);
+		margin-bottom: var(--spacing-3);
+	}
+
+	.category-blurb {
+		font-size: var(--font-size-sm);
+		line-height: var(--leading-relaxed);
 		color: var(--color-text-secondary);
-		background: var(--color-surface);
-		border-radius: var(--radius);
-		text-decoration: none;
-		transition:
-			color var(--transition-fast),
-			background var(--transition-fast);
+		margin-bottom: var(--spacing-4);
 	}
 
-	.featured-tag:hover {
+	.category-link {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--spacing-2);
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		color: var(--color-brand);
+		text-decoration: none;
+	}
+
+	.category-link:hover {
+		color: var(--color-brand-hover);
+	}
+
+	.category-guide {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-4);
+		margin-top: auto;
+		padding: var(--spacing-4) var(--spacing-6);
+		border-top: 1px solid var(--color-border-subtle);
+		background: var(--color-surface);
+		text-decoration: none;
+		transition: background var(--transition-fast);
+	}
+
+	.category-guide:hover {
+		background: var(--color-border-subtle);
+	}
+
+	.category-guide-thumb {
+		flex-shrink: 0;
+		width: 56px;
+		height: 56px;
+		overflow: hidden;
+		border-radius: var(--radius);
+		background: var(--color-border-subtle);
+	}
+
+	.category-guide-thumb img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.category-guide-body {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		min-width: 0;
+	}
+
+	.category-guide-kicker {
+		font-size: var(--font-size-xs);
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wider);
+		color: var(--color-brand);
+	}
+
+	.category-guide-title {
+		font-family: var(--font-heading);
+		font-size: var(--font-size-base);
+		font-weight: var(--font-weight-heading);
+		line-height: var(--leading-snug);
 		color: var(--color-text);
-		background: var(--color-border);
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
 	}
 
 	/* Section header */
@@ -358,8 +362,9 @@ function formatDate(date: Date | null | undefined) {
 	}
 
 	.section-title {
+		font-family: var(--font-body);
 		font-size: var(--font-size-sm);
-		font-weight: 500;
+		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: var(--tracking-wider);
 		color: var(--color-muted);
@@ -367,17 +372,13 @@ function formatDate(date: Date | null | undefined) {
 
 	.section-link {
 		font-size: var(--font-size-sm);
+		font-weight: 600;
 		color: var(--color-brand);
 		text-decoration: none;
-		transition: color var(--transition-fast);
 	}
 
 	.section-link:hover {
 		color: var(--color-brand-hover);
-	}
-
-	/* Posts Grid */
-	.posts-section {
 	}
 
 	.posts-grid {
@@ -386,21 +387,56 @@ function formatDate(date: Date | null | undefined) {
 		gap: var(--spacing-12) var(--spacing-8);
 	}
 
-	/* Empty State */
+	.posts-section {
+		margin-bottom: var(--spacing-20);
+	}
+
+	/* Who-you-are band */
+	.about-band {
+		max-width: 640px;
+		margin: 0 auto;
+		text-align: center;
+		padding-top: var(--spacing-8);
+		border-top: 1px solid var(--color-border-subtle);
+	}
+
+	.about-band-title {
+		font-size: var(--font-size-2xl);
+		font-weight: var(--font-weight-heading);
+		margin-bottom: var(--spacing-4);
+	}
+
+	.about-band-text {
+		font-size: var(--font-size-base);
+		line-height: var(--leading-relaxed);
+		color: var(--color-text-secondary);
+		margin-bottom: var(--spacing-5);
+	}
+
+	.about-band-link {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--spacing-2);
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		color: var(--color-brand);
+		text-decoration: none;
+	}
+
+	.about-band-link:hover {
+		color: var(--color-brand-hover);
+	}
+
+	/* Empty state */
 	.empty-state {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		gap: var(--spacing-3);
 		text-align: center;
-		padding: var(--spacing-20) var(--spacing-6);
+		padding: var(--spacing-16) var(--spacing-6);
 		max-width: 400px;
 		margin: 0 auto;
-	}
-
-	.empty-state h2 {
-		font-size: var(--font-size-2xl);
-		font-weight: var(--font-weight-heading);
 	}
 
 	.empty-state p {
@@ -416,7 +452,7 @@ function formatDate(date: Date | null | undefined) {
 		text-decoration: none;
 		border-radius: var(--radius);
 		font-size: var(--font-size-sm);
-		font-weight: 500;
+		font-weight: 600;
 		transition: background var(--transition-fast);
 	}
 
@@ -426,25 +462,18 @@ function formatDate(date: Date | null | undefined) {
 
 	/* Responsive */
 	@media (max-width: 900px) {
-		.home-content {
-			padding: var(--spacing-6) var(--spacing-4) var(--spacing-12);
+		.home {
+			padding: var(--spacing-8) var(--spacing-4) var(--spacing-16);
 		}
 
-		.featured-image-link {
-			margin-left: 0;
+		.hero {
+			margin-bottom: var(--spacing-10);
 		}
 
-		.featured-grid {
+		.categories {
 			grid-template-columns: 1fr;
-			gap: var(--spacing-6);
-		}
-
-		.featured-image {
-			border-radius: var(--radius-lg);
-		}
-
-		.featured-image img {
-			aspect-ratio: 16 / 9;
+			gap: var(--spacing-4);
+			margin-bottom: var(--spacing-16);
 		}
 
 		.posts-grid {
@@ -454,13 +483,12 @@ function formatDate(date: Date | null | undefined) {
 	}
 
 	@media (max-width: 600px) {
-		.featured-title {
-			font-size: var(--font-size-2xl);
+		.hero-title {
+			font-size: 2.1rem;
 		}
 
 		.posts-grid {
 			grid-template-columns: 1fr;
-			gap: var(--spacing-8);
 		}
 	}
 </style>

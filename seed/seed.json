@@ -2,22 +2,21 @@
 	"$schema": "https://emdashcms.com/seed.schema.json",
 	"version": "1",
 	"meta": {
-		"name": "Blog Starter",
-		"description": "A blog with posts and pages",
-		"author": "EmDash"
+		"name": "Living & Glow",
+		"description": "Everyday style, beautiful spaces and thoughtful finds — fashion, beauty and home guides with honest product picks.",
+		"author": "Living & Glow"
 	},
 	"settings": {
-		"title": "My Blog",
-		"tagline": "Thoughts on building for the web"
+		"title": "Living & Glow",
+		"tagline": "Everyday style, beautiful spaces and thoughtful finds."
 	},
 	"collections": [
 		{
 			"slug": "posts",
-			"label": "Posts",
-			"labelSingular": "Post",
+			"label": "Guides",
+			"labelSingular": "Guide",
 			"urlPattern": "/posts/{slug}",
 			"supports": ["drafts", "revisions", "preview", "scheduling", "search", "seo"],
-			"commentsEnabled": true,
 			"fields": [
 				{
 					"slug": "title",
@@ -75,18 +74,10 @@
 			"hierarchical": true,
 			"collections": ["posts"],
 			"terms": [
-				{
-					"slug": "development",
-					"label": "Development"
-				},
-				{
-					"slug": "design",
-					"label": "Design"
-				},
-				{
-					"slug": "notes",
-					"label": "Notes"
-				}
+				{ "slug": "fashion-style", "label": "Fashion & Style" },
+				{ "slug": "beauty-getting-ready", "label": "Beauty & Getting Ready" },
+				{ "slug": "home-living", "label": "Home & Living" },
+				{ "slug": "gifts-seasonal", "label": "Gifts & Seasonal" }
 			]
 		},
 		{
@@ -96,36 +87,23 @@
 			"hierarchical": false,
 			"collections": ["posts"],
 			"terms": [
-				{
-					"slug": "webdev",
-					"label": "Web Development"
-				},
-				{
-					"slug": "opinion",
-					"label": "Opinion"
-				},
-				{
-					"slug": "tools",
-					"label": "Tools"
-				},
-				{
-					"slug": "creativity",
-					"label": "Creativity"
-				}
+				{ "slug": "outfit-ideas", "label": "Outfit Ideas" },
+				{ "slug": "capsule-wardrobe", "label": "Capsule Wardrobe" },
+				{ "slug": "accessories", "label": "Accessories" },
+				{ "slug": "makeup-organization", "label": "Makeup Organization" },
+				{ "slug": "hair-accessories", "label": "Hair Accessories" },
+				{ "slug": "cozy-decor", "label": "Cozy Decor" },
+				{ "slug": "home-organization", "label": "Home Organization" },
+				{ "slug": "small-spaces", "label": "Small Spaces" },
+				{ "slug": "gift-guides", "label": "Gift Guides" }
 			]
 		}
 	],
 	"bylines": [
 		{
-			"id": "byline-editorial",
-			"slug": "emdash-editorial",
-			"displayName": "EmDash Editorial"
-		},
-		{
-			"id": "byline-guest",
-			"slug": "guest-contributor",
-			"displayName": "Guest Contributor",
-			"isGuest": true
+			"id": "byline-lg",
+			"slug": "living-and-glow",
+			"displayName": "Living & Glow"
 		}
 	],
 	"menus": [
@@ -133,20 +111,39 @@
 			"name": "primary",
 			"label": "Primary Navigation",
 			"items": [
+				{ "type": "custom", "label": "Home", "url": "/" },
 				{
 					"type": "custom",
-					"label": "Home",
-					"url": "/"
+					"label": "Fashion & Style",
+					"url": "/category/fashion-style"
 				},
 				{
 					"type": "custom",
-					"label": "About",
-					"url": "/pages/about"
+					"label": "Beauty & Getting Ready",
+					"url": "/category/beauty-getting-ready"
 				},
 				{
 					"type": "custom",
-					"label": "Posts",
-					"url": "/posts"
+					"label": "Home & Living",
+					"url": "/category/home-living"
+				},
+				{ "type": "custom", "label": "About", "url": "/pages/about" }
+			]
+		},
+		{
+			"name": "footer",
+			"label": "Footer Navigation",
+			"items": [
+				{ "type": "custom", "label": "Contact", "url": "/pages/contact" },
+				{
+					"type": "custom",
+					"label": "Affiliate Disclosure",
+					"url": "/pages/affiliate-disclosure"
+				},
+				{
+					"type": "custom",
+					"label": "Privacy Policy",
+					"url": "/pages/privacy-policy"
 				}
 			]
 		}
@@ -155,13 +152,9 @@
 		{
 			"name": "sidebar",
 			"label": "Sidebar",
-			"description": "Widget area displayed on single post pages",
+			"description": "Widget area displayed on single guide pages",
 			"widgets": [
-				{
-					"type": "component",
-					"componentId": "core:search",
-					"title": "Search"
-				},
+				{ "type": "component", "componentId": "core:search", "title": "Search" },
 				{
 					"type": "component",
 					"componentId": "core:categories",
@@ -169,27 +162,11 @@
 				},
 				{
 					"type": "component",
-					"componentId": "core:tags",
-					"title": "Tags"
-				},
-				{
-					"type": "component",
 					"componentId": "core:recent-posts",
-					"title": "Recent Posts",
-					"settings": {
-						"count": 5,
-						"showDate": true
-					}
+					"title": "Recent guides",
+					"settings": { "count": 5, "showDate": true }
 				},
-				{
-					"type": "component",
-					"componentId": "core:archives",
-					"title": "Archives",
-					"settings": {
-						"type": "monthly",
-						"limit": 6
-					}
-				}
+				{ "type": "component", "componentId": "core:tags", "title": "Tags" }
 			]
 		},
 		{
@@ -207,7 +184,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "A blog about software, design, and the occasional stray thought.",
+									"text": "Practical guides to everyday style, getting ready, and comfortable rooms. Some links earn us a commission — every pick still has to earn its place.",
 									"_key": "k1"
 								}
 							],
@@ -220,42 +197,22 @@
 	],
 	"sections": [
 		{
-			"slug": "newsletter-signup",
-			"title": "Newsletter Signup",
-			"description": "A call-to-action block for newsletter subscriptions",
-			"keywords": ["newsletter", "subscribe", "email", "cta"],
+			"slug": "affiliate-disclosure",
+			"title": "Affiliate Disclosure",
+			"description": "Standard disclosure to place before the first product recommendation",
+			"keywords": ["affiliate", "disclosure", "amazon", "ad"],
 			"source": "theme",
 			"content": [
 				{
-					"_type": "block",
-					"style": "h3",
-					"children": [
-						{
-							"_type": "span",
-							"text": "Stay in the loop",
-							"_key": "k1"
-						}
-					],
-					"_key": "k0"
-				},
-				{
-					"_type": "block",
-					"style": "normal",
-					"children": [
-						{
-							"_type": "span",
-							"text": "Get notified when new posts are published. No spam, unsubscribe anytime.",
-							"_key": "k3"
-						}
-					],
-					"_key": "k2"
+					"_type": "affiliateDisclosure",
+					"_key": "disclosure-1"
 				}
 			]
 		},
 		{
 			"slug": "about-author",
-			"title": "About the Author",
-			"description": "Brief author bio for use in posts or pages",
+			"title": "About Living & Glow",
+			"description": "Short site bio for use in guides or pages",
 			"keywords": ["author", "bio", "about"],
 			"source": "theme",
 			"content": [
@@ -265,7 +222,7 @@
 					"children": [
 						{
 							"_type": "span",
-							"text": "A software developer who writes about building things on the web. Based somewhere with good coffee and reliable internet.",
+							"text": "Living & Glow researches practical style, beauty and home products for US shoppers. Guides mix hands-on notes with verified specs, and always say when a pick is researched rather than tested.",
 							"_key": "k1"
 						}
 					],
@@ -289,7 +246,133 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "A place for writing about software, design, and the occasional stray thought. No posting schedule, no newsletter funnel. Just things I wanted to write down.",
+									"text": "Living & Glow is a small editorial site about everyday style, getting ready, and comfortable spaces. The idea is simple: most of us don't want more stuff — we want fewer, better things that actually work in a real wardrobe, a real bathroom drawer, a real living room.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "How we choose products",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Every guide starts with a practical problem — choosing an everyday bag, organizing a makeup bag, warming up a living room. Products come second. Before anything is recommended, we check the facts that matter: measurements, materials, care instructions, and who should skip it entirely.",
+									"_key": "k5"
+								}
+							],
+							"_key": "k4"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "When we've used something ourselves, we say so. When a pick is researched rather than tested, we say that too, and we explain what the recommendation is based on. A manufacturer spec isn't proof of real-world performance, and we don't pretend it is.",
+									"_key": "k7"
+								}
+							],
+							"_key": "k6"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "How the site makes money",
+									"_key": "k9"
+								}
+							],
+							"_key": "k8"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Some guides link to products on Amazon. If you buy through one of those links, we may earn a commission at no extra cost to you. As an Amazon Associate, Living & Glow earns from qualifying purchases. See the full ",
+									"_key": "k11"
+								},
+								{
+									"_type": "span",
+									"text": "Affiliate Disclosure",
+									"_key": "k12",
+									"marks": ["a1"]
+								},
+								{
+									"_type": "span",
+									"text": " for details.",
+									"_key": "k13"
+								}
+							],
+							"markDefs": [
+								{
+									"_key": "a1",
+									"_type": "link",
+									"href": "/pages/affiliate-disclosure"
+								}
+							],
+							"_key": "k10"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Questions or a topic you'd like covered? ",
+									"_key": "k15"
+								},
+								{
+									"_type": "span",
+									"text": "Get in touch",
+									"_key": "k16",
+									"marks": ["a2"]
+								},
+								{ "_type": "span", "text": ".", "_key": "k17" }
+							],
+							"markDefs": [
+								{
+									"_key": "a2",
+									"_type": "link",
+									"href": "/pages/contact"
+								}
+							],
+							"_key": "k14"
+						}
+					]
+				}
+			},
+			{
+				"id": "contact",
+				"slug": "contact",
+				"status": "published",
+				"data": {
+					"title": "Contact",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "The easiest way to reach Living & Glow is by email. Whether it's a question about a guide, a correction, or a topic you'd like us to cover, we read everything.",
 									"_key": "k1"
 								}
 							],
@@ -301,11 +384,263 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "Built with Astro and EmDash. The source is open if you want to see how it works.",
+									"text": "Email: hello@livingandglow.com",
+									"_key": "k3",
+									"marks": ["strong"]
+								}
+							],
+							"_key": "k2"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "A note on product questions: we can share what a guide is based on, but for sizing, stock and delivery questions the retailer's own page is the most current source.",
+									"_key": "k5"
+								}
+							],
+							"_key": "k4"
+						}
+					]
+				}
+			},
+			{
+				"id": "affiliate-disclosure",
+				"slug": "affiliate-disclosure",
+				"status": "published",
+				"data": {
+					"title": "Affiliate Disclosure",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Living & Glow is reader-supported. Some guides contain affiliate links — links to products that earn us a commission if you make a qualifying purchase, at no extra cost to you.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "As an Amazon Associate, Living & Glow earns from qualifying purchases.",
+									"_key": "k3",
+									"marks": ["strong"]
+								}
+							],
+							"_key": "k2"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "What this means in practice",
+									"_key": "k5"
+								}
+							],
+							"_key": "k4"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"listItem": "bullet",
+							"level": 1,
+							"children": [
+								{
+									"_type": "span",
+									"text": "Affiliate links are labeled where they appear, and guides that use them carry a disclosure near the top.",
+									"_key": "k7"
+								}
+							],
+							"_key": "k6"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"listItem": "bullet",
+							"level": 1,
+							"children": [
+								{
+									"_type": "span",
+									"text": "Commissions never decide what we recommend. A product has to solve the guide's actual problem first.",
+									"_key": "k9"
+								}
+							],
+							"_key": "k8"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"listItem": "bullet",
+							"level": 1,
+							"children": [
+								{
+									"_type": "span",
+									"text": "We don't display live prices or star ratings copied from Amazon, because they change. Check the product page for current details.",
+									"_key": "k11"
+								}
+							],
+							"_key": "k10"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"listItem": "bullet",
+							"level": 1,
+							"children": [
+								{
+									"_type": "span",
+									"text": "We don't buy through our own links, and we don't ask friends or family to. Recommendations exist for real readers, not for commission.",
+									"_key": "k13"
+								}
+							],
+							"_key": "k12"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "If anything on the site ever looks unclear about the affiliate relationship, please tell us — it's a conversation worth having.",
+									"_key": "k15"
+								}
+							],
+							"_key": "k14"
+						}
+					]
+				}
+			},
+			{
+				"id": "privacy-policy",
+				"slug": "privacy-policy",
+				"status": "published",
+				"data": {
+					"title": "Privacy Policy",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Living & Glow keeps things simple: this site is for reading, not for tracking you around the internet. This page describes what data is collected, why, and what you can do about it. Update this policy if you add analytics, email signup, or other tools.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "What we collect",
 									"_key": "k3"
 								}
 							],
 							"_key": "k2"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"listItem": "bullet",
+							"level": 1,
+							"children": [
+								{
+									"_type": "span",
+									"text": "Server logs. Like any website, the hosting server records standard request data (IP address, browser, pages visited) for security and troubleshooting.",
+									"_key": "k5"
+								}
+							],
+							"_key": "k4"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"listItem": "bullet",
+							"level": 1,
+							"children": [
+								{
+									"_type": "span",
+									"text": "Theme preference. If you choose a light or dark theme, a small cookie stores that choice so the site remembers it. That's the only cookie the site sets for visitors.",
+									"_key": "k7"
+								}
+							],
+							"_key": "k6"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"listItem": "bullet",
+							"level": 1,
+							"children": [
+								{
+									"_type": "span",
+									"text": "Analytics (if enabled). Any analytics or measurement tools in use will be listed here, along with the consent choices that apply to them.",
+									"_key": "k9"
+								}
+							],
+							"_key": "k8"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Affiliate links",
+									"_key": "k11"
+								}
+							],
+							"_key": "k10"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Links marked as affiliate links take you to retailers like Amazon. Once you leave this site, their privacy policies apply, including any tracking they use for their affiliate programs.",
+									"_key": "k13"
+								}
+							],
+							"_key": "k12"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Contact",
+									"_key": "k15"
+								}
+							],
+							"_key": "k14"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Questions about this policy? Email hello@livingandglow.com.",
+									"_key": "k17"
+								}
+							],
+							"_key": "k16"
 						}
 					]
 				}
@@ -314,30 +649,22 @@
 		"posts": [
 			{
 				"id": "post-1",
-				"slug": "building-for-the-long-term",
+				"slug": "casual-outfit-ideas",
 				"status": "published",
 				"data": {
-					"title": "Building for the Long Term",
-					"excerpt": "The frameworks will change. The databases will change. What survives is the clarity of your thinking.",
+					"title": "5 Casual Outfit Formulas Using Wardrobe Basics",
+					"excerpt": "Five repeatable combinations built from pieces you probably already own — plus how to finish each one with simple accessories.",
 					"featured_image": {
 						"$media": {
-							"url": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&h=800&fit=crop",
-							"alt": "Code on a monitor in a dark room",
-							"filename": "building-long-term.jpg"
+							"url": "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&h=800&fit=crop",
+							"alt": "Neutral wardrobe basics on hangers",
+							"filename": "casual-outfit-ideas.jpg"
 						}
 					},
 					"content": [
 						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Every few years the industry collectively decides that everything we've been doing is wrong and there's a better way. New frameworks, new paradigms, new build tools. The churn is relentless, and if you're not careful, you spend more time migrating than building.",
-									"_key": "k1"
-								}
-							],
-							"_key": "k0"
+							"_type": "affiliateDisclosure",
+							"_key": "d1"
 						},
 						{
 							"_type": "block",
@@ -345,11 +672,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "I've been writing software long enough to have seen several of these cycles. jQuery to Backbone to Angular to React to whatever comes next. Each transition felt urgent at the time. Looking back, the things that actually mattered were rarely about the framework.",
-									"_key": "k3"
+									"text": "The fastest way to get dressed without thinking: keep a short list of outfit formulas you can repeat. A formula is a combination that already works — same structure, different pieces. Here are five built from basics most wardrobes already have.",
+									"_key": "b1"
 								}
 							],
-							"_key": "k2"
+							"_key": "b0"
 						},
 						{
 							"_type": "block",
@@ -357,11 +684,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "What survives",
-									"_key": "k5"
+									"text": "1. Straight jeans + fitted tee + sneakers",
+									"_key": "b3"
 								}
 							],
-							"_key": "k4"
+							"_key": "b2"
 						},
 						{
 							"_type": "block",
@@ -369,11 +696,23 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "Clean data models survive. Clear boundaries between systems survive. Good naming survives. The decision to keep things simple when you could have made them clever - that definitely survives.",
-									"_key": "k7"
+									"text": "The default casual uniform for a reason. A straight or slightly relaxed jean keeps it current; a tee that actually fits your shoulders keeps it sharp. French-tuck the front if the tee runs long. Works with white sneakers, but loafers shift it smarter without any extra effort.",
+									"_key": "b5"
 								}
 							],
-							"_key": "k6"
+							"_key": "b4"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "2. Midi dress + denim jacket",
+									"_key": "b7"
+								}
+							],
+							"_key": "b6"
 						},
 						{
 							"_type": "block",
@@ -381,11 +720,23 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "What doesn't survive is code that was written to impress, abstractions built for problems that never materialized, and architectures designed around a framework's opinions rather than the domain's reality.",
-									"_key": "k9"
+									"text": "One piece doing the work of an outfit. A solid or small-print midi dress, a cropped or waist-length denim jacket, and whatever shoes the day calls for. In cooler weather swap the jacket for a chunky cardigan and add a belt to keep the shape.",
+									"_key": "b9"
 								}
 							],
-							"_key": "k8"
+							"_key": "b8"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "3. Wide-leg trousers + tucked knit",
+									"_key": "b11"
+								}
+							],
+							"_key": "b10"
 						},
 						{
 							"_type": "block",
@@ -393,54 +744,156 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "The best code I've written is boring. It reads like prose, does one thing well, and doesn't require a PhD in category theory to understand. The worst code I've written was technically impressive at the time.",
-									"_key": "k11"
+									"text": "The formula that looks like you tried. High-rise wide-leg trousers plus a fine knit tucked in fully — the tuck is what makes it deliberate. Keep the top fitted so the volume stays on the bottom. A belt with a small buckle finishes it.",
+									"_key": "b13"
 								}
 							],
-							"_key": "k10"
+							"_key": "b12"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "4. Overshirt + tank + jeans",
+									"_key": "b15"
+								}
+							],
+							"_key": "b14"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "A light layer over a simple base. An unbuttoned flannel, utility or linen overshirt over a ribbed tank turns two plain pieces into an outfit with depth. Roll the sleeves once and leave the collar relaxed — this formula fails when it looks fussed over.",
+									"_key": "b17"
+								}
+							],
+							"_key": "b16"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "5. Sweater + slip skirt",
+									"_key": "b19"
+								}
+							],
+							"_key": "b18"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Soft on structured. A chunky or mid-weight knit half-tucked into a satin slip skirt — the contrast between textures is the whole point. Ankle boots in fall, flat sandals when it's warm.",
+									"_key": "b21"
+								}
+							],
+							"_key": "b20"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Finish it: one accessory, not five",
+									"_key": "b23"
+								}
+							],
+							"_key": "b22"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Each formula needs exactly one finishing piece: a structured bag for the jeans-and-tee days, a belt when something's tucked, small hoops when the neckline is bare. More than that and casual tips into cluttered.",
+									"_key": "b25"
+								}
+							],
+							"_key": "b24"
+						},
+						{
+							"_type": "productCard",
+							"_key": "p1",
+							"title": "Structured everyday crossbody bag",
+							"note": "A structured shape sharpens soft, casual outfits — look for an adjustable strap and a zip closure so it works across seasons.",
+							"caveat": "Check the listed dimensions against what you carry daily; a compact crossbody won't fit a tablet.",
+							"url": "https://www.amazon.com/s?k=structured+crossbody+bag+women",
+							"buttonLabel": "View on Amazon"
+						},
+						{
+							"_type": "productCard",
+							"_key": "p2",
+							"title": "Slim leather belt",
+							"note": "The tucked-knit and wide-leg formulas read unfinished without one. A slim belt in a neutral leather covers nearly every outfit here.",
+							"caveat": "Sizing runs differently between brands — measure a belt you own and compare the size chart.",
+							"url": "https://www.amazon.com/s?k=women+slim+leather+belt",
+							"buttonLabel": "View on Amazon"
+						},
+						{
+							"_type": "productList",
+							"_key": "pl1",
+							"heading": "Shop this guide",
+							"items": [
+								{
+									"name": "Structured everyday crossbody bag",
+									"detail": "Sharpens soft, casual outfits; adjustable strap",
+									"url": "https://www.amazon.com/s?k=structured+crossbody+bag+women"
+								},
+								{
+									"name": "Slim leather belt",
+									"detail": "Finishes tucked tops and high-rise trousers",
+									"url": "https://www.amazon.com/s?k=women+slim+leather+belt"
+								},
+								{
+									"name": "Small hoop earrings",
+									"detail": "The easy finisher when the neckline is bare",
+									"url": "https://www.amazon.com/s?k=small+hoop+earrings+gold"
+								}
+							]
+						},
+						{
+							"_type": "callout",
+							"_key": "c1",
+							"variant": "tip",
+							"text": "Keep the five formulas on a note in your phone with the pieces you own next to each one. Shopping gets easier too — you only buy what fills a real gap in a formula, not a hypothetical outfit."
 						}
 					]
 				},
-				"bylines": [
-					{
-						"byline": "byline-editorial"
-					},
-					{
-						"byline": "byline-guest",
-						"roleLabel": "Guest essay"
-					}
-				],
+				"bylines": [{ "byline": "byline-lg" }],
 				"taxonomies": {
-					"category": ["development"],
-					"tag": ["opinion"]
+					"category": ["fashion-style"],
+					"tag": ["outfit-ideas", "capsule-wardrobe", "accessories"]
 				}
 			},
 			{
 				"id": "post-2",
-				"slug": "the-case-for-static",
+				"slug": "cozy-living-room",
 				"status": "published",
 				"data": {
-					"title": "The Case for Static",
-					"excerpt": "Static sites aren't a step backwards. They're what you get when you take performance and simplicity seriously.",
+					"title": "How to Make a Living Room Feel Cozy",
+					"excerpt": "Warm light, layered textiles and a layout that invites sitting down — most of it works with things you already own.",
 					"featured_image": {
 						"$media": {
-							"url": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200&h=800&fit=crop",
-							"alt": "Laptop and coffee on a wooden table",
-							"filename": "case-for-static.jpg"
+							"url": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200&h=800&fit=crop",
+							"alt": "A cozy living room with a sofa and warm lighting",
+							"filename": "cozy-living-room.jpg"
 						}
 					},
 					"content": [
 						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "There's a certain irony in the fact that the web started static, went dynamic, and is now swinging back toward static again. But the static sites of today aren't the hand-coded HTML pages of 1998. They're generated, optimized, and deployed to edge networks that serve them in milliseconds.",
-									"_key": "k1"
-								}
-							],
-							"_key": "k0"
+							"_type": "affiliateDisclosure",
+							"_key": "d1"
 						},
 						{
 							"_type": "block",
@@ -448,11 +901,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "The pitch for server-rendered everything was compelling: dynamic content, personalization, real-time data. But most sites don't need most of that most of the time. A blog post doesn't need to be rendered on every request. A product page doesn't change every second.",
-									"_key": "k3"
+									"text": "Cozy is mostly lighting and texture, not furniture. If you only change one thing, swap a cold overhead bulb for a warm lamp at sitting height — the room changes instantly. Everything below builds on that, and most of it is free.",
+									"_key": "b1"
 								}
 							],
-							"_key": "k2"
+							"_key": "b0"
 						},
 						{
 							"_type": "block",
@@ -460,11 +913,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "The performance argument",
-									"_key": "k5"
+									"text": "Fix the light first",
+									"_key": "b3"
 								}
 							],
-							"_key": "k4"
+							"_key": "b2"
 						},
 						{
 							"_type": "block",
@@ -472,11 +925,23 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "A static file served from a CDN is as fast as the web gets. No cold starts, no database queries, no server-side rendering overhead. The Time to First Byte is essentially the network latency to your nearest edge node. You can't beat physics.",
-									"_key": "k7"
+									"text": "Overhead lights flatten a room. Aim for two or three light sources at different heights — a floor lamp in the darkest corner, a table lamp beside the sofa, candles or a small lamp on a shelf. Look for bulbs around 2700K; anything labeled \"daylight\" works against you here.",
+									"_key": "b5"
 								}
 							],
-							"_key": "k6"
+							"_key": "b4"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Layer textiles you can touch",
+									"_key": "b7"
+								}
+							],
+							"_key": "b6"
 						},
 						{
 							"_type": "block",
@@ -484,50 +949,117 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "And when you do need dynamic behavior, you can add it surgically. An island of interactivity in a sea of static HTML. The best of both worlds, without paying the cost of either at all times.",
-									"_key": "k9"
+									"text": "A throw within arm's reach of the sofa, cushion covers in a mix of textures (one smooth, one nubby, one woven), and a rug that's big enough for the front legs of the seating to sit on. A rug that's too small makes the whole room feel temporary — it's the most common mistake.",
+									"_key": "b9"
 								}
 							],
-							"_key": "k8"
+							"_key": "b8"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Pull the furniture closer",
+									"_key": "b11"
+								}
+							],
+							"_key": "b10"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Rooms pushed against the walls feel like waiting rooms. Bring seating inward so people can talk without raising their voices — even ten centimeters off the wall changes the feel. If the room is small, a loveseat angled toward a chair reads cozier than a sofa floating alone.",
+									"_key": "b13"
+								}
+							],
+							"_key": "b12"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Clear one surface completely",
+									"_key": "b15"
+								}
+							],
+							"_key": "b14"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Cozy is not clutter. Pick one surface — usually the coffee table — and keep it nearly empty: a tray, a candle, maybe a small stack of books. Everything else gets a home in a basket or behind a cabinet door. The calm surface is what makes the layers feel intentional.",
+									"_key": "b17"
+								}
+							],
+							"_key": "b16"
+						},
+						{
+							"_type": "comparisonTable",
+							"_key": "ct1",
+							"heading": "The three buys that change the room most",
+							"rows": [
+								{
+									"item": "Warm floor lamp (2700K)",
+									"bestFor": "The single biggest change; corners and reading spots",
+									"keepInMind": "Check height — the shade should sit near seated eye level",
+									"url": "https://www.amazon.com/s?k=warm+floor+lamp+2700k"
+								},
+								{
+									"item": "Textured throw blanket",
+									"bestFor": "Instant softness on the sofa; picks up accent colors",
+									"keepInMind": "Check dimensions — under 50x60 inches reads small",
+									"url": "https://www.amazon.com/s?k=textured+throw+blanket"
+								},
+								{
+									"item": "Woven storage basket",
+									"bestFor": "Blankets, remotes and the daily clutter that undoes cozy",
+									"keepInMind": "Measure the shelf or floor spot before buying",
+									"url": "https://www.amazon.com/s?k=woven+storage+basket+large"
+								}
+							]
+						},
+						{
+							"_type": "callout",
+							"_key": "c1",
+							"variant": "note",
+							"text": "Renting? Everything here works without touching a wall. Lamps, textiles and baskets are all reversible — and they move with you."
 						}
 					]
 				},
-				"bylines": [
-					{
-						"byline": "byline-editorial"
-					}
-				],
+				"bylines": [{ "byline": "byline-lg" }],
 				"taxonomies": {
-					"category": ["development"],
-					"tag": ["webdev", "opinion"]
+					"category": ["home-living"],
+					"tag": ["cozy-decor", "small-spaces"]
 				}
 			},
 			{
 				"id": "post-3",
-				"slug": "learning-in-public",
+				"slug": "makeup-bag-organization",
 				"status": "published",
 				"data": {
-					"title": "Learning in Public",
-					"excerpt": "Writing about what you're learning is the fastest way to find out what you don't actually understand.",
+					"title": "Makeup Bag Organization: What to Keep and How to Store It",
+					"excerpt": "A simple edit for daily-use products, compartments that actually work, and how to keep brushes clean on the go.",
 					"featured_image": {
 						"$media": {
-							"url": "https://images.unsplash.com/photo-1432821596592-e2c18b78144f?w=1200&h=800&fit=crop",
-							"alt": "Notebook and pen on a desk",
-							"filename": "learning-in-public.jpg"
+							"url": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1200&h=800&fit=crop",
+							"alt": "Makeup brushes and cosmetics arranged neatly",
+							"filename": "makeup-bag-organization.jpg"
 						}
 					},
 					"content": [
 						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "I started writing about things I was learning not because I had anything original to say, but because I kept forgetting what I'd figured out. The blog posts were notes to my future self, published publicly more out of laziness than courage.",
-									"_key": "k1"
-								}
-							],
-							"_key": "k0"
+							"_type": "affiliateDisclosure",
+							"_key": "d1"
 						},
 						{
 							"_type": "block",
@@ -535,11 +1067,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "What I didn't expect was how much the writing itself would accelerate the learning. There's a particular kind of clarity that comes from trying to explain something to someone else. The gaps in your understanding, which you can happily ignore when the knowledge lives only in your head, become painfully obvious when you try to put it into sentences.",
-									"_key": "k3"
+									"text": "The right makeup bag is smaller than you think. If you separate what you use every day from the occasional extras, a single medium bag with two or three compartments covers most routines — here's how to get there.",
+									"_key": "b1"
 								}
 							],
-							"_key": "k2"
+							"_key": "b0"
 						},
 						{
 							"_type": "block",
@@ -547,11 +1079,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "The fear of being wrong",
-									"_key": "k5"
+									"text": "Edit to a daily set first",
+									"_key": "b3"
 								}
 							],
-							"_key": "k4"
+							"_key": "b2"
 						},
 						{
 							"_type": "block",
@@ -559,69 +1091,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "The biggest barrier isn't time or writing skill. It's the fear of publishing something that turns out to be wrong. But here's the thing: being wrong publicly is one of the most efficient ways to learn. Someone will correct you, often kindly, and you'll remember that correction forever.",
-									"_key": "k7"
+									"text": "Empty the bag. Put back only what you used in the last two weeks — that's the daily set. Everything else goes to a drawer organizer or a \"occasion\" pouch at home. Most bags are chaotic because they're carrying three routines at once.",
+									"_key": "b5"
 								}
 							],
-							"_key": "k6"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "The posts that helped me most weren't written by experts. They were written by people one step ahead of me on the same path, in language that hadn't yet been polished into abstraction. There's a place for that kind of writing, and it's more valuable than most people realize.",
-									"_key": "k9"
-								}
-							],
-							"_key": "k8"
-						}
-					]
-				},
-				"taxonomies": {
-					"category": ["notes"],
-					"tag": ["opinion"]
-				}
-			},
-			{
-				"id": "post-4",
-				"slug": "small-tools-big-impact",
-				"status": "published",
-				"data": {
-					"title": "Small Tools, Big Impact",
-					"excerpt": "The best developer tools do one thing well and get out of your way. A love letter to focused software.",
-					"featured_image": {
-						"$media": {
-							"url": "https://images.unsplash.com/photo-1575026615908-666710ae5e47?w=1200&h=800&fit=crop",
-							"alt": "Wrenches and hand tools hanging on a workshop wall",
-							"filename": "small-tools.jpg"
-						}
-					},
-					"content": [
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "There's a class of software that doesn't get enough appreciation. Not the frameworks or the platforms or the IDEs, but the small, sharp tools that solve one problem so well you stop thinking about them. They become invisible, which is the highest compliment you can pay a tool.",
-									"_key": "k1"
-								}
-							],
-							"_key": "k0"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "I'm talking about things like ripgrep, which searches code so fast it changed how I think about searching. Or jq, which makes JSON feel like a first-class data format in the terminal. Or curl, which has been quietly powering the internet's plumbing for decades.",
-									"_key": "k3"
-								}
-							],
-							"_key": "k2"
+							"_key": "b4"
 						},
 						{
 							"_type": "block",
@@ -629,11 +1103,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "The Unix philosophy, revisited",
-									"_key": "k5"
+									"text": "Choose compartments over capacity",
+									"_key": "b7"
 								}
 							],
-							"_key": "k4"
+							"_key": "b6"
 						},
 						{
 							"_type": "block",
@@ -641,69 +1115,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "Do one thing well. The advice is old enough to be a cliche, but the best modern tools still follow it. They don't try to be platforms. They don't have plugin ecosystems or configuration languages or startup wizards. They do their job and they compose with other tools that do theirs.",
-									"_key": "k7"
+									"text": "One big pouch becomes a rummage box. Look for a main compartment, a flat pocket for palettes, and a brush section or elastic loops. A bag that opens flat or stands upright beats a deep one — you can see everything without tipping it out.",
+									"_key": "b9"
 								}
 							],
-							"_key": "k6"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "The temptation is always to add more. One more feature, one more option, one more integration. But every addition is a decision someone has to make, a path through the code that has to be maintained, a thing that can break. The best tools resist this. They stay small, and in staying small, they stay reliable.",
-									"_key": "k9"
-								}
-							],
-							"_key": "k8"
-						}
-					]
-				},
-				"taxonomies": {
-					"category": ["development"],
-					"tag": ["tools"]
-				}
-			},
-			{
-				"id": "post-5",
-				"slug": "designing-with-constraints",
-				"status": "published",
-				"data": {
-					"title": "Designing with Constraints",
-					"excerpt": "Limitations aren't obstacles to creativity. They're the structure that makes creativity possible.",
-					"featured_image": {
-						"$media": {
-							"url": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=1200&h=800&fit=crop",
-							"alt": "Pencils and design tools on a desk",
-							"filename": "designing-with-constraints.jpg"
-						}
-					},
-					"content": [
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Give a designer a blank canvas and unlimited time, and they'll often produce something mediocre. Give them a tight brief, a small screen, and a deadline, and they'll surprise you. This isn't a paradox - it's how creativity actually works.",
-									"_key": "k1"
-								}
-							],
-							"_key": "k0"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Constraints force decisions. When you can't use more than two typefaces, you have to choose carefully. When the page has to load in under a second, every element earns its place. When the interface has to work on a 320px screen, you discover what's truly essential.",
-									"_key": "k3"
-								}
-							],
-							"_key": "k2"
+							"_key": "b8"
 						},
 						{
 							"_type": "block",
@@ -711,11 +1127,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "Embracing the box",
-									"_key": "k5"
+									"text": "Brushes need their own space",
+									"_key": "b11"
 								}
 							],
-							"_key": "k4"
+							"_key": "b10"
 						},
 						{
 							"_type": "block",
@@ -723,216 +1139,42 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "The web itself is a constraint. HTML flows in one direction. CSS has a box model. Browsers have viewport sizes and font rendering quirks. You can fight these constraints or you can work with them, and the results are dramatically different.",
-									"_key": "k7"
+									"text": "Loose brushes shed product onto everything else and lose their shape. A slim brush roll or a section with elastic loops keeps bristles protected. Let brushes dry fully before they go back in a closed bag — trapped moisture is how mildew starts.",
+									"_key": "b13"
 								}
 							],
-							"_key": "k6"
+							"_key": "b12"
 						},
 						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "The designs I admire most don't look like they were forced through a framework. They look like they grew naturally from the medium, respecting its grain rather than working against it. That only happens when you treat constraints as creative partners rather than enemies.",
-									"_key": "k9"
-								}
-							],
-							"_key": "k8"
+							"_type": "productCard",
+							"_key": "p1",
+							"title": "Lay-flat makeup bag with compartments",
+							"note": "Opens fully so nothing hides at the bottom; a separate brush flap keeps powder off everything else.",
+							"caveat": "Check the closed dimensions — some open flat but pack bulky in a tote.",
+							"url": "https://www.amazon.com/s?k=lay+flat+makeup+bag+compartments",
+							"buttonLabel": "View on Amazon"
+						},
+						{
+							"_type": "productCard",
+							"_key": "p2",
+							"title": "Slim brush roll",
+							"note": "Protects bristles in transit and doubles as a stand on a counter. Look for washable lining — it will get dirty.",
+							"caveat": "Elastic loops sized for slim brushes may not fit chunky kabuki handles.",
+							"url": "https://www.amazon.com/s?k=makeup+brush+roll+case",
+							"buttonLabel": "View on Amazon"
+						},
+						{
+							"_type": "callout",
+							"_key": "c1",
+							"variant": "remember",
+							"text": "Liquids for carry-on flights need to fit the usual 3.4 oz / 100 ml rule in a clear quart bag — keep a travel pouch pre-packed so you're not decanting at midnight before a trip."
 						}
 					]
 				},
+				"bylines": [{ "byline": "byline-lg" }],
 				"taxonomies": {
-					"category": ["design"],
-					"tag": ["creativity"]
-				}
-			},
-			{
-				"id": "post-6",
-				"slug": "a-weekend-with-a-side-project",
-				"status": "published",
-				"data": {
-					"title": "A Weekend with a Side Project",
-					"excerpt": "No stakeholders, no deadlines, no Jira tickets. Just you and a dumb idea that might turn into something.",
-					"featured_image": {
-						"$media": {
-							"url": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=1200&h=800&fit=crop",
-							"alt": "Code on a screen with a dark theme",
-							"filename": "weekend-side-project.jpg"
-						}
-					},
-					"content": [
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Saturday morning. Coffee's made, the house is quiet, and I've got an idea that's been nagging at me all week. Not a good idea, necessarily - just a persistent one. A small tool that does a thing I keep doing manually. How hard could it be?",
-									"_key": "k1"
-								}
-							],
-							"_key": "k0"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "This is the best kind of programming. No requirements document, no sprint planning, no pull request reviews. Just a text editor and a problem. The freedom to make terrible architectural decisions, rewrite everything twice, and follow tangents that turn out to be dead ends.",
-									"_key": "k3"
-								}
-							],
-							"_key": "k2"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Why side projects matter",
-									"_key": "k5"
-								}
-							],
-							"_key": "k4"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Side projects are where you learn things your day job would never teach you. Not because the problems are harder, but because you're free to take risks. Try a language you've never used. Build something without a framework. Deploy to a platform you've only read about. The stakes are zero, which makes the learning maximum.",
-									"_key": "k7"
-								}
-							],
-							"_key": "k6"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "By Sunday evening, the thing sort of works. It's rough, the error handling is nonexistent, and the README is a single sentence. But it solves the problem I set out to solve, and I learned three things I didn't know on Friday. Not a bad weekend.",
-									"_key": "k9"
-								}
-							],
-							"_key": "k8"
-						}
-					]
-				},
-				"taxonomies": {
-					"category": ["development"],
-					"tag": ["creativity"]
-				}
-			},
-			{
-				"id": "post-7",
-				"slug": "notes-on-simplicity",
-				"status": "published",
-				"data": {
-					"title": "Notes on Simplicity",
-					"excerpt": "Simplicity isn't the absence of complexity. It's the result of understanding a problem well enough to solve it cleanly.",
-					"featured_image": {
-						"$media": {
-							"url": "https://images.unsplash.com/photo-1559051668-e1fa58f25786?w=1200&h=800&fit=crop",
-							"alt": "Geometric pattern carved into white paper",
-							"filename": "notes-on-simplicity.jpg"
-						}
-					},
-					"content": [
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Every piece of software starts simple. A few files, a clear purpose, a small surface area. Then features get added, edge cases get handled, and before long you're looking at something that requires a diagram to understand. This isn't inevitable, but it takes discipline to prevent.",
-									"_key": "k1"
-								}
-							],
-							"_key": "k0"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "The hard part of simplicity isn't the initial design. It's the ongoing resistance to complication. Every feature request, every bug fix, every refactor is an opportunity to add complexity. Saying no is the most important design skill, and the least celebrated.",
-									"_key": "k3"
-								}
-							],
-							"_key": "k2"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Removing as a feature",
-									"_key": "k5"
-								}
-							],
-							"_key": "k4"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "The best version of a product often has fewer features than the previous one. Not because features were missing, but because someone had the courage to remove things that weren't earning their keep. Every feature has a cost - in maintenance, in cognitive load, in the weight of the interface.",
-									"_key": "k7"
-								}
-							],
-							"_key": "k6"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Simplicity is a practice, not a destination. You never arrive at simple. You just keep asking: is this necessary? Could this be clearer? Is there a way to solve this problem by removing something instead of adding something? The answer is yes more often than you'd expect.",
-									"_key": "k9"
-								}
-							],
-							"_key": "k8"
-						}
-					]
-				},
-				"taxonomies": {
-					"category": ["notes"],
-					"tag": ["opinion"]
-				}
-			},
-			{
-				"id": "post-draft",
-				"slug": "work-in-progress",
-				"status": "draft",
-				"data": {
-					"title": "Work in Progress",
-					"excerpt": "This post is still being written.",
-					"content": [
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "This is a draft post that won't appear in the public listing.",
-									"_key": "k1"
-								}
-							],
-							"_key": "k0"
-						}
-					]
+					"category": ["beauty-getting-ready"],
+					"tag": ["makeup-organization", "home-organization"]
 				}
 			}
 		]

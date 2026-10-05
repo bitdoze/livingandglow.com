@@ -41,13 +41,15 @@ const {
 	author,
 	content,
 } = Astro.props;
-const [settingsResult, menuResult] = await Promise.all([
+const [settingsResult, menuResult, footerMenuResult] = await Promise.all([
 	getSiteSettingsWithCacheHint(),
 	getMenuWithCacheHint("primary"),
+	getMenuWithCacheHint("footer"),
 ]);
 if (Astro.cache?.enabled) {
 	Astro.cache.set(settingsResult.cacheHint);
 	Astro.cache.set(menuResult.cacheHint);
+	Astro.cache.set(footerMenuResult.cacheHint);
 }
 
 const { siteTitle, siteTagline, siteLogo } = resolveBlogSiteIdentity(
@@ -60,6 +62,7 @@ const titleIncludesSiteName =
 const fullTitle = titleIncludesSiteName ? title : `${title} — ${siteTitle}`;
 
 const menu = menuResult.data;
+const footerMenu = footerMenuResult.data;
 
 // Build public page context for plugin contributions
 // SEO data is passed here and rendered securely by EmDashHead
@@ -88,6 +91,7 @@ const isLoggedIn = !!Astro.locals.user;
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<Font cssVariable="--font-body" preload />
+		<Font cssVariable="--font-fraunces" preload />
 		<Font cssVariable="--font-mono" />
 		<title>{fullTitle}</title>
 		<EmDashHead page={pageCtx} />
@@ -203,8 +207,25 @@ const isLoggedIn = !!Astro.locals.user;
 						</ul>
 					</div>
 					<div class="footer-nav">
-						<h2 class="footer-heading">Connect</h2>
+						<h2 class="footer-heading">Site</h2>
 						<ul class="footer-links">
+							{
+								footerMenu?.items.map((item) => (
+									<li>
+										<a
+											href={item.url}
+											target={item.target}
+											rel={
+												item.target === "_blank"
+													? "noopener noreferrer"
+													: undefined
+											}
+										>
+											{item.label}
+										</a>
+									</li>
+								))
+							}
 							<li><a href="/rss.xml">RSS Feed</a></li>
 						</ul>
 					</div>
@@ -213,9 +234,15 @@ const isLoggedIn = !!Astro.locals.user;
 					</div>
 				</div>
 				<div class="footer-bottom">
-					<p class="footer-copyright">
-						Powered by <a href="https://emdashcms.com">EmDash</a>
-					</p>
+					<div class="footer-legal">
+						<p class="footer-copyright">
+							Powered by <a href="https://emdashcms.com">EmDash</a>
+						</p>
+						<p class="footer-disclosure">
+							As an Amazon Associate, {siteTitle} earns from qualifying
+							purchases.
+						</p>
+					</div>
 					<div class="theme-switcher">
 						<button
 							type="button"
@@ -749,6 +776,12 @@ const isLoggedIn = !!Astro.locals.user;
 				border-top: 1px solid var(--color-border);
 			}
 
+			.footer-legal {
+				display: flex;
+				flex-direction: column;
+				gap: var(--spacing-1);
+			}
+
 			.footer-copyright {
 				font-size: var(--font-size-sm);
 				color: var(--color-muted);
@@ -756,6 +789,11 @@ const isLoggedIn = !!Astro.locals.user;
 
 			.footer-copyright a {
 				color: var(--color-text-secondary);
+			}
+
+			.footer-disclosure {
+				font-size: var(--font-size-xs);
+				color: var(--color-muted);
 			}
 
 			/* Theme switcher */

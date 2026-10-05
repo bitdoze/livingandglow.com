@@ -1,30 +1,66 @@
 /*
-  theme.css -- your theme overrides. This is the file to edit to
-  retheme the site.
+  Living & Glow theme overrides. Defaults live in tokens.css;
+  declarations here are unlayered and always win.
 
-  Every design token lives in src/styles/tokens.css (colors, type
-  scale, spacing, layout, shadows) with its default value. Override any
-  of them here: declarations in this file are unlayered, so they always
-  beat the @layer base defaults in tokens.css.
-
-  Colors are defined with light-dark(). Overriding with a plain color
-  changes light and dark mode at once; use light-dark(<light>, <dark>)
-  to set different values per mode.
-
-  Webfonts are loaded in astro.config.mjs (--font-body, --font-mono).
-  Swap the loaded font there; use overrides here for system fonts or a
-  separate heading face.
-
-  Example:
-
-  :root {
-    --color-brand: light-dark(#0f766e, #2dd4bf);
-    --font-heading: "Iowan Old Style", Georgia, serif;
-    --radius: 8px;
-  }
+  Palette: warm cream paper, deep green ink, one terracotta accent.
+  Headings use Fraunces (loaded as --font-fraunces in astro.config.mjs);
+  body stays Inter.
 */
 
 :root {
+	/* Colors */
+	--color-bg: light-dark(#faf6ef, #161d18);
+	--color-bg-subtle: light-dark(#f2ecdf, #1b241e);
+	--color-text: light-dark(#24382c, #ece5d5);
+	--color-text-secondary: light-dark(#4e5d50, #aab4a3);
+	--color-muted: light-dark(#8c9484, #76826f);
+	--color-border: light-dark(#e3dac7, #2c3a30);
+	--color-border-subtle: light-dark(#ede5d3, #232e25);
+	--color-surface: light-dark(#f1eadb, #202b23);
+	--color-brand: light-dark(#b0552f, #d98a5e);
+	--color-brand-hover: light-dark(#93421f, #eaa87f);
+	--color-on-brand: light-dark(#fff8ee, #241206);
+
+	/* Typography */
+	--font-heading: var(--font-fraunces, Georgia, serif);
+	--font-weight-heading: 500;
+	--font-weight-display: 600;
+	--tracking-tight: -0.02em;
+	--tracking-snug: -0.01em;
+
+	/* Softer corners for a warmer feel */
+	--radius: 6px;
+	--radius-lg: 14px;
+
+	/* Warm shadows on cream */
+	--shadow-sm: 0 1px 2px rgba(36, 56, 44, 0.06);
+	--shadow-lg: 0 10px 34px rgba(36, 56, 44, 0.14);
+}
+
+/* Light values for browsers without light-dark() (mirrors above). */
+@supports not (color: light-dark(#000, #fff)) {
+	:root {
+		--color-bg: #faf6ef;
+		--color-bg-subtle: #f2ecdf;
+		--color-text: #24382c;
+		--color-text-secondary: #4e5d50;
+		--color-muted: #8c9484;
+		--color-border: #e3dac7;
+		--color-border-subtle: #ede5d3;
+		--color-surface: #f1eadb;
+		--color-brand: #b0552f;
+		--color-brand-hover: #93421f;
+		--color-on-brand: #fff8ee;
+	}
+}
+
+/* Serif wordmark in header and footer. */
+.site-title,
+.footer-logo {
+	font-family: var(--font-heading);
+	font-weight: 600;
+	letter-spacing: var(--tracking-tight);
+	font-size: var(--font-size-xl);
 }
 
 /* Keep the signed-in Admin link separated from the primary navigation. */

@@ -1,0 +1,38 @@
+---
+const { variant, text } = Astro.props.node;
+const label =
+	variant === "note" ? "Note" : variant === "remember" ? "Good to know" : "Tip";
+---
+
+<aside class:list={["lg-callout", `lg-callout--${variant || "tip"}`]}>
+	<span class="lg-callout-label">{label}</span>
+	<p class="lg-callout-text">{text}</p>
+</aside>
+
+<style>
+	.lg-callout {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3em;
+		margin: 2em 0;
+		padding: var(--spacing-4) var(--spacing-5);
+		background: var(--color-surface);
+		border-left: 3px solid var(--color-brand);
+		border-radius: 0 var(--radius) var(--radius) 0;
+		font-size: 0.9em;
+		line-height: 1.6;
+	}
+
+	.lg-callout-label {
+		font-size: 0.75em;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wider);
+		color: var(--color-brand);
+	}
+
+	.lg-callout-text {
+		margin: 0;
+		color: var(--color-text-secondary);
+	}
+</style>

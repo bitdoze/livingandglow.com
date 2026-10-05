@@ -1,0 +1,116 @@
+---
+const { heading, rows } = Astro.props.node;
+const list = Array.isArray(rows) ? rows.filter((r: any) => r?.item) : [];
+---
+
+<div class="lg-compare">
+	{heading && <span class="lg-compare-heading">{heading}</span>}
+	<div class="lg-compare-scroll">
+		<table class="lg-compare-table">
+			<thead>
+				<tr>
+					<th>Product</th>
+					<th>Best for</th>
+					<th>Keep in mind</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{
+					list.map((row: any) => (
+						<tr>
+							<td class="lg-compare-item">{row.item}</td>
+							<td>{row.bestFor}</td>
+							<td>{row.keepInMind}</td>
+							<td>
+								{row.url && (
+									<a
+										class="lg-compare-link"
+										href={row.url}
+										target="_blank"
+										rel="sponsored nofollow noopener"
+									>
+										View on Amazon
+									</a>
+								)}
+							</td>
+						</tr>
+					))
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<style>
+	.lg-compare {
+		margin: 2em 0;
+	}
+
+	.lg-compare-heading {
+		display: block;
+		margin-bottom: var(--spacing-3);
+		font-family: var(--font-heading);
+		font-size: 1.05em;
+		font-weight: var(--font-weight-heading);
+		letter-spacing: var(--tracking-snug);
+		color: var(--color-text);
+	}
+
+	.lg-compare-scroll {
+		overflow-x: auto;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+	}
+
+	.lg-compare-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.85em;
+		line-height: 1.5;
+	}
+
+	.lg-compare-table th {
+		padding: 0.7em 1em;
+		font-family: var(--font-body);
+		font-size: 0.78em;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wide);
+		text-align: left;
+		color: var(--color-muted);
+		background: var(--color-bg-subtle);
+		border-bottom: 1px solid var(--color-border);
+		white-space: nowrap;
+	}
+
+	.lg-compare-table td {
+		padding: 0.8em 1em;
+		vertical-align: top;
+		color: var(--color-text-secondary);
+		border-bottom: 1px solid var(--color-border-subtle);
+	}
+
+	.lg-compare-table tr:last-child td {
+		border-bottom: none;
+	}
+
+	.lg-compare-item {
+		font-weight: 500;
+		color: var(--color-text);
+		min-width: 140px;
+	}
+
+	.lg-compare-link {
+		font-weight: 600;
+		color: var(--color-brand);
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.lg-compare-link:hover {
+		color: var(--color-brand-hover);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+</style>

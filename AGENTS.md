@@ -42,19 +42,19 @@ This template ships with `.mcp.json`, `.cursor/mcp.json`, and `.vscode/mcp.json`
 - When Astro's cache is enabled, pass content-query hints to `Astro.cache.set(cacheHint)`. Use the `WithCacheHint` variants for site settings, menus, taxonomies, and widget areas rendered by cached routes.
 - Taxonomy names in queries must match the seed's `"name"` field exactly (e.g., `"category"` not `"categories"`).
 
-## This Template
+## This Site
 
-A blog with posts, pages, categories, tags, full-text search, and RSS. Designed for personal writing, technical writing, indie newsletters, and anything where the writing is the product. Editorial-tech aesthetic: confident sans-serif, restrained accent, real article structure with bylines and reading time.
+**Living & Glow** (livingandglow.com) -- a lifestyle affiliate-content site for US shoppers covering fashion, beauty, and home. Editorial guides live here; purchases happen at Amazon via disclosed affiliate links. Traffic plan: Pinterest -> guide -> Amazon.
 
 ## Pages
 
 | Page        | Path               | What it shows                                                                                          |
 | ----------- | ------------------ | ------------------------------------------------------------------------------------------------------ |
-| Home        | `/`                | Featured post hero (large image + excerpt), latest posts grid                                          |
-| All posts   | `/posts`           | Article count, full post list with excerpts and tag chips                                              |
+| Home        | `/`                | Brand promise hero, three category cards with start-here guides, recent guides, about band             |
+| All posts   | `/posts`           | Full guide list with excerpts and tag chips                                                            |
 | Post detail | `/posts/[slug]`    | Featured image, title, body, left meta column (authors + date), right TOC + search + categories gutter |
 | Search      | `/search`          | Full-text search UI                                                                                    |
-| Page        | `/pages/[slug]`    | Static page content (Portable Text)                                                                    |
+| Page        | `/pages/[slug]`    | Static pages: About, Contact, Affiliate Disclosure, Privacy Policy                                     |
 | Category    | `/category/[slug]` | Posts filtered by category                                                                             |
 | Tag         | `/tag/[slug]`      | Posts filtered by tag                                                                                  |
 | RSS         | `/rss.xml`         | Generated feed                                                                                         |
@@ -62,17 +62,25 @@ A blog with posts, pages, categories, tags, full-text search, and RSS. Designed 
 ## Schema
 
 - `posts` collection: `title`, `featured_image`, `content` (Portable Text), `excerpt` (text).
-- `pages` collection: `title`, `content` (Portable Text). Used for `/about` etc.
-- Taxonomies: `category`, `tag`.
-- Single `primary` menu (Home, About, Posts by default).
+- `pages` collection: `title`, `content` (Portable Text).
+- Taxonomies: `category` (Fashion & Style, Beauty & Getting Ready, Home & Living, Gifts & Seasonal), `tag`.
+- Menus: `primary` (Home, categories, About) and `footer` (Contact, Affiliate Disclosure, Privacy Policy).
 
 Site settings have `title` and `tagline` -- both render in the header / footer.
 
+## Custom blocks (lg-blocks plugin)
+
+`plugins/lg-blocks` is a local native plugin adding affiliate-oriented Portable Text block types: `productCard`, `productList`, `affiliateDisclosure`, `callout`, `comparisonTable`. Admin declarations in `plugins/lg-blocks/src/index.ts`; Astro renderers in `plugins/lg-blocks/src/astro/` exported via `componentsEntry`.
+
+Affiliate rules baked into the theme:
+
+- Every affiliate CTA uses `rel="sponsored noopener"` and visible "(paid link)" labeling.
+- `affiliateDisclosure` blocks must appear before the first product recommendation in a guide.
+- Never render Amazon prices, star ratings, or copied reviews -- link out with "View on Amazon" style CTAs instead.
+
 ## Visual character
 
-Single typeface: **Inter** on `--font-body`, used for everything including headings (`--font-heading` defaults to the body face; tighter letter-spacing on h1/h2). **JetBrains Mono** on `--font-mono` for inline code and code blocks. Body and headings share the same family; weight and size carry the hierarchy (`--font-weight-heading` 600, `--font-weight-display` 700 for h1/page titles).
-
-The brand colour is `#0066cc` (`--color-brand`) -- used for links, the post-card title hover, and the search input focus ring. There's also a secondary text colour (`--color-text-secondary`) and a `--color-muted` for meta info. Don't add a second accent.
+Warm lifestyle/editorial palette (`src/styles/theme.css`): cream background (`#faf6ef`), deep green ink (`#24382c`), terracotta accent (`#b0552f` = `--color-brand`). Body text is Inter; headings use **Fraunces** (loaded as `--font-fraunces` in `astro.config.mjs`, bound to `--font-heading`). JetBrains Mono for code/meta accents. Keep the single-accent rule -- no second accent colour.
 
 The article layout is the standout feature: a three-column reading view with a left meta column (author bylines, date), centred 680px body column, and a right gutter for search, table of contents, and categories. Don't flatten that into one column on desktop -- the layout signals "this is something to read".
 
@@ -99,9 +107,21 @@ CSS variables worth knowing (see `tokens.css` for the full list):
 
 ## What not to do
 
-- Don't add a second accent colour or coloured section backgrounds. The page should be black, white, and one blue.
-- Don't replace Inter with a display sans (Bebas, Anton, etc.). Headings rely on weight contrast, not novelty faces.
+- Don't add a second accent colour or coloured section backgrounds. One terracotta accent only.
+- Don't replace Fraunces/Inter with a display sans (Bebas, Anton, etc.). Headings rely on warmth and weight contrast.
 - Don't collapse the article gutter on desktop -- it's part of the reading experience.
 - Don't use stock blog copy ("Welcome to my blog", "Stay tuned for more"). Write a real tagline that says what this blog is about.
 - Don't seed the home page with three identical placeholder posts. If you only have one real post, show one real post.
-- Comments are enabled on posts and rendered on the post detail page. Configure moderation before publishing the site, or remove `commentsEnabled` and the comments UI together.
+- Comments are intentionally disabled -- no `commentsEnabled` in the seed and no comments UI on post pages. Re-add both together if that changes.
+- Don't render Amazon prices, availability, ratings, or review text in templates or blocks.
+
+## Docker / production
+
+```bash
+docker compose up -d --build   # app on :4321 + postgres, migrations + schema auto-seed on first boot
+```
+
+- `DATABASE_URL` selects Postgres; without it the app falls back to `sqlite` at `./data.db`.
+- `S3_ENDPOINT` selects Bunny/S3 storage; without it media goes to `./uploads` (bind-mount it if used).
+- Fill `.env` from `.env.example` (POSTGRES_*, EMDASH_*, S3_*). Never commit `.env`.
+- On a fresh DB the runtime applies schema only; the setup wizard at `/_emdash/admin` offers the seed's starter content (3 guides, terms, bylines, media).
