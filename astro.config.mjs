@@ -5,13 +5,21 @@ import emdash, { local, s3 } from "emdash/astro";
 import { postgres, sqlite } from "emdash/db";
 import { lgBlocksPlugin } from "lg-blocks";
 
-const database = process.env.DATABASE_URL
+// Adapter selection happens at build time (descriptors are baked into the
+// bundle), so Docker builds set EMDASH_DB=postgres / EMDASH_STORAGE=s3 as
+// non-secret build args. The connection string itself resolves at runtime:
+// DATABASE_URL for migrations, and pg's PG* env fallback for the pool when
+// connectionString is absent.
+const usePostgres =
+	process.env.EMDASH_DB === "postgres" || !!process.env.DATABASE_URL;
+const database = usePostgres
 	? postgres({ connectionString: process.env.DATABASE_URL })
 	: sqlite({ url: "file:./data.db" });
 
-const storage = process.env.S3_ENDPOINT
-	? s3()
-	: local({ directory: "./uploads", baseUrl: "/_emdash/api/media/file" });
+const storage =
+	process.env.EMDASH_STORAGE === "s3" || process.env.S3_ENDPOINT
+		? s3()
+		: local({ directory: "./uploads", baseUrl: "/_emdash/api/media/file" });
 
 export default defineConfig({
 	output: "server",

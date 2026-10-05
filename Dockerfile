@@ -5,6 +5,10 @@ COPY plugins ./plugins
 RUN npm ci
 
 FROM deps AS build
+# Adapter selection is baked at build time — flags carry no secrets.
+ARG EMDASH_DB=sqlite
+ARG EMDASH_STORAGE=local
+ENV EMDASH_DB=$EMDASH_DB EMDASH_STORAGE=$EMDASH_STORAGE
 COPY . .
 RUN npm run build
 
@@ -16,5 +20,6 @@ ENV NODE_ENV=production \
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/seed ./seed
+COPY scripts ./scripts
 EXPOSE 4321
 CMD ["node", "./dist/server/entry.mjs"]

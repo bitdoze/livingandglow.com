@@ -1,19 +1,39 @@
 services:
   app:
-    build: .
+    build:
+      context: .
+      args:
+        # Adapter types are baked at build time; secrets stay runtime-only.
+        EMDASH_DB: postgres
+        EMDASH_STORAGE: ${S3_ENDPOINT:+s3}
+    container_name: livingandglow
     env_file: .env
-    ports:
-      - "4321:4321"
+    # No host port mapping — Caddy reaches the container on the shared
+    # "web" network as livingandglow:4321.
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       EMDASH_SITE_URL: ${EMDASH_SITE_URL:-http://localhost:4321}
+      # The build bakes postgres() without a literal connectionString, so the
+      # runtime pool resolves these standard libpq vars.
+      PGHOST: db
+      PGPORT: "5432"
+      PGDATABASE: ${POSTGRES_DB}
+      PGUSER: ${POSTGRES_USER}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      # Local-storage fallback for media when S3_* (Bunny) is not set.
+      - ./data/uploads:/app/uploads
     depends_on:
       db:
         condition: service_healthy
     restart: unless-stopped
+    networks:
+      - default
+      - web
 
   db:
     image: postgres:18-alpine
+    container_name: livingandglow-db
     env_file: .env
     volumes:
       # PG18+ stores data at /var/lib/postgresql/18/docker and declares
@@ -25,3 +45,9 @@ services:
       timeout: 3s
       retries: 10
     restart: unless-stopped
+    networks:
+      - default
+
+networks:
+  web:
+    external: true
