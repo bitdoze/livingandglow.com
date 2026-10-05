@@ -15,6 +15,10 @@ const storage = process.env.S3_ENDPOINT
 
 export default defineConfig({
 	output: "server",
+	server: {
+		host: "0.0.0.0",
+		port: 4321,
+	},
 	adapter: node({
 		mode: "standalone",
 	}),
