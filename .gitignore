@@ -5,6 +5,7 @@ dist
 uploads
 data.db
 data.db-*
+data/
 
 # Environment
 .env

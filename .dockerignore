@@ -7,4 +7,6 @@ dist
 !.env.example
 uploads
 data.db
+data.db-*
+data/
 *.md
