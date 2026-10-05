@@ -6,14 +6,18 @@ const hasImage =
 	typeof image === "string" ? image.length > 0 : !!image;
 ---
 
-<figure class:list={["lg-product", { "lg-product--media": hasImage }]}>
+<figure class="lg-product">
 	{
 		hasImage && (
 			<span class="lg-product-image">
 				{typeof image === "string" ? (
 					<img src={image} alt={title || ""} loading="lazy" />
 				) : (
-					<Image image={image} widths={[184, 368]} sizes="184px" />
+					<Image
+						image={image}
+						widths={[640, 960, 1280]}
+						sizes="(max-width: 720px) 100vw, 640px"
+					/>
 				)}
 			</span>
 		)
@@ -63,29 +67,19 @@ const hasImage =
 
 <style>
 	.lg-product {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr);
-		gap: var(--spacing-5);
-		align-items: start;
 		margin: 2em 0;
-		padding: var(--spacing-5);
 		background: var(--color-surface);
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius-lg);
 		box-shadow: var(--shadow-sm);
-	}
-
-	.lg-product--media {
-		grid-template-columns: 184px minmax(0, 1fr);
+		overflow: hidden;
 	}
 
 	.lg-product-image {
 		display: block;
-		overflow: hidden;
-		border-radius: var(--radius);
 		background: var(--color-bg-subtle);
-		border: 1px solid var(--color-border-subtle);
-		aspect-ratio: 1;
+		border-bottom: 1px solid var(--color-border-subtle);
+		aspect-ratio: 16 / 10;
 	}
 
 	.lg-product-image img,
@@ -101,12 +95,12 @@ const hasImage =
 		display: flex;
 		flex-direction: column;
 		gap: 0.5em;
-		min-width: 0;
+		padding: var(--spacing-5);
 	}
 
 	.lg-product-title {
 		font-family: var(--font-heading);
-		font-size: 1.12em;
+		font-size: 1.2em;
 		font-weight: var(--font-weight-heading);
 		letter-spacing: var(--tracking-snug);
 		line-height: 1.3;
@@ -154,9 +148,9 @@ const hasImage =
 		display: inline-flex;
 		align-items: center;
 		gap: 0.4em;
-		padding: 0.6em 1.15em;
+		padding: 0.65em 1.3em;
 		font-family: var(--font-body);
-		font-size: 0.82em;
+		font-size: 0.85em;
 		font-weight: 600;
 		line-height: 1;
 		color: var(--color-on-brand);
@@ -178,13 +172,5 @@ const hasImage =
 		letter-spacing: var(--tracking-wide);
 		text-transform: uppercase;
 		color: var(--color-muted);
-	}
-
-	@media (max-width: 560px) {
-		.lg-product--media {
-			grid-template-columns: 112px minmax(0, 1fr);
-			gap: var(--spacing-4);
-			padding: var(--spacing-4);
-		}
 	}
 </style>
