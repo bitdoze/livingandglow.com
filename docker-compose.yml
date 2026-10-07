@@ -4,6 +4,7 @@ services:
       context: .
       args:
         # Adapter types are baked at build time; secrets stay runtime-only.
+        NODE_VERSION: "26"
         EMDASH_DB: postgres
         EMDASH_STORAGE: ${S3_ENDPOINT:+s3}
     container_name: livingandglow

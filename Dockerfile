@@ -1,4 +1,5 @@
-FROM node:22-alpine AS deps
+ARG NODE_VERSION=24
+FROM node:${NODE_VERSION}-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 COPY plugins ./plugins
@@ -12,7 +13,7 @@ ENV EMDASH_DB=$EMDASH_DB EMDASH_STORAGE=$EMDASH_STORAGE
 COPY . .
 RUN npm run build
 
-FROM node:22-alpine AS runner
+FROM node:${NODE_VERSION}-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production \
 	HOST=0.0.0.0 \
