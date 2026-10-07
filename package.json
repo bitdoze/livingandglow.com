@@ -20,7 +20,7 @@
     "@aws-sdk/client-s3": "^3.1146.0",
     "@aws-sdk/s3-request-presigner": "^3.1146.0",
     "astro": "^7.3.2",
-    "emdash": "^1.0.1",
+    "emdash": "^1.2.0",
     "lg-blocks": "file:plugins/lg-blocks",
     "pg": "^8.23.1",
     "react": "19.2.4",
