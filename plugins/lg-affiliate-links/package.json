@@ -1,0 +1,35 @@
+{
+	"name": "lg-affiliate-links",
+	"version": "1.0.0",
+	"description": "Affiliate link manager for EmDash CMS: organized links, /go/ redirect URLs and click tracking, plus an article block for placing managed links in posts.",
+	"type": "module",
+	"main": "dist/index.mjs",
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"types": "./dist/index.d.mts"
+		},
+		"./sandbox": "./dist/plugin.mjs"
+	},
+	"files": [
+		"dist",
+		"site",
+		"emdash-plugin.jsonc",
+		"README.md"
+	],
+	"license": "MIT",
+	"scripts": {
+		"validate": "emdash-plugin validate",
+		"build": "emdash-plugin build",
+		"typecheck": "tsc --noEmit"
+	},
+	"devDependencies": {
+		"@emdash-cms/blocks": "^1.3.1",
+		"@emdash-cms/plugin-cli": "^0.13.2",
+		"emdash": ">=1.0.0",
+		"typescript": "^5.9.0"
+	},
+	"peerDependencies": {
+		"emdash": ">=1.0.0"
+	}
+}

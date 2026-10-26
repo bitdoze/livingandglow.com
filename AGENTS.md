@@ -62,16 +62,22 @@ This template ships with `.mcp.json`, `.cursor/mcp.json`, and `.vscode/mcp.json`
 
 ## Schema
 
-- `posts` collection: `title`, `featured_image`, `content` (Portable Text), `excerpt` (text).
-- `pages` collection: `title`, `content` (Portable Text).
+- `posts` collection: `title`, `featured_image`, `content` (a `blocks` field), `excerpt` (text).
+- `pages` collection: `title`, `content` (a `blocks` field).
+- Both `content` fields allow the 19 `widget_*` types, `contact_form`, and `affiliate_link`. Prose rich text lives inside `widget_prose` blocks (a `body` Portable Text field) -- the old lg-blocks Portable Text types still work there.
 - Taxonomies: `category` (Fashion & Style, Beauty & Getting Ready, Home & Living, Gifts & Seasonal), `tag`.
 - Menus: `primary` (Home, categories, About) and `footer` (Contact, Affiliate Disclosure, Privacy Policy).
 
 Site settings have `title` and `tagline` -- both render in the header / footer.
 
-## Custom blocks (lg-blocks plugin)
+## Blocks and plugins
 
-`plugins/lg-blocks` is a local native plugin adding affiliate-oriented Portable Text block types: `productCard`, `productList`, `affiliateDisclosure`, `callout`, `comparisonTable`. Admin declarations in `plugins/lg-blocks/src/index.ts`; Astro renderers in `plugins/lg-blocks/src/astro/` exported via `componentsEntry`.
+- `src/components/ContentBlocks.astro` renders `blocks` content via `Blocks` + `defineBlockComponents`: the `widget_*` map (`src/components/widgets/`), `contact_form` (`ContactForm.astro`), and `affiliate_link` (`AffiliateLink.astro`).
+- **Widgets** (`@bitdoze.com/emdashhq-widgets`, registry, sandboxed): 19 `widget_*` article block types. Renderers live in `src/components/widgets/` (copied from the package `site/`); `config.ts` resolves plugin settings + posts in-process via `Astro.locals.emdash.handlePublicPluginApiRoute`.
+- **Contact forms** (`@bitdoze.com/emdashhq-contact-forms`, registry, sandboxed): `contact_form` block + `ContactForm.astro`, resolved in-process the same way.
+- **Site Scripts** (`plugins/emdashhq-site-scripts`, file dep, in-process under `plugins:`): injects Plausible/CF/GA4 + free-form head/body HTML on public pages. Must stay in-process -- `page:fragments` never fires for sandboxed plugins. Settings at Plugins -> Site Scripts -> Settings.
+- **Affiliate Links** (`plugins/lg-affiliate-links`, local file dep, in-process): managed affiliate URLs with category/tags/click tracking (deduped per visitor/day, retention-pruned by hourly cron). Admin Block Kit pages under Plugins -> Affiliate links. Public routes: `resolve` (label only), `go` (records click, returns destination). The `affiliate_link` block renders `/go/<slug>/` links; `src/pages/go/[slug].ts` calls the `go` route in-process and issues the off-origin 303 (public plugin routes can't redirect off-origin). Sandboxed-plugin rules apply: `orderBy`/`where` fields must be in the collection's `indexes`, and they match `data` fields -- not row metadata.
+- `plugins/lg-blocks` remains a native plugin adding affiliate-oriented Portable Text block types (`productCard`, `productList`, `affiliateDisclosure`, `callout`, `comparisonTable`) usable inside `widget_prose.body`. Admin declarations in `plugins/lg-blocks/src/index.ts`; Astro renderers in `plugins/lg-blocks/src/astro/` exported via `componentsEntry`.
 
 Affiliate rules baked into the theme:
 

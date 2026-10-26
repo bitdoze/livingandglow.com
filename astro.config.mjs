@@ -3,6 +3,8 @@ import react from "@astrojs/react";
 import { defineConfig, fontProviders } from "astro/config";
 import emdash, { local, s3 } from "emdash/astro";
 import { postgres, sqlite } from "emdash/db";
+import siteScriptsPlugin from "emdashhq-site-scripts";
+import lgAffiliateLinksPlugin from "lg-affiliate-links";
 import { lgBlocksPlugin } from "lg-blocks";
 
 // Adapter selection happens at build time (descriptors are baked into the
@@ -54,7 +56,19 @@ export default defineConfig({
 		emdash({
 			database,
 			storage,
-			plugins: [lgBlocksPlugin()],
+			plugins: [
+				lgBlocksPlugin(),
+				// page:fragments is trusted-only: sandboxed plugins never get
+				// the hook, so site-scripts runs in-process like any native plugin.
+				siteScriptsPlugin,
+				// Standard-format descriptor — runs in-process via
+				// adaptSandboxEntry. Storage, routes and Block Kit admin pages
+				// work through the plugin context factory.
+				lgAffiliateLinksPlugin,
+			],
+			// Sandboxed plugins (registry installs) run in a workerd child
+			// process on Node deployments.
+			sandboxRunner: "@emdash-cms/sandbox-workerd/sandbox",
 		}),
 	],
 	fonts: [

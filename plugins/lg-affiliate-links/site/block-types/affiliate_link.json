@@ -1,0 +1,34 @@
+{
+	"slug": "affiliate_link",
+	"label": "Affiliate link",
+	"description": "Tracked affiliate link managed under Plugins → Affiliate links. Renders a labelled paid link that redirects through /go/<slug>/.",
+	"category": "Affiliate",
+	"currentVersion": 1,
+	"versions": [
+		{
+			"version": 1,
+			"fields": [
+				{
+					"slug": "link_slug",
+					"label": "Link slug (from Plugins → Affiliate links, e.g. cerave-moisturizing-cream)",
+					"type": "string",
+					"required": true
+				},
+				{
+					"slug": "text",
+					"label": "Anchor text (optional — defaults to the link's label)",
+					"type": "string"
+				},
+				{
+					"slug": "style",
+					"label": "Style",
+					"type": "select",
+					"validation": {
+						"options": ["inline", "button"]
+					},
+					"defaultValue": "inline"
+				}
+			]
+		}
+	]
+}

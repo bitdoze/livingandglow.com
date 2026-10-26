@@ -5,8 +5,8 @@ import {
 	decodeSlug,
 	getSiteSettings,
 } from "emdash";
-import { PortableText } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
+import ContentBlocks from "../../components/ContentBlocks.astro";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 
 // Canonical URLs carry a trailing slash.
@@ -49,7 +49,7 @@ const seo = getSeoMeta(page, {
 		</header>
 
 		<div class="page-content" {...page.edit.content}>
-			<PortableText value={page.data.content} />
+			<ContentBlocks value={page.data.content} />
 		</div>
 	</article>
 </Base>

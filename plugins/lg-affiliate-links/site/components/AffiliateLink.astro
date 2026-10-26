@@ -1,0 +1,117 @@
+---
+import { affiliateHref, resolveAffiliateLink } from "../lib/affiliate-links";
+
+interface AffiliateLinkValue {
+	link_slug?: string;
+	text?: string;
+	style?: string;
+}
+
+const { value } = Astro.props as { value: AffiliateLinkValue };
+const slug = typeof value?.link_slug === "string" ? value.link_slug.trim() : "";
+const style = value?.style === "button" ? "button" : "inline";
+
+let label = typeof value?.text === "string" && value.text.trim() ? value.text.trim() : "";
+let found = Boolean(slug);
+if (slug) {
+	const info = await resolveAffiliateLink(Astro.locals, Astro.url.origin, slug);
+	if (info.found) {
+		if (!label && info.label) label = info.label;
+	} else {
+		found = false;
+	}
+}
+if (!label) label = slug;
+---
+
+{
+	slug && found ? (
+		style === "button" ? (
+			<span class="aff-cta">
+				<a
+					class="aff-cta-button"
+					href={affiliateHref(slug)}
+					target="_blank"
+					rel="sponsored nofollow noopener"
+				>
+					{label}
+					<svg
+						width="12"
+						height="12"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						aria-hidden="true"
+					>
+						<path d="M7 17L17 7"></path>
+						<path d="M8 7h9v9"></path>
+					</svg>
+				</a>
+				<span class="aff-cta-paid">paid link</span>
+			</span>
+		) : (
+			<a
+				class="aff-link"
+				href={affiliateHref(slug)}
+				target="_blank"
+				rel="sponsored nofollow noopener"
+			>
+				{label}
+				<span class="aff-paid">(paid link)</span>
+			</a>
+		)
+	) : (
+		<span class="aff-missing" title="Affiliate link not found">
+			{label || "missing affiliate link"}
+		</span>
+	)
+}
+
+<style>
+	.aff-link {
+		color: var(--color-brand);
+		text-decoration: underline;
+		text-underline-offset: 0.15em;
+	}
+	.aff-link:hover {
+		color: var(--color-brand-hover);
+	}
+	.aff-paid {
+		font-size: 0.85em;
+		color: var(--color-muted);
+		margin-inline-start: 0.35em;
+		white-space: nowrap;
+	}
+	.aff-cta {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		margin: 1.25rem 0;
+	}
+	.aff-cta-button {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		background: var(--color-brand);
+		color: var(--color-on-brand);
+		padding: 0.65rem 1.2rem;
+		border-radius: 999px;
+		font-weight: 600;
+		text-decoration: none;
+	}
+	.aff-cta-button:hover {
+		background: var(--color-brand-hover);
+	}
+	.aff-cta-paid {
+		font-size: 0.8rem;
+		color: var(--color-muted);
+	}
+	.aff-missing {
+		color: var(--color-muted);
+		font-style: italic;
+		border-bottom: 1px dashed var(--color-border);
+	}
+</style>

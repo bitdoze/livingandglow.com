@@ -7,8 +7,9 @@ import {
 	decodeSlug,
 	getSiteSettings,
 } from "emdash";
-import { Image, PortableText, WidgetArea } from "emdash/ui";
+import { Image, WidgetArea } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
+import ContentBlocks from "../../components/ContentBlocks.astro";
 import PostCard from "../../components/PostCard.astro";
 import { getReadingTime } from "../../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
@@ -213,7 +214,7 @@ const publishDate =
 				</header>
 
 				<div class="article-content">
-					<PortableText value={post.data.content} />
+					<ContentBlocks value={post.data.content} />
 				</div>
 			</div>
 

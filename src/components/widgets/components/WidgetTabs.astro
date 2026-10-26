@@ -1,0 +1,160 @@
+---
+/**
+ * widget_tabs — tabbed panels, one tab per OS or package manager. Without
+ * JavaScript the labels render as in-page jump links and every panel stays
+ * visible; the script upgrades the markup to a proper tablist/tab/tabpanel
+ * widget with arrow-key, Home and End navigation. Copy into your site's
+ * components and register it for the `widget_tabs` block type (see README).
+ */
+
+type TabItem = { label: string; body: string };
+
+type Props = {
+	value: {
+		items?: TabItem[] | null;
+	};
+};
+
+const { value } = Astro.props;
+const items = (value.items ?? []).filter((item) => item?.label);
+const id = `wgt-tabs-${Math.random().toString(36).slice(2, 8)}`;
+
+function paragraphs(text: string): string[] {
+	return (text ?? "")
+		.split(/\n\s*\n/)
+		.map((chunk) => chunk.trim())
+		.filter(Boolean);
+}
+---
+
+<div class="wgt-tabs" data-wgt-tabs>
+	<div class="wgt-tabs-list">
+		{
+			items.map((item, i) => (
+				<a href={`#${id}-panel-${i}`} id={`${id}-tab-${i}`} class="wgt-tab">
+					{item.label}
+				</a>
+			))
+		}
+	</div>
+	{
+		items.map((item, i) => (
+			<div id={`${id}-panel-${i}`} class="wgt-tab-panel">
+				{paragraphs(item.body).map((paragraph) => <p>{paragraph}</p>)}
+			</div>
+		))
+	}
+</div>
+
+<script>
+	for (const root of document.querySelectorAll<HTMLElement>("[data-wgt-tabs]")) {
+		if (root.dataset.enhanced) continue;
+		root.dataset.enhanced = "1";
+		const list = root.querySelector<HTMLElement>(".wgt-tabs-list");
+		const tabs = Array.from(root.querySelectorAll<HTMLAnchorElement>("a.wgt-tab"));
+		const panels = Array.from(root.querySelectorAll<HTMLElement>(".wgt-tab-panel"));
+		if (list) {
+			list.setAttribute("role", "tablist");
+			list.setAttribute("aria-label", "Content tabs");
+		}
+		panels.forEach((panel, i) => {
+			const tab = tabs[i];
+			if (!tab) return;
+			tab.setAttribute("role", "tab");
+			tab.setAttribute("aria-controls", panel.id);
+			panel.setAttribute("role", "tabpanel");
+			panel.setAttribute("aria-labelledby", tab.id);
+		});
+		function select(index: number) {
+			tabs.forEach((tab, i) => {
+				tab.setAttribute("aria-selected", String(i === index));
+				tab.tabIndex = i === index ? 0 : -1;
+			});
+			panels.forEach((panel, i) => {
+				panel.hidden = i !== index;
+				// A panel with no focusable content gets a tab stop so keyboard
+				// users can read past the tablist (APG tabs pattern).
+				if (i === index && !panel.querySelector("a, button, input, select, textarea, iframe, [tabindex]")) {
+					panel.tabIndex = 0;
+				} else {
+					panel.removeAttribute("tabindex");
+				}
+			});
+		}
+		select(0);
+		tabs.forEach((tab, i) => {
+			tab.addEventListener("click", (event) => {
+				event.preventDefault();
+				select(i);
+				tab.focus();
+			});
+			tab.addEventListener("keydown", (event) => {
+				let next = -1;
+				if (event.key === "ArrowRight") next = (i + 1) % tabs.length;
+				else if (event.key === "ArrowLeft") next = (i - 1 + tabs.length) % tabs.length;
+				else if (event.key === "Home") next = 0;
+				else if (event.key === "End") next = tabs.length - 1;
+				else if (event.key === " ") next = i;
+				if (next < 0) return;
+				event.preventDefault();
+				select(next);
+				tabs[next].focus();
+			});
+		});
+	}
+</script>
+
+<style>
+	.wgt-tabs {
+		margin-block: var(--spacing-xl, 2rem);
+		border: 1px solid var(--color-border, #e2e0d8);
+		border-radius: var(--radius, 10px);
+		background: var(--color-surface, #fff);
+		overflow: hidden;
+	}
+
+	.wgt-tabs-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0;
+		border-bottom: 1px solid var(--color-border, #e2e0d8);
+		background: color-mix(in srgb, var(--color-border, #e2e0d8) 25%, transparent);
+	}
+
+	.wgt-tab {
+		display: inline-block;
+		padding: var(--spacing-sm, 0.75rem) var(--spacing-lg, 1.5rem);
+		font: inherit;
+		font-size: var(--font-size-sm, 0.875rem);
+		font-weight: 600;
+		color: var(--color-muted, #555);
+		text-decoration: none;
+		background: transparent;
+		border: none;
+		border-bottom: 2px solid transparent;
+		margin-bottom: -1px;
+		cursor: pointer;
+	}
+
+	.wgt-tab:hover {
+		color: var(--color-text, inherit);
+	}
+
+	.wgt-tab[aria-selected="true"] {
+		color: var(--color-brand-strong, #3730a3);
+		border-bottom-color: var(--color-brand-strong, #3730a3);
+		background: var(--color-surface, #fff);
+	}
+
+	.wgt-tab-panel {
+		padding: var(--spacing-lg, 1.5rem);
+		line-height: 1.65;
+	}
+
+	.wgt-tab-panel p {
+		margin: 0 0 var(--spacing-sm, 0.75rem);
+	}
+	.wgt-tab-panel p:last-child {
+		margin-bottom: 0;
+	}
+</style>

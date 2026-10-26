@@ -1,0 +1,61 @@
+{
+	"$schema": "../../node_modules/@emdash-cms/plugin-cli/schemas/emdash-plugin.schema.json",
+
+	"slug": "lg-affiliate-links",
+	"publisher": "did:plc:qr4gckwrgatg5h3lzc57bsnp", // bitdoze.com — same publisher as the other site plugins
+
+	"license": "MIT",
+	"author": { "name": "Living & Glow" },
+	"security": { "email": "dragos@emdashhq.com" },
+	"name": "Affiliate Links",
+	"description": "Affiliate link manager: organized links, /go/ redirect URLs, click tracking, and an article block for managed links in posts.",
+	"keywords": ["affiliate", "links", "redirect", "tracking", "amazon"],
+
+	// Storage, settings, KV and cron need no capability. The plugin never reads
+	// site content, so no content/schema capabilities are declared.
+	"capabilities": [],
+	"allowedHosts": [],
+	"storage": {
+		"links": {
+			"indexes": ["slug", "status", "category", "createdAt", "clickCount"],
+			"uniqueIndexes": ["slug"]
+		},
+		"clicks": {
+			"indexes": ["linkId", "createdAt", ["linkId", "createdAt"]]
+		}
+	},
+
+	"admin": {
+		"pages": [
+			{ "path": "/links", "label": "Affiliate links", "icon": "link" },
+			{ "path": "/stats", "label": "Click stats", "icon": "chart-line" },
+			{ "path": "/setup", "label": "Setup guide", "icon": "rocket-launch" }
+		],
+		"settingsSchema": {
+			"logClicks": {
+				"type": "boolean",
+				"label": "Store individual click rows",
+				"description": "Keep one row per click (referrer, user agent, country, time) in addition to the per-link counter. Turn off to only keep counters.",
+				"default": true
+			},
+			"clickRetentionDays": {
+				"type": "number",
+				"label": "Click row retention (days)",
+				"description": "Individual click rows older than this are pruned hourly. Counters are unaffected. 0 keeps rows forever.",
+				"default": 90,
+				"min": 0,
+				"max": 3650
+			},
+			"dedupeClicks": {
+				"type": "boolean",
+				"label": "De-duplicate repeat clicks",
+				"description": "Count at most one click per visitor per link per day, using a short-lived hash of IP + user agent. IPs are never stored.",
+				"default": true
+			}
+		}
+	},
+
+	"release": {
+		"requires": { "env:emdash": ">=1.0.0" }
+	}
+}

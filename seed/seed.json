@@ -10,6 +10,846 @@
 		"title": "Living & Glow",
 		"tagline": "Everyday style, beautiful spaces and thoughtful finds."
 	},
+	"blockTypes": [
+		{
+			"slug": "widget_accordion",
+			"label": "Accordion",
+			"description": "Collapsible sections — FAQs, optional steps, details that should not dominate the page.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "heading",
+							"label": "Heading",
+							"type": "string",
+							"description": "Optional heading above the accordion."
+						},
+						{
+							"slug": "items",
+							"label": "Items",
+							"type": "repeater",
+							"validation": {
+								"subFields": [
+									{
+										"slug": "title",
+										"label": "Title",
+										"type": "string",
+										"required": true
+									},
+									{
+										"slug": "body",
+										"label": "Body",
+										"type": "text",
+										"required": true
+									}
+								],
+								"maxItems": 12,
+								"minItems": 1
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "widget_button",
+			"label": "Button",
+			"description": "Standalone call-to-action or download link.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "label",
+							"label": "Label",
+							"type": "string",
+							"required": true
+						},
+						{
+							"slug": "url",
+							"label": "URL",
+							"type": "string",
+							"required": true,
+							"validation": {
+								"pattern": "^(?:https?://|mailto:|tel:|/(?!/)|#).+$"
+							}
+						},
+						{
+							"slug": "icon",
+							"label": "Icon",
+							"type": "select",
+							"validation": {
+								"options": [
+									"arrow-right",
+									"arrow-up-right",
+									"download",
+									"play",
+									"check",
+									"star",
+									"info",
+									"rocket",
+									"book",
+									"github",
+									"mail",
+									"terminal"
+								]
+							},
+							"description": "Optional icon before the label."
+						},
+						{
+							"slug": "variant",
+							"label": "Variant",
+							"type": "select",
+							"validation": {
+								"options": ["solid", "outline"]
+							},
+							"defaultValue": "solid"
+						},
+						{
+							"slug": "align",
+							"label": "Alignment",
+							"type": "select",
+							"validation": {
+								"options": ["left", "center", "right"]
+							},
+							"defaultValue": "left"
+						},
+						{
+							"slug": "new_tab",
+							"label": "Open in a new tab",
+							"type": "boolean",
+							"defaultValue": false
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "widget_cards",
+			"label": "Link cards",
+			"description": "A grid of linked cards — related tools, further reading, resources.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "title",
+							"label": "Title",
+							"type": "string"
+						},
+						{
+							"slug": "items",
+							"label": "Cards",
+							"type": "repeater",
+							"validation": {
+								"subFields": [
+									{
+										"slug": "icon",
+										"label": "Icon",
+										"type": "select",
+										"options": [
+											"arrow-right",
+											"arrow-up-right",
+											"download",
+											"play",
+											"check",
+											"star",
+											"info",
+											"rocket",
+											"book",
+											"github",
+											"mail",
+											"terminal"
+										]
+									},
+									{
+										"slug": "title",
+										"label": "Title",
+										"type": "string",
+										"required": true
+									},
+									{
+										"slug": "url",
+										"label": "URL",
+										"type": "string",
+										"required": true,
+										"validation": {
+											"pattern": "^(?:https?://|mailto:|tel:|/(?!/)|#).+$"
+										}
+									},
+									{
+										"slug": "description",
+										"label": "Description",
+										"type": "text"
+									}
+								],
+								"minItems": 1,
+								"maxItems": 12
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "widget_checklist",
+			"label": "Checklist",
+			"description": "Checkmarked list — requirements, takeaways, do-this-first items.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "title",
+							"label": "Title",
+							"type": "string"
+						},
+						{
+							"slug": "items",
+							"label": "Items",
+							"type": "repeater",
+							"validation": {
+								"subFields": [{ "slug": "text", "label": "Text", "type": "string", "required": true }],
+								"maxItems": 20,
+								"minItems": 1
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "widget_code",
+			"label": "Code block",
+			"description": "A code sample with language label, optional filename and copy button.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "language",
+							"label": "Language",
+							"type": "select",
+							"defaultValue": "plaintext",
+							"validation": {
+								"options": [
+									"plaintext",
+									"bash",
+									"typescript",
+									"javascript",
+									"json",
+									"html",
+									"css",
+									"yaml",
+									"sql",
+									"python"
+								]
+							}
+						},
+						{
+							"slug": "filename",
+							"label": "Filename",
+							"type": "string"
+						},
+						{
+							"slug": "code",
+							"label": "Code",
+							"type": "text",
+							"required": true
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "widget_divider",
+			"label": "Divider",
+			"description": "A section break inside the article — a line, dots, or whitespace.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "style",
+							"label": "Style",
+							"type": "select",
+							"defaultValue": "line",
+							"validation": {
+								"options": ["line", "dots", "space"]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "widget_embed",
+			"label": "Embed",
+			"description": "Generic iframe embed with a fixed aspect ratio — CodePen, maps, third-party players.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "url",
+							"label": "Embed URL",
+							"type": "url",
+							"required": true
+						},
+						{
+							"slug": "title",
+							"label": "Title",
+							"type": "string",
+							"required": true,
+							"description": "Accessible name for the iframe."
+						},
+						{
+							"slug": "aspect",
+							"label": "Aspect ratio",
+							"type": "select",
+							"validation": {
+								"options": ["16:9", "4:3", "1:1", "9:16"]
+							},
+							"defaultValue": "16:9"
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "widget_facts",
+			"label": "Facts table",
+			"description": "Key/value spec sheet — pricing tiers, versions, limits, requirements.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "title",
+							"label": "Title",
+							"type": "string"
+						},
+						{
+							"slug": "items",
+							"label": "Facts",
+							"type": "repeater",
+							"validation": {
+								"subFields": [
+									{
+										"slug": "label",
+										"label": "Label",
+										"type": "string",
+										"required": true
+									},
+									{
+										"slug": "value",
+										"label": "Value",
+										"type": "string",
+										"required": true
+									}
+								],
+								"maxItems": 20,
+								"minItems": 1
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "widget_image",
+			"label": "Image",
+			"description": "A figure with an optional caption — screenshots, diagrams, photos inside an article.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "image",
+							"label": "Image",
+							"type": "image",
+							"required": true
+						},
+						{
+							"slug": "caption",
+							"label": "Caption",
+							"type": "text"
+						},
+						{
+							"slug": "wide",
+							"label": "Wide",
+							"type": "boolean",
+							"defaultValue": false,
+							"description": "Let the image break out wider than the text column."
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "widget_latest_posts",
+			"label": "Latest posts",
+			"description": "Live list of the newest published entries in a collection, resolved by the Widgets plugin.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "heading",
+							"label": "Heading",
+							"type": "string",
+							"defaultValue": "Keep reading"
+						},
+						{
+							"slug": "collection",
+							"label": "Collection slug",
+							"type": "string",
+							"description": "Defaults to the plugin's posts collection setting."
+						},
+						{
+							"slug": "limit",
+							"label": "How many",
+							"type": "integer",
+							"validation": {
+								"min": 1,
+								"max": 20
+							},
+							"defaultValue": 5
+						},
+						{
+							"slug": "exclude_current",
+							"label": "Exclude the current post",
+							"type": "boolean",
+							"description": "Skips the entry whose URL matches this page.",
+							"defaultValue": true
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "widget_notice",
+			"label": "Notice",
+			"description": "Colored callout for tips, warnings, prerequisites and pitfalls.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "kind",
+							"label": "Kind",
+							"type": "select",
+							"required": true,
+							"validation": {
+								"options": ["info", "success", "warning", "danger"]
+							},
+							"defaultValue": "info"
+						},
+						{
+							"slug": "title",
+							"label": "Title",
+							"type": "string"
+						},
+						{
+							"slug": "body",
+							"label": "Body",
+							"type": "portableText",
+							"required": true
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "widget_product",
+			"label": "Product box",
+			"description": "Review or affiliate card: rating, description, pros and cons, price and a buy button.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "name",
+							"label": "Product name",
+							"type": "string",
+							"required": true
+						},
+						{
+							"slug": "image",
+							"label": "Image",
+							"type": "image"
+						},
+						{
+							"slug": "rating",
+							"label": "Rating (0-5)",
+							"type": "integer",
+							"validation": {
+								"min": 0,
+								"max": 5
+							}
+						},
+						{
+							"slug": "description",
+							"label": "Description",
+							"type": "text"
+						},
+						{
+							"slug": "pros",
+							"label": "Pros",
+							"type": "repeater",
+							"validation": {
+								"subFields": [{ "slug": "text", "label": "Text", "type": "string", "required": true }],
+								"maxItems": 10
+							}
+						},
+						{
+							"slug": "cons",
+							"label": "Cons",
+							"type": "repeater",
+							"validation": {
+								"subFields": [{ "slug": "text", "label": "Text", "type": "string", "required": true }],
+								"maxItems": 10
+							}
+						},
+						{
+							"slug": "price",
+							"label": "Price label",
+							"type": "string",
+							"description": "Free text — \"from $5/mo\", \"$49\", \"Free\"."
+						},
+						{
+							"slug": "url",
+							"label": "Product URL",
+							"type": "string",
+							"validation": {
+								"pattern": "^(?:$|(?:https?://|mailto:|tel:|/(?!/)).+)$"
+							}
+						},
+						{
+							"slug": "cta_label",
+							"label": "Button label",
+							"type": "string",
+							"defaultValue": "Check price"
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "widget_prose",
+			"label": "Prose",
+			"description": "Rich text section — paragraphs, headings, lists, images, code. Stack it between widgets to write an article.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [{ "slug": "body", "label": "Body", "type": "portableText", "required": true }]
+				}
+			]
+		},
+		{
+			"slug": "widget_quote",
+			"label": "Pull quote",
+			"description": "Highlighted quotation with attribution.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "quote",
+							"label": "Quote",
+							"type": "text",
+							"required": true
+						},
+						{
+							"slug": "attribution",
+							"label": "Attribution",
+							"type": "string",
+							"description": "Who said it."
+						},
+						{
+							"slug": "role",
+							"label": "Role or source",
+							"type": "string",
+							"description": "Optional — \"Docs\", a job title, a publication."
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "widget_series",
+			"label": "Series nav",
+			"description": "Ordered navigation for multi-part posts. The current part is highlighted automatically from the URL.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "title",
+							"label": "Title",
+							"type": "string",
+							"defaultValue": "This post is part of a series"
+						},
+						{
+							"slug": "items",
+							"label": "Parts",
+							"type": "repeater",
+							"validation": {
+								"subFields": [
+									{
+										"slug": "label",
+										"label": "Label",
+										"type": "string",
+										"required": true
+									},
+									{
+										"slug": "url",
+										"label": "URL",
+										"type": "string",
+										"required": true
+									}
+								],
+								"maxItems": 20,
+								"minItems": 2
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "widget_steps",
+			"label": "Steps",
+			"description": "Numbered how-to steps — walkthroughs, setup guides, ordered processes.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "title",
+							"label": "Title",
+							"type": "string"
+						},
+						{
+							"slug": "items",
+							"label": "Steps",
+							"type": "repeater",
+							"validation": {
+								"subFields": [
+									{
+										"slug": "title",
+										"label": "Step title",
+										"type": "string",
+										"required": true
+									},
+									{
+										"slug": "body",
+										"label": "Details",
+										"type": "text"
+									}
+								],
+								"minItems": 1,
+								"maxItems": 20
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "widget_tabs",
+			"label": "Tabs",
+			"description": "Tabbed panels — one tab per OS, per package manager, per plan.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "items",
+							"label": "Tabs",
+							"type": "repeater",
+							"validation": {
+								"subFields": [
+									{
+										"slug": "label",
+										"label": "Label",
+										"type": "string",
+										"required": true
+									},
+									{
+										"slug": "body",
+										"label": "Body",
+										"type": "text",
+										"required": true
+									}
+								],
+								"maxItems": 8,
+								"minItems": 1
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "widget_toc",
+			"label": "Table of contents",
+			"description": "Lists the article's headings and links to them. Filled automatically in the browser.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [{ "slug": "title", "label": "Title", "type": "string", "defaultValue": "On this page" }]
+				}
+			]
+		},
+		{
+			"slug": "widget_youtube",
+			"label": "YouTube video",
+			"description": "Click-to-play YouTube embed. Loads no player (and sets no cookies) until the visitor asks.",
+			"category": "Widgets",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "url",
+							"label": "Video URL",
+							"type": "url",
+							"required": true,
+							"description": "Watch, youtu.be, embed or shorts URL."
+						},
+						{
+							"slug": "title",
+							"label": "Title",
+							"type": "string",
+							"required": true,
+							"description": "Used for the embed's accessible label."
+						},
+						{
+							"slug": "caption",
+							"label": "Caption",
+							"type": "text",
+							"description": "Optional line under the video."
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "contact_form",
+			"label": "Contact form",
+			"description": "Renders a form managed by the Contact forms plugin. Create the form under Plugins, Contact forms, then paste its slug here.",
+			"category": "Forms",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "anchor_id",
+							"label": "Anchor ID",
+							"type": "string",
+							"validation": {
+								"pattern": "^(?:$|[a-z][a-z0-9_-]*)$"
+							}
+						},
+						{
+							"slug": "headline",
+							"label": "Headline",
+							"type": "string"
+						},
+						{
+							"slug": "subheadline",
+							"label": "Subheadline",
+							"type": "text"
+						},
+						{
+							"slug": "form",
+							"label": "Form slug",
+							"description": "The slug of a form created under Plugins, Contact forms (for example \"contact\").",
+							"type": "string",
+							"required": true,
+							"validation": {
+								"pattern": "^[a-z][a-z0-9_-]*$"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "affiliate_link",
+			"label": "Affiliate link",
+			"description": "Tracked affiliate link managed under Plugins → Affiliate links. Renders a labelled paid link that redirects through /go/<slug>/.",
+			"category": "Affiliate",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "link_slug",
+							"label": "Link slug (from Plugins → Affiliate links, e.g. cerave-moisturizing-cream)",
+							"type": "string",
+							"required": true
+						},
+						{
+							"slug": "text",
+							"label": "Anchor text (optional — defaults to the link's label)",
+							"type": "string"
+						},
+						{
+							"slug": "style",
+							"label": "Style",
+							"type": "select",
+							"validation": {
+								"options": ["inline", "button"]
+							},
+							"defaultValue": "inline"
+						}
+					]
+				}
+			]
+		}
+	],
 	"collections": [
 		{
 			"slug": "posts",
@@ -33,8 +873,33 @@
 				{
 					"slug": "content",
 					"label": "Content",
-					"type": "portableText",
-					"searchable": true
+					"type": "blocks",
+					"validation": {
+						"allowedTypes": [
+							"widget_prose",
+							"widget_notice",
+							"widget_accordion",
+							"widget_tabs",
+							"widget_checklist",
+							"widget_steps",
+							"widget_button",
+							"widget_youtube",
+							"widget_embed",
+							"widget_image",
+							"widget_code",
+							"widget_product",
+							"widget_cards",
+							"widget_quote",
+							"widget_facts",
+							"widget_toc",
+							"widget_series",
+							"widget_latest_posts",
+							"widget_divider",
+							"contact_form",
+							"affiliate_link"
+						],
+						"maxItems": 100
+					}
 				},
 				{
 					"slug": "excerpt",
@@ -60,8 +925,33 @@
 				{
 					"slug": "content",
 					"label": "Content",
-					"type": "portableText",
-					"searchable": true
+					"type": "blocks",
+					"validation": {
+						"allowedTypes": [
+							"widget_prose",
+							"widget_notice",
+							"widget_accordion",
+							"widget_tabs",
+							"widget_checklist",
+							"widget_steps",
+							"widget_button",
+							"widget_youtube",
+							"widget_embed",
+							"widget_image",
+							"widget_code",
+							"widget_product",
+							"widget_cards",
+							"widget_quote",
+							"widget_facts",
+							"widget_toc",
+							"widget_series",
+							"widget_latest_posts",
+							"widget_divider",
+							"contact_form",
+							"affiliate_link"
+						],
+						"maxItems": 100
+					}
 				}
 			]
 		}
@@ -74,10 +964,22 @@
 			"hierarchical": true,
 			"collections": ["posts"],
 			"terms": [
-				{ "slug": "fashion-style", "label": "Fashion & Style" },
-				{ "slug": "beauty-getting-ready", "label": "Beauty & Getting Ready" },
-				{ "slug": "home-living", "label": "Home & Living" },
-				{ "slug": "gifts-seasonal", "label": "Gifts & Seasonal" }
+				{
+					"slug": "fashion-style",
+					"label": "Fashion & Style"
+				},
+				{
+					"slug": "beauty-getting-ready",
+					"label": "Beauty & Getting Ready"
+				},
+				{
+					"slug": "home-living",
+					"label": "Home & Living"
+				},
+				{
+					"slug": "gifts-seasonal",
+					"label": "Gifts & Seasonal"
+				}
 			]
 		},
 		{
@@ -87,31 +989,56 @@
 			"hierarchical": false,
 			"collections": ["posts"],
 			"terms": [
-				{ "slug": "outfit-ideas", "label": "Outfit Ideas" },
-				{ "slug": "capsule-wardrobe", "label": "Capsule Wardrobe" },
-				{ "slug": "accessories", "label": "Accessories" },
-				{ "slug": "makeup-organization", "label": "Makeup Organization" },
-				{ "slug": "hair-accessories", "label": "Hair Accessories" },
-				{ "slug": "cozy-decor", "label": "Cozy Decor" },
-				{ "slug": "home-organization", "label": "Home Organization" },
-				{ "slug": "small-spaces", "label": "Small Spaces" },
-				{ "slug": "gift-guides", "label": "Gift Guides" }
+				{
+					"slug": "outfit-ideas",
+					"label": "Outfit Ideas"
+				},
+				{
+					"slug": "capsule-wardrobe",
+					"label": "Capsule Wardrobe"
+				},
+				{
+					"slug": "accessories",
+					"label": "Accessories"
+				},
+				{
+					"slug": "makeup-organization",
+					"label": "Makeup Organization"
+				},
+				{
+					"slug": "hair-accessories",
+					"label": "Hair Accessories"
+				},
+				{
+					"slug": "cozy-decor",
+					"label": "Cozy Decor"
+				},
+				{
+					"slug": "home-organization",
+					"label": "Home Organization"
+				},
+				{
+					"slug": "small-spaces",
+					"label": "Small Spaces"
+				},
+				{
+					"slug": "gift-guides",
+					"label": "Gift Guides"
+				}
 			]
 		}
 	],
-	"bylines": [
-		{
-			"id": "byline-lg",
-			"slug": "living-and-glow",
-			"displayName": "Living & Glow"
-		}
-	],
+	"bylines": [{ "id": "byline-lg", "slug": "living-and-glow", "displayName": "Living & Glow" }],
 	"menus": [
 		{
 			"name": "primary",
 			"label": "Primary Navigation",
 			"items": [
-				{ "type": "custom", "label": "Home", "url": "/" },
+				{
+					"type": "custom",
+					"label": "Home",
+					"url": "/"
+				},
 				{
 					"type": "custom",
 					"label": "Fashion & Style",
@@ -127,14 +1054,22 @@
 					"label": "Home & Living",
 					"url": "/category/home-living/"
 				},
-				{ "type": "custom", "label": "About", "url": "/pages/about/" }
+				{
+					"type": "custom",
+					"label": "About",
+					"url": "/pages/about/"
+				}
 			]
 		},
 		{
 			"name": "footer",
 			"label": "Footer Navigation",
 			"items": [
-				{ "type": "custom", "label": "Contact", "url": "/pages/contact/" },
+				{
+					"type": "custom",
+					"label": "Contact",
+					"url": "/pages/contact/"
+				},
 				{
 					"type": "custom",
 					"label": "Affiliate Disclosure",
@@ -154,13 +1089,21 @@
 			"label": "Sidebar",
 			"description": "Widget area displayed on single guide pages",
 			"widgets": [
-				{ "type": "component", "componentId": "core:search", "title": "Search" },
+				{
+					"type": "component",
+					"componentId": "core:search",
+					"title": "Search"
+				},
 				{
 					"type": "component",
 					"componentId": "core:categories",
 					"title": "Categories"
 				},
-				{ "type": "component", "componentId": "core:tags", "title": "Tags" }
+				{
+					"type": "component",
+					"componentId": "core:tags",
+					"title": "Tags"
+				}
 			]
 		},
 		{
@@ -196,12 +1139,7 @@
 			"description": "Standard disclosure to place before the first product recommendation",
 			"keywords": ["affiliate", "disclosure", "amazon", "ad"],
 			"source": "theme",
-			"content": [
-				{
-					"_type": "affiliateDisclosure",
-					"_key": "disclosure-1"
-				}
-			]
+			"content": [{ "_type": "affiliateDisclosure", "_key": "disclosure-1" }]
 		},
 		{
 			"slug": "about-author",
@@ -235,120 +1173,107 @@
 					"title": "About",
 					"content": [
 						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+							"_type": "widget_prose",
+							"_version": 1,
+							"_key": "about-prose",
+							"body": [
 								{
-									"_type": "span",
-									"text": "Living & Glow is a small editorial site about everyday style, getting ready, and comfortable spaces. The idea is simple: most of us don't want more stuff — we want fewer, better things that actually work in a real wardrobe, a real bathroom drawer, a real living room.",
-									"_key": "k1"
-								}
-							],
-							"_key": "k0"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "How we choose products",
-									"_key": "k3"
-								}
-							],
-							"_key": "k2"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Every guide starts with a practical problem — choosing an everyday bag, organizing a makeup bag, warming up a living room. Products come second. Before anything is recommended, we check the facts that matter: measurements, materials, care instructions, and who should skip it entirely.",
-									"_key": "k5"
-								}
-							],
-							"_key": "k4"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "When we've used something ourselves, we say so. When a pick is researched rather than tested, we say that too, and we explain what the recommendation is based on. A manufacturer spec isn't proof of real-world performance, and we don't pretend it is.",
-									"_key": "k7"
-								}
-							],
-							"_key": "k6"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "How the site makes money",
-									"_key": "k9"
-								}
-							],
-							"_key": "k8"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Some guides link to products on Amazon. If you buy through one of those links, we may earn a commission at no extra cost to you. As an Amazon Associate, Living & Glow earns from qualifying purchases. See the full ",
-									"_key": "k11"
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Living & Glow is a small editorial site about everyday style, getting ready, and comfortable spaces. The idea is simple: most of us don't want more stuff — we want fewer, better things that actually work in a real wardrobe, a real bathroom drawer, a real living room.",
+											"_key": "k1"
+										}
+									],
+									"_key": "k0"
 								},
 								{
-									"_type": "span",
-									"text": "Affiliate Disclosure",
-									"_key": "k12",
-									"marks": ["a1"]
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "How we choose products", "_key": "k3" }],
+									"_key": "k2"
 								},
 								{
-									"_type": "span",
-									"text": " for details.",
-									"_key": "k13"
-								}
-							],
-							"markDefs": [
-								{
-									"_key": "a1",
-									"_type": "link",
-									"href": "/pages/affiliate-disclosure/"
-								}
-							],
-							"_key": "k10"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Questions or a topic you'd like covered? ",
-									"_key": "k15"
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Every guide starts with a practical problem — choosing an everyday bag, organizing a makeup bag, warming up a living room. Products come second. Before anything is recommended, we check the facts that matter: measurements, materials, care instructions, and who should skip it entirely.",
+											"_key": "k5"
+										}
+									],
+									"_key": "k4"
 								},
 								{
-									"_type": "span",
-									"text": "Get in touch",
-									"_key": "k16",
-									"marks": ["a2"]
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "When we've used something ourselves, we say so. When a pick is researched rather than tested, we say that too, and we explain what the recommendation is based on. A manufacturer spec isn't proof of real-world performance, and we don't pretend it is.",
+											"_key": "k7"
+										}
+									],
+									"_key": "k6"
 								},
-								{ "_type": "span", "text": ".", "_key": "k17" }
-							],
-							"markDefs": [
 								{
-									"_key": "a2",
-									"_type": "link",
-									"href": "/pages/contact/"
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "How the site makes money", "_key": "k9" }],
+									"_key": "k8"
+								},
+								{
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Some guides link to products on Amazon. If you buy through one of those links, we may earn a commission at no extra cost to you. As an Amazon Associate, Living & Glow earns from qualifying purchases. See the full ",
+											"_key": "k11"
+										},
+										{
+											"_type": "span",
+											"text": "Affiliate Disclosure",
+											"_key": "k12",
+											"marks": ["a1"]
+										},
+										{
+											"_type": "span",
+											"text": " for details.",
+											"_key": "k13"
+										}
+									],
+									"markDefs": [{ "_key": "a1", "_type": "link", "href": "/pages/affiliate-disclosure/" }],
+									"_key": "k10"
+								},
+								{
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Questions or a topic you'd like covered? ",
+											"_key": "k15"
+										},
+										{
+											"_type": "span",
+											"text": "Get in touch",
+											"_key": "k16",
+											"marks": ["a2"]
+										},
+										{
+											"_type": "span",
+											"text": ".",
+											"_key": "k17"
+										}
+									],
+									"markDefs": [{ "_key": "a2", "_type": "link", "href": "/pages/contact/" }],
+									"_key": "k14"
 								}
-							],
-							"_key": "k14"
+							]
 						}
 					]
 				}
@@ -361,41 +1286,48 @@
 					"title": "Contact",
 					"content": [
 						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+							"_type": "widget_prose",
+							"_version": 1,
+							"_key": "contact-prose",
+							"body": [
 								{
-									"_type": "span",
-									"text": "The easiest way to reach Living & Glow is by email. Whether it's a question about a guide, a correction, or a topic you'd like us to cover, we read everything.",
-									"_key": "k1"
-								}
-							],
-							"_key": "k0"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "The easiest way to reach Living & Glow is by email. Whether it's a question about a guide, a correction, or a topic you'd like us to cover, we read everything.",
+											"_key": "k1"
+										}
+									],
+									"_key": "k0"
+								},
 								{
-									"_type": "span",
-									"text": "Email: hello@livingandglow.com",
-									"_key": "k3",
-									"marks": ["strong"]
-								}
-							],
-							"_key": "k2"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Email: hello@livingandglow.com",
+											"_key": "k3",
+											"marks": ["strong"]
+										}
+									],
+									"_key": "k2"
+								},
 								{
-									"_type": "span",
-									"text": "A note on product questions: we can share what a guide is based on, but for sizing, stock and delivery questions the retailer's own page is the most current source.",
-									"_key": "k5"
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "A note on product questions: we can share what a guide is based on, but for sizing, stock and delivery questions the retailer's own page is the most current source.",
+											"_key": "k5"
+										}
+									],
+									"_key": "k4"
 								}
-							],
-							"_key": "k4"
+							]
 						}
 					]
 				}
@@ -408,109 +1340,110 @@
 					"title": "Affiliate Disclosure",
 					"content": [
 						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+							"_type": "widget_prose",
+							"_version": 1,
+							"_key": "affiliate-disclosure-prose",
+							"body": [
 								{
-									"_type": "span",
-									"text": "Living & Glow is reader-supported. Some guides contain affiliate links — links to products that earn us a commission if you make a qualifying purchase, at no extra cost to you.",
-									"_key": "k1"
-								}
-							],
-							"_key": "k0"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Living & Glow is reader-supported. Some guides contain affiliate links — links to products that earn us a commission if you make a qualifying purchase, at no extra cost to you.",
+											"_key": "k1"
+										}
+									],
+									"_key": "k0"
+								},
 								{
-									"_type": "span",
-									"text": "As an Amazon Associate, Living & Glow earns from qualifying purchases.",
-									"_key": "k3",
-									"marks": ["strong"]
-								}
-							],
-							"_key": "k2"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "As an Amazon Associate, Living & Glow earns from qualifying purchases.",
+											"_key": "k3",
+											"marks": ["strong"]
+										}
+									],
+									"_key": "k2"
+								},
 								{
-									"_type": "span",
-									"text": "What this means in practice",
-									"_key": "k5"
-								}
-							],
-							"_key": "k4"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"listItem": "bullet",
-							"level": 1,
-							"children": [
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "What this means in practice", "_key": "k5" }],
+									"_key": "k4"
+								},
 								{
-									"_type": "span",
-									"text": "Affiliate links are labeled where they appear, and guides that use them carry a disclosure near the top.",
-									"_key": "k7"
-								}
-							],
-							"_key": "k6"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"listItem": "bullet",
-							"level": 1,
-							"children": [
+									"_type": "block",
+									"style": "normal",
+									"listItem": "bullet",
+									"level": 1,
+									"children": [
+										{
+											"_type": "span",
+											"text": "Affiliate links are labeled where they appear, and guides that use them carry a disclosure near the top.",
+											"_key": "k7"
+										}
+									],
+									"_key": "k6"
+								},
 								{
-									"_type": "span",
-									"text": "Commissions never decide what we recommend. A product has to solve the guide's actual problem first.",
-									"_key": "k9"
-								}
-							],
-							"_key": "k8"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"listItem": "bullet",
-							"level": 1,
-							"children": [
+									"_type": "block",
+									"style": "normal",
+									"listItem": "bullet",
+									"level": 1,
+									"children": [
+										{
+											"_type": "span",
+											"text": "Commissions never decide what we recommend. A product has to solve the guide's actual problem first.",
+											"_key": "k9"
+										}
+									],
+									"_key": "k8"
+								},
 								{
-									"_type": "span",
-									"text": "We don't display live prices or star ratings copied from Amazon, because they change. Check the product page for current details.",
-									"_key": "k11"
-								}
-							],
-							"_key": "k10"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"listItem": "bullet",
-							"level": 1,
-							"children": [
+									"_type": "block",
+									"style": "normal",
+									"listItem": "bullet",
+									"level": 1,
+									"children": [
+										{
+											"_type": "span",
+											"text": "We don't display live prices or star ratings copied from Amazon, because they change. Check the product page for current details.",
+											"_key": "k11"
+										}
+									],
+									"_key": "k10"
+								},
 								{
-									"_type": "span",
-									"text": "We don't buy through our own links, and we don't ask friends or family to. Recommendations exist for real readers, not for commission.",
-									"_key": "k13"
-								}
-							],
-							"_key": "k12"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+									"_type": "block",
+									"style": "normal",
+									"listItem": "bullet",
+									"level": 1,
+									"children": [
+										{
+											"_type": "span",
+											"text": "We don't buy through our own links, and we don't ask friends or family to. Recommendations exist for real readers, not for commission.",
+											"_key": "k13"
+										}
+									],
+									"_key": "k12"
+								},
 								{
-									"_type": "span",
-									"text": "If anything on the site ever looks unclear about the affiliate relationship, please tell us — it's a conversation worth having.",
-									"_key": "k15"
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "If anything on the site ever looks unclear about the affiliate relationship, please tell us — it's a conversation worth having.",
+											"_key": "k15"
+										}
+									],
+									"_key": "k14"
 								}
-							],
-							"_key": "k14"
+							]
 						}
 					]
 				}
@@ -523,118 +1456,107 @@
 					"title": "Privacy Policy",
 					"content": [
 						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+							"_type": "widget_prose",
+							"_version": 1,
+							"_key": "privacy-policy-prose",
+							"body": [
 								{
-									"_type": "span",
-									"text": "Living & Glow keeps things simple: this site is for reading, not for tracking you around the internet. This page describes what data is collected, why, and what you can do about it.",
-									"_key": "k1"
-								}
-							],
-							"_key": "k0"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Living & Glow keeps things simple: this site is for reading, not for tracking you around the internet. This page describes what data is collected, why, and what you can do about it.",
+											"_key": "k1"
+										}
+									],
+									"_key": "k0"
+								},
 								{
-									"_type": "span",
-									"text": "What we collect",
-									"_key": "k3"
-								}
-							],
-							"_key": "k2"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"listItem": "bullet",
-							"level": 1,
-							"children": [
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "What we collect", "_key": "k3" }],
+									"_key": "k2"
+								},
 								{
-									"_type": "span",
-									"text": "Server logs. Like any website, the hosting server records standard request data (IP address, browser, pages visited) for security and troubleshooting.",
-									"_key": "k5"
-								}
-							],
-							"_key": "k4"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"listItem": "bullet",
-							"level": 1,
-							"children": [
+									"_type": "block",
+									"style": "normal",
+									"listItem": "bullet",
+									"level": 1,
+									"children": [
+										{
+											"_type": "span",
+											"text": "Server logs. Like any website, the hosting server records standard request data (IP address, browser, pages visited) for security and troubleshooting.",
+											"_key": "k5"
+										}
+									],
+									"_key": "k4"
+								},
 								{
-									"_type": "span",
-									"text": "Theme preference. If you choose a light or dark theme, a small cookie stores that choice so the site remembers it. That's the only cookie the site sets for visitors.",
-									"_key": "k7"
-								}
-							],
-							"_key": "k6"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"listItem": "bullet",
-							"level": 1,
-							"children": [
+									"_type": "block",
+									"style": "normal",
+									"listItem": "bullet",
+									"level": 1,
+									"children": [
+										{
+											"_type": "span",
+											"text": "Theme preference. If you choose a light or dark theme, a small cookie stores that choice so the site remembers it. That's the only cookie the site sets for visitors.",
+											"_key": "k7"
+										}
+									],
+									"_key": "k6"
+								},
 								{
-									"_type": "span",
-									"text": "Analytics. The site does not run third-party analytics or advertising trackers. If that changes, this section will say what is used and what choices you have.",
-									"_key": "k9"
-								}
-							],
-							"_key": "k8"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
+									"_type": "block",
+									"style": "normal",
+									"listItem": "bullet",
+									"level": 1,
+									"children": [
+										{
+											"_type": "span",
+											"text": "Analytics. The site does not run third-party analytics or advertising trackers. If that changes, this section will say what is used and what choices you have.",
+											"_key": "k9"
+										}
+									],
+									"_key": "k8"
+								},
 								{
-									"_type": "span",
-									"text": "Affiliate links",
-									"_key": "k11"
-								}
-							],
-							"_key": "k10"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "Affiliate links", "_key": "k11" }],
+									"_key": "k10"
+								},
 								{
-									"_type": "span",
-									"text": "Links marked as affiliate links take you to retailers like Amazon. Once you leave this site, their privacy policies apply, including any tracking they use for their affiliate programs.",
-									"_key": "k13"
-								}
-							],
-							"_key": "k12"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Links marked as affiliate links take you to retailers like Amazon. Once you leave this site, their privacy policies apply, including any tracking they use for their affiliate programs.",
+											"_key": "k13"
+										}
+									],
+									"_key": "k12"
+								},
 								{
-									"_type": "span",
-									"text": "Contact",
-									"_key": "k15"
-								}
-							],
-							"_key": "k14"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "Contact", "_key": "k15" }],
+									"_key": "k14"
+								},
 								{
-									"_type": "span",
-									"text": "Questions about this policy? Email hello@livingandglow.com.",
-									"_key": "k17"
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Questions about this policy? Email hello@livingandglow.com.",
+											"_key": "k17"
+										}
+									],
+									"_key": "k16"
 								}
-							],
-							"_key": "k16"
+							]
 						}
 					]
 				}
@@ -657,224 +1579,195 @@
 					},
 					"content": [
 						{
-							"_type": "affiliateDisclosure",
-							"_key": "d1"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+							"_type": "widget_prose",
+							"_version": 1,
+							"_key": "casual-outfit-ideas-prose",
+							"body": [
 								{
-									"_type": "span",
-									"text": "The fastest way to get dressed without thinking: keep a short list of outfit formulas you can repeat. A formula is a combination that already works — same structure, different pieces. Here are five built from basics most wardrobes already have.",
-									"_key": "b1"
-								}
-							],
-							"_key": "b0"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "1. Straight jeans + fitted tee + sneakers",
-									"_key": "b3"
-								}
-							],
-							"_key": "b2"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "The default casual uniform for a reason. A straight or slightly relaxed jean keeps it current; a tee that actually fits your shoulders keeps it sharp. French-tuck the front if the tee runs long. Works with white sneakers, but loafers shift it smarter without any extra effort.",
-									"_key": "b5"
-								}
-							],
-							"_key": "b4"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "2. Midi dress + denim jacket",
-									"_key": "b7"
-								}
-							],
-							"_key": "b6"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "One piece doing the work of an outfit. A solid or small-print midi dress, a cropped or waist-length denim jacket, and whatever shoes the day calls for. In cooler weather swap the jacket for a chunky cardigan and add a belt to keep the shape.",
-									"_key": "b9"
-								}
-							],
-							"_key": "b8"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "3. Wide-leg trousers + tucked knit",
-									"_key": "b11"
-								}
-							],
-							"_key": "b10"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "The formula that looks like you tried. High-rise wide-leg trousers plus a fine knit tucked in fully — the tuck is what makes it deliberate. Keep the top fitted so the volume stays on the bottom. A belt with a small buckle finishes it.",
-									"_key": "b13"
-								}
-							],
-							"_key": "b12"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "4. Overshirt + tank + jeans",
-									"_key": "b15"
-								}
-							],
-							"_key": "b14"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "A light layer over a simple base. An unbuttoned flannel, utility or linen overshirt over a ribbed tank turns two plain pieces into an outfit with depth. Roll the sleeves once and leave the collar relaxed. This formula fails when it looks fussed over.",
-									"_key": "b17"
-								}
-							],
-							"_key": "b16"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "5. Sweater + slip skirt",
-									"_key": "b19"
-								}
-							],
-							"_key": "b18"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Soft on structured. A chunky or mid-weight knit half-tucked into a satin slip skirt. The contrast between textures is the whole point. Ankle boots in fall, flat sandals when it's warm.",
-									"_key": "b21"
-								}
-							],
-							"_key": "b20"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Finish it: one accessory, not five",
-									"_key": "b23"
-								}
-							],
-							"_key": "b22"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Each formula needs exactly one finishing piece: a structured bag for the jeans-and-tee days, a belt when something's tucked, small hoops when the neckline is bare. More than that and casual tips into cluttered.",
-									"_key": "b25"
-								}
-							],
-							"_key": "b24"
-						},
-						{
-							"_type": "productCard",
-							"_key": "p1",
-							"title": "Structured everyday crossbody bag",
-							"image": {
-								"$media": {
-									"url": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=480&h=480&fit=crop",
-									"alt": "Structured leather crossbody bag",
-									"filename": "crossbody-bag.jpg"
-								}
-							},
-							"note": "A structured shape sharpens soft, casual outfits. Look for an adjustable strap and a zip closure so it works across seasons.",
-							"caveat": "Check the listed dimensions against what you carry daily; a compact crossbody won't fit a tablet.",
-							"url": "https://www.amazon.com/s?k=structured+crossbody+bag+women",
-							"buttonLabel": "View on Amazon"
-						},
-						{
-							"_type": "productCard",
-							"_key": "p2",
-							"title": "Slim leather belt",
-							"image": {
-								"$media": {
-									"url": "https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=480&h=480&fit=crop",
-									"alt": "Slim leather belt coiled on a neutral surface",
-									"filename": "leather-belt.jpg"
-								}
-							},
-							"note": "The tucked-knit and wide-leg formulas read unfinished without one. A slim belt in a neutral leather covers nearly every outfit here.",
-							"caveat": "Sizing runs differently between brands. Measure a belt you own and compare the size chart.",
-							"url": "https://www.amazon.com/s?k=women+slim+leather+belt",
-							"buttonLabel": "View on Amazon"
-						},
-						{
-							"_type": "productList",
-							"_key": "pl1",
-							"heading": "Shop this guide",
-							"items": [
-								{
-									"name": "Structured everyday crossbody bag",
-									"detail": "Sharpens soft, casual outfits; adjustable strap",
-									"url": "https://www.amazon.com/s?k=structured+crossbody+bag+women"
+									"_type": "affiliateDisclosure",
+									"_key": "d1"
 								},
 								{
-									"name": "Slim leather belt",
-									"detail": "Finishes tucked tops and high-rise trousers",
-									"url": "https://www.amazon.com/s?k=women+slim+leather+belt"
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "The fastest way to get dressed without thinking: keep a short list of outfit formulas you can repeat. A formula is a combination that already works — same structure, different pieces. Here are five built from basics most wardrobes already have.",
+											"_key": "b1"
+										}
+									],
+									"_key": "b0"
 								},
 								{
-									"name": "Small hoop earrings",
-									"detail": "The easy finisher when the neckline is bare",
-									"url": "https://www.amazon.com/s?k=small+hoop+earrings+gold"
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "1. Straight jeans + fitted tee + sneakers", "_key": "b3" }],
+									"_key": "b2"
+								},
+								{
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "The default casual uniform for a reason. A straight or slightly relaxed jean keeps it current; a tee that actually fits your shoulders keeps it sharp. French-tuck the front if the tee runs long. Works with white sneakers, but loafers shift it smarter without any extra effort.",
+											"_key": "b5"
+										}
+									],
+									"_key": "b4"
+								},
+								{
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "2. Midi dress + denim jacket", "_key": "b7" }],
+									"_key": "b6"
+								},
+								{
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "One piece doing the work of an outfit. A solid or small-print midi dress, a cropped or waist-length denim jacket, and whatever shoes the day calls for. In cooler weather swap the jacket for a chunky cardigan and add a belt to keep the shape.",
+											"_key": "b9"
+										}
+									],
+									"_key": "b8"
+								},
+								{
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "3. Wide-leg trousers + tucked knit", "_key": "b11" }],
+									"_key": "b10"
+								},
+								{
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "The formula that looks like you tried. High-rise wide-leg trousers plus a fine knit tucked in fully — the tuck is what makes it deliberate. Keep the top fitted so the volume stays on the bottom. A belt with a small buckle finishes it.",
+											"_key": "b13"
+										}
+									],
+									"_key": "b12"
+								},
+								{
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "4. Overshirt + tank + jeans", "_key": "b15" }],
+									"_key": "b14"
+								},
+								{
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "A light layer over a simple base. An unbuttoned flannel, utility or linen overshirt over a ribbed tank turns two plain pieces into an outfit with depth. Roll the sleeves once and leave the collar relaxed. This formula fails when it looks fussed over.",
+											"_key": "b17"
+										}
+									],
+									"_key": "b16"
+								},
+								{
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "5. Sweater + slip skirt", "_key": "b19" }],
+									"_key": "b18"
+								},
+								{
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Soft on structured. A chunky or mid-weight knit half-tucked into a satin slip skirt. The contrast between textures is the whole point. Ankle boots in fall, flat sandals when it's warm.",
+											"_key": "b21"
+										}
+									],
+									"_key": "b20"
+								},
+								{
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "Finish it: one accessory, not five", "_key": "b23" }],
+									"_key": "b22"
+								},
+								{
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Each formula needs exactly one finishing piece: a structured bag for the jeans-and-tee days, a belt when something's tucked, small hoops when the neckline is bare. More than that and casual tips into cluttered.",
+											"_key": "b25"
+										}
+									],
+									"_key": "b24"
+								},
+								{
+									"_type": "productCard",
+									"_key": "p1",
+									"title": "Structured everyday crossbody bag",
+									"image": {
+										"$media": {
+											"url": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=480&h=480&fit=crop",
+											"alt": "Structured leather crossbody bag",
+											"filename": "crossbody-bag.jpg"
+										}
+									},
+									"note": "A structured shape sharpens soft, casual outfits. Look for an adjustable strap and a zip closure so it works across seasons.",
+									"caveat": "Check the listed dimensions against what you carry daily; a compact crossbody won't fit a tablet.",
+									"url": "https://www.amazon.com/s?k=structured+crossbody+bag+women",
+									"buttonLabel": "View on Amazon"
+								},
+								{
+									"_type": "productCard",
+									"_key": "p2",
+									"title": "Slim leather belt",
+									"image": {
+										"$media": {
+											"url": "https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=480&h=480&fit=crop",
+											"alt": "Slim leather belt coiled on a neutral surface",
+											"filename": "leather-belt.jpg"
+										}
+									},
+									"note": "The tucked-knit and wide-leg formulas read unfinished without one. A slim belt in a neutral leather covers nearly every outfit here.",
+									"caveat": "Sizing runs differently between brands. Measure a belt you own and compare the size chart.",
+									"url": "https://www.amazon.com/s?k=women+slim+leather+belt",
+									"buttonLabel": "View on Amazon"
+								},
+								{
+									"_type": "productList",
+									"_key": "pl1",
+									"heading": "Shop this guide",
+									"items": [
+										{
+											"name": "Structured everyday crossbody bag",
+											"detail": "Sharpens soft, casual outfits; adjustable strap",
+											"url": "https://www.amazon.com/s?k=structured+crossbody+bag+women"
+										},
+										{
+											"name": "Slim leather belt",
+											"detail": "Finishes tucked tops and high-rise trousers",
+											"url": "https://www.amazon.com/s?k=women+slim+leather+belt"
+										},
+										{
+											"name": "Small hoop earrings",
+											"detail": "The easy finisher when the neckline is bare",
+											"url": "https://www.amazon.com/s?k=small+hoop+earrings+gold"
+										}
+									]
+								},
+								{
+									"_type": "callout",
+									"_key": "c1",
+									"variant": "tip",
+									"text": "Keep the five formulas on a note in your phone with the pieces you own next to each one. Shopping gets easier too: you only buy what fills a real gap in a formula, not a hypothetical outfit."
 								}
 							]
-						},
-						{
-							"_type": "callout",
-							"_key": "c1",
-							"variant": "tip",
-							"text": "Keep the five formulas on a note in your phone with the pieces you own next to each one. Shopping gets easier too: you only buy what fills a real gap in a formula, not a hypothetical outfit."
 						}
 					]
 				},
@@ -900,147 +1793,130 @@
 					},
 					"content": [
 						{
-							"_type": "affiliateDisclosure",
-							"_key": "d1"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+							"_type": "widget_prose",
+							"_version": 1,
+							"_key": "cozy-living-room-prose",
+							"body": [
 								{
-									"_type": "span",
-									"text": "Cozy is mostly lighting and texture, not furniture. If you only change one thing, swap a cold overhead bulb for a warm lamp at sitting height. The room changes instantly. Everything below builds on that, and most of it is free.",
-									"_key": "b1"
-								}
-							],
-							"_key": "b0"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Fix the light first",
-									"_key": "b3"
-								}
-							],
-							"_key": "b2"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Overhead lights flatten a room. Aim for two or three light sources at different heights — a floor lamp in the darkest corner, a table lamp beside the sofa, candles or a small lamp on a shelf. Look for bulbs around 2700K; anything labeled \"daylight\" works against you here.",
-									"_key": "b5"
-								}
-							],
-							"_key": "b4"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Layer textiles you can touch",
-									"_key": "b7"
-								}
-							],
-							"_key": "b6"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "A throw within arm's reach of the sofa, cushion covers in a mix of textures (one smooth, one nubby, one woven), and a rug that's big enough for the front legs of the seating to sit on. A rug that's too small makes the whole room feel temporary. It's the most common mistake.",
-									"_key": "b9"
-								}
-							],
-							"_key": "b8"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Pull the furniture closer",
-									"_key": "b11"
-								}
-							],
-							"_key": "b10"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Rooms pushed against the walls feel like waiting rooms. Bring seating inward so people can talk without raising their voices. Even a few inches off the wall changes the feel. If the room is small, a loveseat angled toward a chair reads cozier than a sofa floating alone.",
-									"_key": "b13"
-								}
-							],
-							"_key": "b12"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Clear one surface completely",
-									"_key": "b15"
-								}
-							],
-							"_key": "b14"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Cozy is not clutter. Pick one surface, usually the coffee table, and keep it nearly empty: a tray, a candle, maybe a small stack of books. Everything else gets a home in a basket or behind a cabinet door. The calm surface is what makes the layers feel intentional.",
-									"_key": "b17"
-								}
-							],
-							"_key": "b16"
-						},
-						{
-							"_type": "comparisonTable",
-							"_key": "ct1",
-							"heading": "The three buys that change the room most",
-							"rows": [
-								{
-									"item": "Warm floor lamp (2700K)",
-									"bestFor": "The single biggest change; corners and reading spots",
-									"keepInMind": "Check the height. The shade should sit near seated eye level",
-									"url": "https://www.amazon.com/s?k=warm+floor+lamp+2700k"
+									"_type": "affiliateDisclosure",
+									"_key": "d1"
 								},
 								{
-									"item": "Textured throw blanket",
-									"bestFor": "Instant softness on the sofa; picks up accent colors",
-									"keepInMind": "Check the dimensions. Under 50x60 inches reads small",
-									"url": "https://www.amazon.com/s?k=textured+throw+blanket"
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Cozy is mostly lighting and texture, not furniture. If you only change one thing, swap a cold overhead bulb for a warm lamp at sitting height. The room changes instantly. Everything below builds on that, and most of it is free.",
+											"_key": "b1"
+										}
+									],
+									"_key": "b0"
 								},
 								{
-									"item": "Woven storage basket",
-									"bestFor": "Blankets, remotes and the daily clutter that undoes cozy",
-									"keepInMind": "Measure the shelf or floor spot before buying",
-									"url": "https://www.amazon.com/s?k=woven+storage+basket+large"
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "Fix the light first", "_key": "b3" }],
+									"_key": "b2"
+								},
+								{
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Overhead lights flatten a room. Aim for two or three light sources at different heights — a floor lamp in the darkest corner, a table lamp beside the sofa, candles or a small lamp on a shelf. Look for bulbs around 2700K; anything labeled \"daylight\" works against you here.",
+											"_key": "b5"
+										}
+									],
+									"_key": "b4"
+								},
+								{
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "Layer textiles you can touch", "_key": "b7" }],
+									"_key": "b6"
+								},
+								{
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "A throw within arm's reach of the sofa, cushion covers in a mix of textures (one smooth, one nubby, one woven), and a rug that's big enough for the front legs of the seating to sit on. A rug that's too small makes the whole room feel temporary. It's the most common mistake.",
+											"_key": "b9"
+										}
+									],
+									"_key": "b8"
+								},
+								{
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "Pull the furniture closer", "_key": "b11" }],
+									"_key": "b10"
+								},
+								{
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Rooms pushed against the walls feel like waiting rooms. Bring seating inward so people can talk without raising their voices. Even a few inches off the wall changes the feel. If the room is small, a loveseat angled toward a chair reads cozier than a sofa floating alone.",
+											"_key": "b13"
+										}
+									],
+									"_key": "b12"
+								},
+								{
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "Clear one surface completely", "_key": "b15" }],
+									"_key": "b14"
+								},
+								{
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Cozy is not clutter. Pick one surface, usually the coffee table, and keep it nearly empty: a tray, a candle, maybe a small stack of books. Everything else gets a home in a basket or behind a cabinet door. The calm surface is what makes the layers feel intentional.",
+											"_key": "b17"
+										}
+									],
+									"_key": "b16"
+								},
+								{
+									"_type": "comparisonTable",
+									"_key": "ct1",
+									"heading": "The three buys that change the room most",
+									"rows": [
+										{
+											"item": "Warm floor lamp (2700K)",
+											"bestFor": "The single biggest change; corners and reading spots",
+											"keepInMind": "Check the height. The shade should sit near seated eye level",
+											"url": "https://www.amazon.com/s?k=warm+floor+lamp+2700k"
+										},
+										{
+											"item": "Textured throw blanket",
+											"bestFor": "Instant softness on the sofa; picks up accent colors",
+											"keepInMind": "Check the dimensions. Under 50x60 inches reads small",
+											"url": "https://www.amazon.com/s?k=textured+throw+blanket"
+										},
+										{
+											"item": "Woven storage basket",
+											"bestFor": "Blankets, remotes and the daily clutter that undoes cozy",
+											"keepInMind": "Measure the shelf or floor spot before buying",
+											"url": "https://www.amazon.com/s?k=woven+storage+basket+large"
+										}
+									]
+								},
+								{
+									"_type": "callout",
+									"_key": "c1",
+									"variant": "note",
+									"text": "Renting? Everything here works without touching a wall. Lamps, textiles and baskets are all reversible, and they move with you."
 								}
 							]
-						},
-						{
-							"_type": "callout",
-							"_key": "c1",
-							"variant": "note",
-							"text": "Renting? Everything here works without touching a wall. Lamps, textiles and baskets are all reversible, and they move with you."
 						}
 					]
 				},
@@ -1066,130 +1942,119 @@
 					},
 					"content": [
 						{
-							"_type": "affiliateDisclosure",
-							"_key": "d1"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+							"_type": "widget_prose",
+							"_version": 1,
+							"_key": "makeup-bag-organization-prose",
+							"body": [
 								{
-									"_type": "span",
-									"text": "The right makeup bag is smaller than you think. If you separate what you use every day from the occasional extras, a single medium bag with two or three compartments covers most routines. Here's how to get there.",
-									"_key": "b1"
-								}
-							],
-							"_key": "b0"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
+									"_type": "affiliateDisclosure",
+									"_key": "d1"
+								},
 								{
-									"_type": "span",
-									"text": "Edit to a daily set first",
-									"_key": "b3"
-								}
-							],
-							"_key": "b2"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "The right makeup bag is smaller than you think. If you separate what you use every day from the occasional extras, a single medium bag with two or three compartments covers most routines. Here's how to get there.",
+											"_key": "b1"
+										}
+									],
+									"_key": "b0"
+								},
 								{
-									"_type": "span",
-									"text": "Empty the bag. Put back only what you used in the last two weeks — that's the daily set. Everything else goes to a drawer organizer or an \"occasion\" pouch at home. Most bags are chaotic because they're carrying three routines at once.",
-									"_key": "b5"
-								}
-							],
-							"_key": "b4"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "Edit to a daily set first", "_key": "b3" }],
+									"_key": "b2"
+								},
 								{
-									"_type": "span",
-									"text": "Choose compartments over capacity",
-									"_key": "b7"
-								}
-							],
-							"_key": "b6"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Empty the bag. Put back only what you used in the last two weeks — that's the daily set. Everything else goes to a drawer organizer or an \"occasion\" pouch at home. Most bags are chaotic because they're carrying three routines at once.",
+											"_key": "b5"
+										}
+									],
+									"_key": "b4"
+								},
 								{
-									"_type": "span",
-									"text": "One big pouch becomes a rummage box. Look for a main compartment, a flat pocket for palettes, and a brush section or elastic loops. A bag that opens flat or stands upright beats a deep one. You can see everything without tipping it out.",
-									"_key": "b9"
-								}
-							],
-							"_key": "b8"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "Choose compartments over capacity", "_key": "b7" }],
+									"_key": "b6"
+								},
 								{
-									"_type": "span",
-									"text": "Brushes need their own space",
-									"_key": "b11"
-								}
-							],
-							"_key": "b10"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "One big pouch becomes a rummage box. Look for a main compartment, a flat pocket for palettes, and a brush section or elastic loops. A bag that opens flat or stands upright beats a deep one. You can see everything without tipping it out.",
+											"_key": "b9"
+										}
+									],
+									"_key": "b8"
+								},
 								{
-									"_type": "span",
-									"text": "Loose brushes shed product onto everything else and lose their shape. A slim brush roll or a section with elastic loops keeps bristles protected. Let brushes dry fully before they go back in a closed bag. Trapped moisture is how mildew starts.",
-									"_key": "b13"
+									"_type": "block",
+									"style": "h2",
+									"children": [{ "_type": "span", "text": "Brushes need their own space", "_key": "b11" }],
+									"_key": "b10"
+								},
+								{
+									"_type": "block",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"text": "Loose brushes shed product onto everything else and lose their shape. A slim brush roll or a section with elastic loops keeps bristles protected. Let brushes dry fully before they go back in a closed bag. Trapped moisture is how mildew starts.",
+											"_key": "b13"
+										}
+									],
+									"_key": "b12"
+								},
+								{
+									"_type": "productCard",
+									"_key": "p1",
+									"title": "Lay-flat makeup bag with compartments",
+									"image": {
+										"$media": {
+											"url": "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=480&h=480&fit=crop",
+											"alt": "Cosmetics laid out in an organized flat arrangement",
+											"filename": "makeup-bag-flat.jpg"
+										}
+									},
+									"note": "Opens fully so nothing hides at the bottom; a separate brush flap keeps powder off everything else.",
+									"caveat": "Check the closed dimensions. Some open flat but pack bulky in a tote.",
+									"url": "https://www.amazon.com/s?k=lay+flat+makeup+bag+compartments",
+									"buttonLabel": "View on Amazon"
+								},
+								{
+									"_type": "productCard",
+									"_key": "p2",
+									"title": "Slim brush roll",
+									"image": {
+										"$media": {
+											"url": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=480&h=480&fit=crop",
+											"alt": "Makeup brushes arranged for storage",
+											"filename": "brush-roll.jpg"
+										}
+									},
+									"note": "Protects bristles in transit and doubles as a stand on a counter. Look for washable lining. It will get dirty.",
+									"caveat": "Elastic loops sized for slim brushes may not fit chunky kabuki handles.",
+									"url": "https://www.amazon.com/s?k=makeup+brush+roll+case",
+									"buttonLabel": "View on Amazon"
+								},
+								{
+									"_type": "callout",
+									"_key": "c1",
+									"variant": "remember",
+									"text": "Liquids for carry-on flights need to fit the usual 3.4 oz / 100 ml rule in a clear quart bag. Keep a travel pouch pre-packed so you're not decanting at midnight before a trip."
 								}
-							],
-							"_key": "b12"
-						},
-						{
-							"_type": "productCard",
-							"_key": "p1",
-							"title": "Lay-flat makeup bag with compartments",
-							"image": {
-								"$media": {
-									"url": "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=480&h=480&fit=crop",
-									"alt": "Cosmetics laid out in an organized flat arrangement",
-									"filename": "makeup-bag-flat.jpg"
-								}
-							},
-							"note": "Opens fully so nothing hides at the bottom; a separate brush flap keeps powder off everything else.",
-							"caveat": "Check the closed dimensions. Some open flat but pack bulky in a tote.",
-							"url": "https://www.amazon.com/s?k=lay+flat+makeup+bag+compartments",
-							"buttonLabel": "View on Amazon"
-						},
-						{
-							"_type": "productCard",
-							"_key": "p2",
-							"title": "Slim brush roll",
-							"image": {
-								"$media": {
-									"url": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=480&h=480&fit=crop",
-									"alt": "Makeup brushes arranged for storage",
-									"filename": "brush-roll.jpg"
-								}
-							},
-							"note": "Protects bristles in transit and doubles as a stand on a counter. Look for washable lining. It will get dirty.",
-							"caveat": "Elastic loops sized for slim brushes may not fit chunky kabuki handles.",
-							"url": "https://www.amazon.com/s?k=makeup+brush+roll+case",
-							"buttonLabel": "View on Amazon"
-						},
-						{
-							"_type": "callout",
-							"_key": "c1",
-							"variant": "remember",
-							"text": "Liquids for carry-on flights need to fit the usual 3.4 oz / 100 ml rule in a clear quart bag. Keep a travel pouch pre-packed so you're not decanting at midnight before a trip."
+							]
 						}
 					]
 				},

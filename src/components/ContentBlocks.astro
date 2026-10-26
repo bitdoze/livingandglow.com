@@ -1,0 +1,26 @@
+---
+/**
+ * ContentBlocks.astro — renders the `blocks`-type `content` field used by
+ * posts and pages. Combines the widget_* components shipped by the
+ * Content Widgets plugin (@bitdoze.com/emdashhq-widgets), the contact_form
+ * renderer for the Contact Forms plugin (@bitdoze.com/emdashhq-contact-forms),
+ * and the affiliate_link renderer for the local Affiliate Links plugin.
+ */
+import { Blocks, defineBlockComponents, type BlockValue } from "emdash/ui";
+import { widgetComponents } from "./widgets/widget-components";
+import ContactForm from "./ContactForm.astro";
+import AffiliateLink from "./AffiliateLink.astro";
+
+interface Props {
+	value?: BlockValue[] | null;
+}
+
+const { value } = Astro.props;
+const blockComponents = defineBlockComponents({
+	...widgetComponents,
+	contact_form: ContactForm,
+	affiliate_link: AffiliateLink,
+} as never);
+---
+
+<Blocks {value} components={blockComponents} />

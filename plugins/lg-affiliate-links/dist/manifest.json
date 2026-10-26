@@ -1,0 +1,96 @@
+{
+  "id": "lg-affiliate-links",
+  "version": "1.0.0",
+  "declaredAccess": {},
+  "capabilities": [],
+  "allowedHosts": [],
+  "storage": {
+    "links": {
+      "indexes": [
+        "slug",
+        "status",
+        "category",
+        "createdAt",
+        "clickCount"
+      ],
+      "uniqueIndexes": [
+        "slug"
+      ]
+    },
+    "clicks": {
+      "indexes": [
+        "linkId",
+        "createdAt",
+        [
+          "linkId",
+          "createdAt"
+        ]
+      ]
+    }
+  },
+  "hooks": [
+    "plugin:activate",
+    "plugin:deactivate",
+    "plugin:uninstall",
+    "cron"
+  ],
+  "routes": [
+    {
+      "name": "resolve",
+      "request": {
+        "body": "none"
+      },
+      "public": true
+    },
+    {
+      "name": "go",
+      "request": {
+        "body": "none"
+      },
+      "public": true
+    },
+    "admin"
+  ],
+  "admin": {
+    "settingsSchema": {
+      "logClicks": {
+        "label": "Store individual click rows",
+        "description": "Keep one row per click (referrer, user agent, country, time) in addition to the per-link counter. Turn off to only keep counters.",
+        "type": "boolean",
+        "default": true
+      },
+      "clickRetentionDays": {
+        "label": "Click row retention (days)",
+        "description": "Individual click rows older than this are pruned hourly. Counters are unaffected. 0 keeps rows forever.",
+        "type": "number",
+        "default": 90,
+        "min": 0,
+        "max": 3650
+      },
+      "dedupeClicks": {
+        "label": "De-duplicate repeat clicks",
+        "description": "Count at most one click per visitor per link per day, using a short-lived hash of IP + user agent. IPs are never stored.",
+        "type": "boolean",
+        "default": true
+      }
+    },
+    "pages": [
+      {
+        "path": "/links",
+        "label": "Affiliate links",
+        "icon": "link"
+      },
+      {
+        "path": "/stats",
+        "label": "Click stats",
+        "icon": "chart-line"
+      },
+      {
+        "path": "/setup",
+        "label": "Setup guide",
+        "icon": "rocket-launch"
+      }
+    ],
+    "widgets": []
+  }
+}
