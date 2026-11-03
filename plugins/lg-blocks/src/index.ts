@@ -1,21 +1,66 @@
 import { definePlugin } from "emdash";
-import type { PluginDescriptor } from "emdash";
+import type { PluginDescriptor, RouteContext } from "emdash";
+import { z } from "zod";
 
 export function lgBlocksPlugin(): PluginDescriptor {
 	return {
 		id: "lg-blocks",
-		version: "1.0.0",
+		version: "1.1.0",
 		entrypoint: "lg-blocks",
 		componentsEntry: "lg-blocks/astro",
 	};
 }
 
-export function createPlugin() {
-	return definePlugin({
-		id: "lg-blocks",
-		version: "1.0.0",
-		admin: {
-			portableTextBlocks: [
+const catalogInputSchema = z
+	.object({
+		collection: z.string().optional(),
+	})
+	.strict();
+
+type CatalogInput = z.infer<typeof catalogInputSchema>;
+
+const catalogOutput = {
+	placement: {
+		topLevel:
+			"Blocks listed in each collection's allowedTypes are appended to that collection's `content` blocks field — pass them as objects with `_type` inside `data.content` on content_create / content_update. They are stored inline in the post body, never as separate records.",
+		nested:
+			"The inlineBlocks below are Portable Text types that only live inside a widget_prose block's `body` array — they are rejected at the top level.",
+		fieldDetails:
+			"Call schema_get_block_type with a slug for the full field schema of any top-level block type.",
+	},
+	inlineBlocksNote:
+		"Inline blocks appear as {_type: \"<type>\", ...fields} entries inside widget_prose.body, alongside regular {style: \"normal\", _type: \"block\"} paragraphs.",
+};
+
+const inlineFieldNames = (block: { fields?: Array<Record<string, unknown>> }): string[] =>
+	(block.fields ?? []).map((field) => String(field.action_id ?? field.type ?? "")).filter(Boolean);
+
+async function handleCatalog(ctx: RouteContext<CatalogInput>) {
+	const slugs = ctx.input?.collection ? [ctx.input.collection] : ["posts", "pages"];
+	const collections: Record<string, unknown> = {};
+	for (const slug of slugs) {
+		const info = await ctx.schema?.getCollection(slug);
+		const field = info?.fields.find((candidate) => candidate.type === "blocks");
+		if (!field) continue;
+		collections[slug] = {
+			blocksField: field.slug,
+			allowedTypes: field.validation?.allowedTypes ?? [],
+		};
+	}
+	return {
+		...catalogOutput,
+		collections,
+		inlineBlocks: INLINE_BLOCKS.map((block) => ({
+			type: block.type,
+			label: block.label,
+			description: block.description ?? null,
+			category: block.category ?? null,
+			fields: inlineFieldNames(block),
+		})),
+	};
+}
+
+const INLINE_BLOCKS = [
 				{
 					type: "affiliateDisclosure",
 					label: "Affiliate Disclosure",
@@ -176,7 +221,33 @@ export function createPlugin() {
 						},
 					],
 				},
-			],
+];
+
+export function createPlugin() {
+	return definePlugin({
+		id: "lg-blocks",
+		version: "1.1.0",
+		capabilities: ["schema:read"],
+		routes: {
+			catalog: {
+				permission: "content:read",
+				request: { body: "json" },
+				input: catalogInputSchema,
+				handler: handleCatalog,
+			},
+		},
+		mcp: {
+			tools: {
+				block_catalog: {
+					description:
+						"List every content block type usable in post/page bodies: the top-level widget_* blocks allowed in each collection's `content` field, plus the inline Portable Text types that must be nested inside a widget_prose block's `body`. Blocks are inserted via content_create / content_update — always inline in `data.content`, never as separate block records.",
+					route: "catalog",
+					input: catalogInputSchema,
+				},
+			},
+		},
+		admin: {
+			portableTextBlocks: INLINE_BLOCKS,
 		},
 	});
 }
