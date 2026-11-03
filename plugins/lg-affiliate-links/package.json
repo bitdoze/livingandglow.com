@@ -1,6 +1,6 @@
 {
 	"name": "lg-affiliate-links",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "Affiliate link manager for EmDash CMS: organized links, /go/ redirect URLs and click tracking, plus an article block for placing managed links in posts.",
 	"type": "module",
 	"main": "dist/index.mjs",

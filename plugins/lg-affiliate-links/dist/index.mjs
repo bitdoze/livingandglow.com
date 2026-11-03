@@ -7,7 +7,7 @@
 /** @type {import("emdash").PluginDescriptor} */
 const descriptor = Object.freeze({
 	"id": "lg-affiliate-links",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"format": "standard",
 	"entrypoint": "lg-affiliate-links/sandbox",
 	"capabilities": [],
@@ -57,8 +57,141 @@ const descriptor = Object.freeze({
 			},
 			"public": true
 		},
-		"admin"
+		"admin",
+		{
+			"name": "links_list",
+			"request": {
+				"body": "json"
+			},
+			"permission": "content:read"
+		},
+		{
+			"name": "links_save",
+			"request": {
+				"body": "json"
+			},
+			"permission": "content:edit_any"
+		},
+		{
+			"name": "links_delete",
+			"request": {
+				"body": "json"
+			},
+			"permission": "content:delete_any"
+		}
 	],
+	"mcp": {
+		"tools": [
+			{
+				"name": "link_list",
+				"description": "List managed affiliate links (slug, label, destination, category, tags, status, click count, /go/ short URL). Call this before inserting an affiliate_link block to find the right slug.",
+				"route": "links_list",
+				"permission": "content:read",
+				"destructive": false,
+				"inputSchema": {
+					"$schema": "http://json-schema.org/draft-07/schema#",
+					"type": "object",
+					"properties": {
+						"status": {
+							"description": "Filter by status",
+							"type": "string",
+							"enum": [
+								"active",
+								"archived"
+							]
+						},
+						"query": {
+							"description": "Substring match on slug, label, destination URL or category",
+							"type": "string"
+						},
+						"limit": {
+							"description": "Max links returned (default 100)",
+							"type": "integer",
+							"minimum": 1,
+							"maximum": 500
+						}
+					},
+					"additionalProperties": false
+				}
+			},
+			{
+				"name": "link_save",
+				"description": "Create or update a managed affiliate link, upserted by slug (auto-derived from the label when omitted). The destination must be an http(s) URL. Returns the slug for affiliate_link blocks and the /go/ short URL.",
+				"route": "links_save",
+				"permission": "content:edit_any",
+				"destructive": false,
+				"inputSchema": {
+					"$schema": "http://json-schema.org/draft-07/schema#",
+					"type": "object",
+					"properties": {
+						"label": {
+							"type": "string",
+							"minLength": 1,
+							"description": "Display label (e.g. product name)"
+						},
+						"url": {
+							"type": "string",
+							"description": "Destination http(s) URL — usually the Amazon affiliate URL"
+						},
+						"slug": {
+							"description": "Short-URL slug; derived from label when omitted",
+							"type": "string"
+						},
+						"category": {
+							"description": "Grouping category (e.g. Fashion, Beauty)",
+							"type": "string"
+						},
+						"tags": {
+							"description": "Free-form tags",
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"notes": {
+							"description": "Internal notes",
+							"type": "string"
+						},
+						"status": {
+							"description": "active (default) or archived",
+							"type": "string",
+							"enum": [
+								"active",
+								"archived"
+							]
+						}
+					},
+					"required": [
+						"label",
+						"url"
+					],
+					"additionalProperties": false
+				}
+			},
+			{
+				"name": "link_delete",
+				"description": "Delete a managed affiliate link by slug, including its click history. Posts referencing its slug will no longer resolve.",
+				"route": "links_delete",
+				"permission": "content:delete_any",
+				"destructive": true,
+				"inputSchema": {
+					"$schema": "http://json-schema.org/draft-07/schema#",
+					"type": "object",
+					"properties": {
+						"slug": {
+							"type": "string",
+							"minLength": 1,
+							"description": "Slug of the link to delete"
+						}
+					},
+					"required": [
+						"slug"
+					],
+					"additionalProperties": false
+				}
+			}
+		]
+	},
 	"adminPages": [
 		{
 			"path": "/links",
