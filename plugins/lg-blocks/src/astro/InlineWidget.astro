@@ -1,0 +1,68 @@
+---
+/**
+ * InlineWidget — renders a widget_* block embedded inside a widget_prose
+ * block's `body` Portable Text. The `/` slash menu inserts these as plugin
+ * blocks; this adapter translates the PT `node` prop into the `value` prop
+ * the site's widget_* renderers expect, then dispatches by `_type`.
+ */
+import WidgetAccordion from "../../../../src/components/widgets/components/WidgetAccordion.astro";
+import WidgetButton from "../../../../src/components/widgets/components/WidgetButton.astro";
+import WidgetCards from "../../../../src/components/widgets/components/WidgetCards.astro";
+import WidgetChecklist from "../../../../src/components/widgets/components/WidgetChecklist.astro";
+import WidgetCode from "../../../../src/components/widgets/components/WidgetCode.astro";
+import WidgetDivider from "../../../../src/components/widgets/components/WidgetDivider.astro";
+import WidgetEmbed from "../../../../src/components/widgets/components/WidgetEmbed.astro";
+import WidgetFacts from "../../../../src/components/widgets/components/WidgetFacts.astro";
+import WidgetImage from "../../../../src/components/widgets/components/WidgetImage.astro";
+import WidgetLatestPosts from "../../../../src/components/widgets/components/WidgetLatestPosts.astro";
+import WidgetNotice from "../../../../src/components/widgets/components/WidgetNotice.astro";
+import WidgetProduct from "../../../../src/components/widgets/components/WidgetProduct.astro";
+import WidgetQuote from "../../../../src/components/widgets/components/WidgetQuote.astro";
+import WidgetSeries from "../../../../src/components/widgets/components/WidgetSeries.astro";
+import WidgetSteps from "../../../../src/components/widgets/components/WidgetSteps.astro";
+import WidgetTabs from "../../../../src/components/widgets/components/WidgetTabs.astro";
+import WidgetToc from "../../../../src/components/widgets/components/WidgetToc.astro";
+import WidgetYoutube from "../../../../src/components/widgets/components/WidgetYoutube.astro";
+
+const COMPONENTS: Record<string, any> = {
+	widget_accordion: WidgetAccordion,
+	widget_button: WidgetButton,
+	widget_cards: WidgetCards,
+	widget_checklist: WidgetChecklist,
+	widget_code: WidgetCode,
+	widget_divider: WidgetDivider,
+	widget_embed: WidgetEmbed,
+	widget_facts: WidgetFacts,
+	widget_image: WidgetImage,
+	widget_latest_posts: WidgetLatestPosts,
+	widget_notice: WidgetNotice,
+	widget_product: WidgetProduct,
+	widget_quote: WidgetQuote,
+	widget_series: WidgetSeries,
+	widget_steps: WidgetSteps,
+	widget_tabs: WidgetTabs,
+	widget_toc: WidgetToc,
+	widget_youtube: WidgetYoutube,
+};
+
+/** Plain text → minimal Portable Text paragraphs (blank line = new paragraph). */
+function toPortableText(text: unknown): unknown[] {
+	if (Array.isArray(text)) return text;
+	return String(text ?? "")
+		.split(/\n\s*\n/)
+		.map((chunk) => chunk.trim())
+		.filter(Boolean)
+		.map((chunk) => ({
+			_type: "block",
+			style: "normal",
+			children: [{ _type: "span", text: chunk }],
+		}));
+}
+
+const node = Astro.props.node ?? {};
+const Component = COMPONENTS[node._type];
+const value = { ...node };
+if (node._type === "widget_notice") value.body = toPortableText(node.body);
+---
+
+{Component && <Component value={value} />}
